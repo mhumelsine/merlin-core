@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { ApplicationState } from '../../store/index';
 import { CodeType, actionCreators as CodeActions, Codes } from '../../store/Code';
 import { actionCreators as OutbreakActions, Results as ObResults } from '../../store/Outbreak';
-import TotalCasesResults from './TotalCasesResults'
-import StaffResults from './StaffResults'
+import TotalCasesResults from './TotalCasesResults';
+import StaffResults from './StaffResults';
 import Loading from '../common/Loading';
 
 type Props = {
@@ -15,8 +15,8 @@ type Props = {
     & typeof CodeActions;
 
 type State = {
-    loading:boolean
-}
+    loading: boolean
+};
 
 class Results extends React.Component<Props, State> {
 
@@ -48,7 +48,7 @@ class Results extends React.Component<Props, State> {
         if (loading) {
             return <Loading />;
         }
-        
+
         return <div className="row">
             <div className="col-md-6">
                 <TotalCasesResults errors={errors} />

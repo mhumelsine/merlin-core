@@ -22,7 +22,7 @@ export function getValidationMessageFor(aliasId: number, validationValue: string
             return `Number must be less than ${validationValue}`;
         case 6:
             return `Number must be less than or equal to ${validationValue}`;
-        
+
         case 12:
             return 'Invalid input';
         case 9:
@@ -39,11 +39,10 @@ export function isNotFutureDate(testDate: string) {
         if (!isValidDate(testDate) || testDate === '') {
             return true;
         }
-        var testDateParsed = Date.parse(testDate);
-        var now = new Date().getTime();
+        let testDateParsed = Date.parse(testDate);
+        let now = new Date().getTime();
         return (testDateParsed <= now);
-    }
-    catch (e) {
+    } catch (e) {
         // return false;
         return true;
     }
@@ -54,11 +53,10 @@ export function isValidDate(testDate: string) {
         if (testDate === '') {
             return true;
         }
-        
+
         const isValid = moment(testDate, ['MM/DD/YYYY', 'M/D/YYYY', 'MM/D/YYYY', 'M/DD/YYYY', 'M/D/YY', 'MM/D/YY', 'M/DD/YY', 'M-D-YYYY', 'MM-D-YYYY', 'M-DD-YYYY', 'M-D-YY', 'MM-D-YY', 'M-DD-YY'], true).isValid();
         return isValid;
-    }
-    catch (e) {
+    } catch (e) {
         return false;
     }
 }
@@ -70,7 +68,7 @@ export function hasValue(testValue: string) {
 
         return false;
     }
-    //returns true if string contains visable character.
+    // returns true if string contains visable character.
     return !(/^[\s]+$/g.test(testValue));
 }
 

@@ -8,7 +8,7 @@ import { Survey } from '../../../store/SurveySearch';
 
 type LayoutSurveyListProps = {
     layout: Layout,
-    initiallyCollapsed:boolean
+    initiallyCollapsed: boolean
 } ;
 
 export default class LayoutSurveyList extends React.Component<LayoutSurveyListProps> {
@@ -17,7 +17,7 @@ export default class LayoutSurveyList extends React.Component<LayoutSurveyListPr
 
         if (!layout) {
             return <Loading />;
-        } 
+        }
         return <CollapsibleCard
             heading={<span>{`Surveys `}<span className="badge badge-pill badge-light">{layout.surveys.length}</span></span>}
             initiallyCollapsed={initiallyCollapsed}
@@ -25,7 +25,7 @@ export default class LayoutSurveyList extends React.Component<LayoutSurveyListPr
                 <ul className="list-group">
 					{layout.surveys && layout.surveys.map((survey: any, index: number) => <li key={survey.surveyId || index} className="list-group-item">
 						<h3>{survey.surveyName}</h3>
-                        <dl className="mb-0">                            
+                        <dl className="mb-0">
 							{survey.icd9 &&
 								<div>
 									<dt>FL Disease Code</dt>
@@ -39,7 +39,7 @@ export default class LayoutSurveyList extends React.Component<LayoutSurveyListPr
 								</div>
 							}
 							<dt>Effective Date</dt>
-							<dd>{survey.effectiveDate}</dd> 
+							<dd>{survey.effectiveDate}</dd>
 						</dl>
                     </li>)}
                 </ul>

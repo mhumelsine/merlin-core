@@ -36,43 +36,11 @@ class CopyExistingLayout extends React.Component<CopyLayoutPageProps> {
         this.onSubmit = this.onSubmit.bind(this);
     }
 
-
-    private onChange(name: string, value: any) {
-        const newState = Object.assign({}, this.state) as any;
-        newState[name] = value;
-        newState.error = ''
-        this.setState(newState);
-    }
-
-    private async onSubmit(event: any) {
-        event.preventDefault();
-
-        const { layoutName, tags } = this.state;
-        if (layoutName === defaults.string) {
-            this.setState({ error: "LayoutName is missing" });
-            return;
-        }
-        try {
-            this.setState({ isLoading: true });
-            const layoutId = await this.props.createLayout(layoutName, tags);
-
-            await this.props.copyLayout(this.props.selectedlayoutId);
-
-            this.setState({ layoutId });
-
-        } catch (err) {
-            this.setState({ error: err });
-            console.log(err);
-        } finally {
-            this.setState({ isLoading: false });
-        }
-    }
-
     public render() {
 
         const { layoutName, tags, layoutId, error } = this.state;
         const { toggle, visible } = this.props;
-        const tagOptions = (tags || []).map(tag => { return { label: tag, value: tag } });
+        const tagOptions = (tags || []).map(tag => { return { label: tag, value: tag }; });
 
         if (layoutId) {
             return <Redirect to={`/layout/edit/${layoutId}`} />;
@@ -105,14 +73,46 @@ class CopyExistingLayout extends React.Component<CopyLayoutPageProps> {
             }
             footer={<div>
                 <CancelButton onClick={toggle} />
-                {" "}
+                {' '}
                 <AddButton onClick={this.onSubmit} buttonText=" Create Layout" />
             </div>}
         />;
     }
+
+
+    private onChange(name: string, value: any) {
+        const newState = Object.assign({}, this.state) as any;
+        newState[name] = value;
+        newState.error = '';
+        this.setState(newState);
+    }
+
+    private async onSubmit(event: any) {
+        event.preventDefault();
+
+        const { layoutName, tags } = this.state;
+        if (layoutName === defaults.string) {
+            this.setState({ error: 'LayoutName is missing' });
+            return;
+        }
+        try {
+            this.setState({ isLoading: true });
+            const layoutId = await this.props.createLayout(layoutName, tags);
+
+            await this.props.copyLayout(this.props.selectedlayoutId);
+
+            this.setState({ layoutId });
+
+        } catch (err) {
+            this.setState({ error: err });
+            console.log(err);
+        } finally {
+            this.setState({ isLoading: false });
+        }
+    }
 }
 
 export default connect(
-    (state: ApplicationState) => { return { layout: state.layout.layout } },
+    (state: ApplicationState) => { return { layout: state.layout.layout }; },
     actionCreators
 )(CopyExistingLayout);

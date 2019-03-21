@@ -18,15 +18,7 @@ class StaffResults extends React.Component<StaffProps> {
     constructor(props: StaffProps) {
         super(props);
 
-        this.onChange = this.onChange.bind(this)
-    }
-
-    private onChange(name: string, value: any) {
-        const results = Object.assign({}, this.props.results) as any;
-
-        results[name] = parseInt(value);
-
-        this.props.updateResults(results);
+        this.onChange = this.onChange.bind(this);
     }
 
     public render() {
@@ -79,6 +71,14 @@ class StaffResults extends React.Component<StaffProps> {
                 </div>
             </div>
         </div>;
+    }
+
+    private onChange(name: string, value: any) {
+        const results = Object.assign({}, this.props.results) as any;
+
+        results[name] = parseInt(value);
+
+        this.props.updateResults(results);
     }
 }
 export default connect(

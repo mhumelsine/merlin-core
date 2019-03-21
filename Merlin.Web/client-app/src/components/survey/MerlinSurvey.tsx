@@ -36,7 +36,7 @@ class MerlinSurvey extends React.Component<MerlinSurveyProps, {}> {
         surveyId: '',
         errors: {} as any,
         isSubmitted: defaults.boolean
-    }
+    };
 
     constructor(props: MerlinSurveyProps) {
         super(props);
@@ -51,8 +51,8 @@ class MerlinSurvey extends React.Component<MerlinSurveyProps, {}> {
             this.setState({
                 isLoading: true,
                 caseId: params.caseId,
-                surveyId:params.surveyId
-            });            
+                surveyId: params.surveyId
+            });
 
             await this.props.requestSurvey(params.surveyId);
             await this.props.loadDetailsForCase(parseInt(params.caseId));
@@ -104,7 +104,7 @@ class MerlinSurvey extends React.Component<MerlinSurveyProps, {}> {
             return <Loading />;
         }
 
-        return <div id={layout.layoutId} className='container-fluid'>
+        return <div id={layout.layoutId} className="container-fluid">
 
             {layout && layout.items &&
                 <LayoutViewer
@@ -119,7 +119,7 @@ class MerlinSurvey extends React.Component<MerlinSurveyProps, {}> {
             {!isSubmitted &&
                 <button className={'btn btn-outline-dark pull-left'} onClick={this.onSubmit}>
                     <FaRegSave fontSize={20} style={{ verticalAlign: 'bottom' }} />
-                    {" Submit"}
+                    {' Submit'}
                 </button>}
         </div>;
     }
@@ -131,16 +131,16 @@ class MerlinSurvey extends React.Component<MerlinSurveyProps, {}> {
         if (element) {
 
             const publishHeight = () => {
-                const height = element.getBoundingClientRect().height + 200; //need a little buffer
+                const height = element.getBoundingClientRect().height + 200; // need a little buffer
 
-                window.parent.postMessage(JSON.stringify({ height }), "*");
+                window.parent.postMessage(JSON.stringify({ height }), '*');
             };
 
             publishHeight();
 
-            //this is a temporary integration piece that shoudl be removed when we are no longer
-            //rendering in an iframe.  Since controls may change their height after loading data,
-            //the total height can change without this render method being called again
+            // this is a temporary integration piece that shoudl be removed when we are no longer
+            // rendering in an iframe.  Since controls may change their height after loading data,
+            // the total height can change without this render method being called again
             setTimeout(publishHeight, 3000);
         }
     }

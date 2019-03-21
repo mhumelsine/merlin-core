@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { RouteComponentProps, Link } from "react-router-dom";
+import { RouteComponentProps, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { ApplicationState } from '../../../store';
 import * as SurveyStore from '../../../store/SurveySearch';
@@ -22,7 +22,7 @@ export default class QuestionManager extends React.Component<QuestionManagerProp
     }
 
     public componentDidMount() {
-        document.title = defaults.titles.QuestionManager
+        document.title = defaults.titles.QuestionManager;
     }
 
     public render() {
@@ -37,7 +37,7 @@ export default class QuestionManager extends React.Component<QuestionManagerProp
             <br />
                 {layoutId &&
 				<Link className={defaults.theme.buttons.class} to={`${defaults.urls.layoutEditUrl}/${layoutId}`} >
-                <FaArrowLeft fontSize={15} style={{ paddingRight: "5px" }}/> Back to Layout
+                <FaArrowLeft fontSize={15} style={{ paddingRight: '5px' }}/> Back to Layout
                     </Link>
                 }
                 {/* <BackButton

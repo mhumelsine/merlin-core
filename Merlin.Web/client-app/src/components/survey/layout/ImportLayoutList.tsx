@@ -23,6 +23,26 @@ type ImportLayoutListProps = {
 class ImportLayoutList extends React.Component<ImportLayoutListProps> {
     state = {
         isLoading: false
+    };
+
+    public render() {
+
+        const { isLoading } = this.state;
+        const { layoutList } = this.props;
+
+        if (isLoading) {
+            return <Loading />;
+        }
+
+        if (layoutList && layoutList.list && layoutList.list.length > 0) {
+            return <ul className="list-group">
+                {layoutList.list.map(layout => this.createListItem(layout))}
+            </ul>;
+        }
+
+        return <Alert alertType="warning">
+            No layouts found
+        </Alert>;
     }
 
     private movePage(page: number) {
@@ -56,33 +76,13 @@ class ImportLayoutList extends React.Component<ImportLayoutListProps> {
 
         </li>;
     }
-
-    public render() {
-
-        const { isLoading } = this.state;
-        const { layoutList } = this.props;
-
-        if (isLoading) {
-            return <Loading />;
-        }
-
-        if (layoutList && layoutList.list && layoutList.list.length > 0) {
-            return <ul className="list-group">
-                {layoutList.list.map(layout => this.createListItem(layout))}
-            </ul>;
-        }
-
-        return <Alert alertType="warning">
-            No layouts found
-        </Alert>;
-    }
 }
 
 const pagedImportLayoutList = PagedList(ImportLayoutList,
-    "",
-    (props: any) => props.isLoading,
-    (props: any) => props.layoutList.paging || defaults.paging,
-    (props: any) => {
+                                        '',
+                                        (props: any) => props.isLoading,
+                                        (props: any) => props.layoutList.paging || defaults.paging,
+                                        (props: any) => {
         const { selectedTags } = props;
 
         return (page: number) => props.loadLayouListFromTags(selectedTags, page);
@@ -95,7 +95,7 @@ export default connect(
         return {
             layoutList: state.layout.layoutList,
             selectedTags: state.layout.selectedTags
-        }
+        };
     },
     actionCreators
 )(pagedImportLayoutList as typeof ImportLayoutList);

@@ -43,6 +43,32 @@ class PropertyManager extends React.Component<PropertyManagerProps> {
         });
     }
 
+    public render() {
+        const { visible, toggle, title } = this.props;
+        const { layoutName, tags, errors, isLoading } = this.state;
+
+        if (isLoading) {
+            return <Loading />;
+        }
+        return <Modal
+            toggle={toggle}
+            visible={visible}
+            title={title}
+            body={<div>
+                <SaveLayoutControl
+                    layoutName={layoutName}
+                    tags={tags}
+                    errors={errors}
+                    onChange={this.onChange}
+                />
+            </div>}
+            footer={<div>
+                <CancelButton onClick={toggle} className={'btn-space-right'} />
+                <SaveButton onClick={this.onSave} className={'pull-right'} />
+            </div>}
+        />;
+    }
+
     private onChange(name: string, newValue: any) {
         let newState = Object.assign({}, this.state);
         (newState as any)[name] = newValue;
@@ -64,32 +90,6 @@ class PropertyManager extends React.Component<PropertyManagerProps> {
         } finally {
             this.setState({ isLoading: false }, () => this.props.toggle());
         }
-    }
-
-    public render() {
-        const { visible, toggle, title } = this.props;
-        const { layoutName, tags, errors, isLoading } = this.state
-
-        if (isLoading) {
-            return <Loading />
-        }
-        return <Modal
-            toggle={toggle}
-            visible={visible}
-            title={title}
-            body={<div>
-                <SaveLayoutControl
-                    layoutName={layoutName}
-                    tags={tags}
-                    errors={errors}
-                    onChange={this.onChange}
-                />
-            </div>}
-            footer={<div>
-                <CancelButton onClick={toggle} className={"btn-space-right"} />
-                <SaveButton onClick={this.onSave} className={"pull-right"} />
-            </div>}
-        />
     }
 }
 export default connect(

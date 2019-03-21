@@ -33,7 +33,7 @@ type QuestionEditFromLayoutProps = {
     layoutId?: string;
     layout: Layout;
     question: SurveyQuestion,
-    codes:CodeStore.Codes
+    codes: CodeStore.Codes
 }
     & typeof SurveyActions
     & typeof LayoutStore.actionCreators
@@ -129,92 +129,6 @@ class QuestionEditFromLayout extends React.Component<QuestionEditFromLayoutProps
         }
     }
 
-    private resetForm() {
-        let newState = Object.assign({}, this.state);
-        newState.question.codeType = defaults.string;
-        newState.question.choices = [] as any;
-        this.setState(newState);
-    }
-
-    private removeTimeout() {
-        if (this.timeout !== defaults.NULL) {
-            clearTimeout(this.timeout);
-            this.timeout = defaults.NULL;
-        }
-    }
-
-    private async onDropdownChange(name: string, newValue: any) {
-        if (name === defaults.inputs.dropdowns.questionTypeInput.name && (questionTypesWithCodesArray.indexOf(newValue) < 0)) {
-            this.resetForm();
-        }
-        if (name === defaults.inputs.dropdowns.questionCodeTypeInput.name) {
-            this.questionIsDirty = true;
-            await this.props.loadDropdown(newValue, this.props.history, 'QUESTION_CHOICES');
-        }
-        this.onChange(name, newValue);
-    }
-
-    private onChange(name: string, newValue: any) {
-        const newState = Object.assign({}, this.state);
-        (newState.question as any)[name] = newValue;
-        this.setState(newState);
-    }
-
-    private onSaveQuestionToLayout(question: LayoutStore.LayoutItem) {
-        const { onQuestionSaved, parentId } = this.props;
-        if (onQuestionSaved) {
-            onQuestionSaved(parentId || "", question);
-        }
-    }
-
-    private onSaveQuestion(event: any) {
-        event.preventDefault();
-        this.setState({ isLoading: true });
-        const { question } = this.state;
-        const layoutItem = LayoutUtils.getItemById(this.props.layout, question.questionId) as LayoutItem;
-
-        (this.props.updateQuestion(question) as any)
-            .then((res: any) => {
-                this.onSaveQuestionToLayout({
-                    id: question.questionId,
-                    questionType: question.questionType,
-                    text: question.questionText,
-                    width: 12,
-                    type: layoutItemType.question,
-                    choices: question.choices || [],
-                    isNumbered: true,
-                    activation: layoutItem.activation,
-                    validations: layoutItem.validations,
-                    groupAccess: defaults.groupAccess
-                });
-                this.setState({ errors: {} as any, isLoading: defaults.boolean }, () => { this.showQuestionSaved(); });
-            })
-            .catch((errors: any) => this.setState({ errors, isLoading: defaults.boolean }));
-    }
-
-    private showQuestionSaved() {
-        const component = this;
-
-        this.setState({
-            saveTimeout: setTimeout(() => {
-                component.setState({ saveMessage: defaults.string })
-            }, 10000),
-            saveMessage: `Question Saved!`
-        });
-    }
-
-    private onEditQuestionToggle() {
-        const newState = Object.assign({}, this.state);
-        newState.question.saveToBank = !this.state.question.saveToBank;
-        this.setState(newState);
-    }
-
-    private onAnswerChange(name: string, newValue: any) {
-        let newState = Object.assign({}, this.state);
-        newState.answers[name] = newValue;
-        this.setState(newState);
-    }
-
     public render() {
         const { history, requestQuestions, isInManageMode, codes, loadDropdown } = this.props;
         const { errors, question, isLoading, saveMessage, answers } = this.state;
@@ -230,13 +144,13 @@ class QuestionEditFromLayout extends React.Component<QuestionEditFromLayoutProps
         }
 
         if (question.hasBeenAnswered) {
-            return <Alert alertType='danger'>
+            return <Alert alertType="danger">
                 {`The question '${question.questionText}' cannot be edited because it has been answered.`}
-            </Alert>
+            </Alert>;
         }
 
         return <div>
-            <div style={{ "border": "1px solid gray", padding: "10px" }}>
+            <div style={{ 'border': '1px solid gray', padding: '10px' }}>
 
 
                 <div className="row">
@@ -254,7 +168,7 @@ class QuestionEditFromLayout extends React.Component<QuestionEditFromLayoutProps
                             error={errors[questionTextInput.name]}
                         />
                     </div>
-                    <div className="col-md-4" style={{ textAlign: "center" }}>
+                    <div className="col-md-4" style={{ textAlign: 'center' }}>
                         {(Object.keys(errors).length > 0) &&
                             <ErrorSummary
                                 errors={errors}
@@ -330,9 +244,9 @@ class QuestionEditFromLayout extends React.Component<QuestionEditFromLayoutProps
                     <div className="col-md-4">
 
                         <YesNo
-                            name={"saveToBank"}
-                            label={"Save Question to Bank?"}
-                            value={question.saveToBank ? "YES" : "NO"}
+                            name={'saveToBank'}
+                            label={'Save Question to Bank?'}
+                            value={question.saveToBank ? 'YES' : 'NO'}
                             hideLabel={false}
                             onChange={this.onEditQuestionToggle}
                         />
@@ -341,6 +255,92 @@ class QuestionEditFromLayout extends React.Component<QuestionEditFromLayoutProps
                 </div>
             </div>
         </div>;
+    }
+
+    private resetForm() {
+        let newState = Object.assign({}, this.state);
+        newState.question.codeType = defaults.string;
+        newState.question.choices = [] as any;
+        this.setState(newState);
+    }
+
+    private removeTimeout() {
+        if (this.timeout !== defaults.NULL) {
+            clearTimeout(this.timeout);
+            this.timeout = defaults.NULL;
+        }
+    }
+
+    private async onDropdownChange(name: string, newValue: any) {
+        if (name === defaults.inputs.dropdowns.questionTypeInput.name && (questionTypesWithCodesArray.indexOf(newValue) < 0)) {
+            this.resetForm();
+        }
+        if (name === defaults.inputs.dropdowns.questionCodeTypeInput.name) {
+            this.questionIsDirty = true;
+            await this.props.loadDropdown(newValue, this.props.history, 'QUESTION_CHOICES');
+        }
+        this.onChange(name, newValue);
+    }
+
+    private onChange(name: string, newValue: any) {
+        const newState = Object.assign({}, this.state);
+        (newState.question as any)[name] = newValue;
+        this.setState(newState);
+    }
+
+    private onSaveQuestionToLayout(question: LayoutStore.LayoutItem) {
+        const { onQuestionSaved, parentId } = this.props;
+        if (onQuestionSaved) {
+            onQuestionSaved(parentId || '', question);
+        }
+    }
+
+    private onSaveQuestion(event: any) {
+        event.preventDefault();
+        this.setState({ isLoading: true });
+        const { question } = this.state;
+        const layoutItem = LayoutUtils.getItemById(this.props.layout, question.questionId) as LayoutItem;
+
+        (this.props.updateQuestion(question) as any)
+            .then((res: any) => {
+                this.onSaveQuestionToLayout({
+                    id: question.questionId,
+                    questionType: question.questionType,
+                    text: question.questionText,
+                    width: 12,
+                    type: layoutItemType.question,
+                    choices: question.choices || [],
+                    isNumbered: true,
+                    activation: layoutItem.activation,
+                    validations: layoutItem.validations,
+                    groupAccess: defaults.groupAccess
+                });
+                this.setState({ errors: {} as any, isLoading: defaults.boolean }, () => { this.showQuestionSaved(); });
+            })
+            .catch((errors: any) => this.setState({ errors, isLoading: defaults.boolean }));
+    }
+
+    private showQuestionSaved() {
+        const component = this;
+
+        this.setState({
+            saveTimeout: setTimeout(() => {
+                component.setState({ saveMessage: defaults.string });
+            },                      10000),
+            saveMessage: `Question Saved!`
+        });
+    }
+
+    private onEditQuestionToggle() {
+        const newState = Object.assign({}, this.state);
+        newState.question.saveToBank = !this.state.question.saveToBank;
+        this.setState(newState);
+    }
+
+    private onAnswerChange(name: string, newValue: any) {
+        let newState = Object.assign({}, this.state);
+        newState.answers[name] = newValue;
+        this.setState(newState);
     }
 
 

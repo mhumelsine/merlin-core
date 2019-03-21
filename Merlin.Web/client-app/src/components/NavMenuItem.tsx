@@ -8,11 +8,11 @@ interface NavMenuProps {
 	url?: string;
 }
 
-export default class NavMenuItem extends React.Component<NavMenuProps>{
+export default class NavMenuItem extends React.Component<NavMenuProps> {
     public render() {
-        const { currentPath, to, children, className,url } = this.props;
+        const { currentPath, to, children, className, url } = this.props;
 
-        return <li className={`nav-item ${className || ""} ${to && currentPath.startsWith(to) ? 'active' : ''}`}>
+        return <li className={`nav-item ${className || ''} ${to && currentPath.startsWith(to) ? 'active' : ''}`}>
 			{url && // Navigate outside React Router
 				<a className="nav-link" href={url}>
 					{children}
@@ -24,6 +24,6 @@ export default class NavMenuItem extends React.Component<NavMenuProps>{
 					{children}
 				</Link>
 			}
-        </li>
+        </li>;
     }
 }

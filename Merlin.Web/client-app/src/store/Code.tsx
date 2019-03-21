@@ -38,7 +38,7 @@ export enum CodeType {
     docsEvent = 'DOCS_EVENT',
     outbreakCaseType = 'OB_CASE_TYPE',
     AssignmentType = 'ASSIGNMENT_TYPE',
-    access = "ACCESS"
+    access = 'ACCESS'
 }
 
 export const outbreakSurveyTypesArray = ['OUTBREAK', 'OUTBREAK_LEVEL', 'OUTBREAK_ROSTER', 'EVENT'];
@@ -90,11 +90,11 @@ export interface Codes {
 }
 
 export interface CodeState {
-    codes: Codes
+    codes: Codes;
     isLoading: boolean;
 }
 
-//actions
+// actions
 interface RequestCodeAction {
     type: 'REQUEST_CODE';
     isLoading: boolean;
@@ -103,7 +103,7 @@ interface RequestCodeAction {
 interface ReceiveCodeAction {
     type: 'RECEIVE_CODE';
     codeType: string;
-    codes: DropdownCode[]
+    codes: DropdownCode[];
     isLoading: boolean;
 }
 
@@ -113,7 +113,7 @@ type KnownAction = RequestCodeAction
 export const actionCreators = {
     loadDropdown: (codeType: string, history?: any, containerName?: string): AppThunkAction<KnownAction> =>
         async (dispatch, getstate) => {
-            //may need to add caching here; right now rely on server-side HTTP response caching
+            // may need to add caching here; right now rely on server-side HTTP response caching
             AjaxUtils.get(`api/Code/${codeType}`)
                 .then(response => response as Promise<DropdownCode[]>)
                 .then(codes => {
@@ -187,7 +187,7 @@ const unloadedState: CodeState = {
     isLoading: false
 };
 
-//reducer
+// reducer
 export const reducer: Reducer<CodeState> = (state: CodeState = unloadedState, incomingAction: Action) => {
     const action = incomingAction as KnownAction;
     switch (action.type) {
@@ -213,4 +213,4 @@ export const reducer: Reducer<CodeState> = (state: CodeState = unloadedState, in
     }
 
     return state || unloadedState;
-}
+};

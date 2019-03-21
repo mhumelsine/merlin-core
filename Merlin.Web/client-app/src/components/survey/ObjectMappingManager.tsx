@@ -31,17 +31,6 @@ type ObjectMappingManagerProps =
     & typeof SurveyQuestionStore.actionCreators;
 
 class ObjectMappingManager extends React.Component<ObjectMappingManagerProps, {}> {
-    constructor(props: ObjectMappingManagerProps) {
-        super(props);
-        this.onChange = this.onChange.bind(this);
-        this.onSave = this.onSave.bind(this);
-        this.onEdit = this.onEdit.bind(this);
-        this.onRemove = this.onRemove.bind(this);
-        this.onReplace = this.onReplace.bind(this);
-        this.onCancel = this.onCancel.bind(this);
-        this.onCreate = this.onCreate.bind(this);
-        this.state.objectMapping.questionId = props.questionId;
-    }
 
     state = {
         objectMapping: {
@@ -57,6 +46,17 @@ class ObjectMappingManager extends React.Component<ObjectMappingManagerProps, {}
         performReplaceOnSave: defaults.boolean,
         formIsVisible: defaults.boolean
     };
+    constructor(props: ObjectMappingManagerProps) {
+        super(props);
+        this.onChange = this.onChange.bind(this);
+        this.onSave = this.onSave.bind(this);
+        this.onEdit = this.onEdit.bind(this);
+        this.onRemove = this.onRemove.bind(this);
+        this.onReplace = this.onReplace.bind(this);
+        this.onCancel = this.onCancel.bind(this);
+        this.onCreate = this.onCreate.bind(this);
+        this.state.objectMapping.questionId = props.questionId;
+    }
 
     public componentWillReceiveProps(newProps: ObjectMappingManagerProps) {
         let newState = Object.assign({}, this.state);
@@ -65,6 +65,87 @@ class ObjectMappingManager extends React.Component<ObjectMappingManagerProps, {}
 
     public componentWillMount() {
         this.props.loadDropdown(CodeStore.CodeType.mappingType, this.props.history);
+    }
+
+
+
+    public render() {
+        const { history, loadDropdown, codes, questionId } = this.props;
+        const { errors, objectMapping, isLoading, saveSuccessful, performReplaceOnSave, formIsVisible } = this.state;
+        const { objectMappingValueInput } = defaults.inputs.textInputs;
+        const { objectMappingTypeInput } = defaults.inputs.dropdowns;
+
+        if (isLoading) {
+            return <Loading />;
+        }
+
+        return <div>
+            <h2>Mapping Manager<AddButton onClick={this.onCreate} buttonText=" Create Mapping" /> </h2>
+
+            {
+                [
+                    (
+                        (Object.keys(errors).length > 0) &&
+                        <ErrorSummary
+                            errors={errors}
+                        />
+                    ),
+                    (
+                        saveSuccessful &&
+                        <Alert alertType="success">
+                            {'Mapping saved!'}
+                        </Alert>
+                    ),
+                    (formIsVisible &&
+                        <form className="row">
+                            <Dropdown
+                                cols={12}
+                                label={objectMappingTypeInput.label}
+                                hideLabel={false}
+                                name={objectMappingTypeInput.name}
+                                value={objectMapping.mappingType}
+                                options={this.getCodeOptions(codes.CD_MAPPING_TYPE)}
+                                placeholder={objectMappingTypeInput.placeholder}
+                                onChange={this.onChange}
+                                isMulti={false}
+                                error={errors[objectMappingTypeInput.name]}
+                                isReadOnly={false}
+                            />
+                            <TextInput
+                                cols={12}
+                                label={objectMappingValueInput.label}
+                                hideLabel={false}
+                                name={objectMappingValueInput.name}
+                                value={objectMapping.mappingValue || defaults.string}
+                                placeholder={objectMappingValueInput.placeholder}
+                                onChange={this.onChange}
+                                inputRef={(input: any) => { }}
+                                isReadOnly={false}
+                                error={errors[objectMappingValueInput.name]}
+                            />
+                            <div className="form-group col-sm-12">
+                                <CancelButton className={'btn-space-right'} onClick={this.onCancel} />
+                                <SaveButton onClick={performReplaceOnSave ? this.onReplace : this.onSave} buttonText=" Save Mapping" />
+                            </div>
+                        </form>
+                    )
+                ]
+
+            }
+
+            {/*  Too much wrong to correct moving to new template.  Functionaly not complete
+            <ObjectMappingList
+                questionId={questionId}
+                className={""}
+                noResultsMessage={""}
+                onEdit={this.onEdit}
+                onRemove={this.onRemove}
+                maxHeight={""}
+                {...this.props}
+
+            />
+            */}
+        </div>;
     }
 
     private onChange(name: string, newValue: any) {
@@ -89,7 +170,7 @@ class ObjectMappingManager extends React.Component<ObjectMappingManagerProps, {}
                 this.setState(newState);
             })
             .catch((errors: any) => {
-                this.setState({ errors, isLoading: defaults.boolean, saveSuccessful: defaults.boolean })
+                this.setState({ errors, isLoading: defaults.boolean, saveSuccessful: defaults.boolean });
             });
     }
 
@@ -167,89 +248,8 @@ class ObjectMappingManager extends React.Component<ObjectMappingManagerProps, {}
 
     private getCodeOptions(options: any[]) {
         return options.map(option => {
-            return { label: option.description, value: option.code }
+            return { label: option.description, value: option.code };
         });
-    }
-
-
-
-    public render() {
-        const { history, loadDropdown, codes, questionId } = this.props
-        const { errors, objectMapping, isLoading, saveSuccessful, performReplaceOnSave, formIsVisible } = this.state
-        const { objectMappingValueInput } = defaults.inputs.textInputs
-        const { objectMappingTypeInput } = defaults.inputs.dropdowns
-
-        if (isLoading) {
-            return <Loading />
-        }
-
-        return <div>
-            <h2>Mapping Manager<AddButton onClick={this.onCreate} buttonText=" Create Mapping" /> </h2>
-
-            {
-                [
-                    (
-                        (Object.keys(errors).length > 0) &&
-                        <ErrorSummary
-                            errors={errors}
-                        />
-                    ),
-                    (
-                        saveSuccessful &&
-                        <Alert alertType="success">
-                            {"Mapping saved!"}
-                        </Alert>
-                    ),
-                    (formIsVisible &&
-                        <form className="row">
-                            <Dropdown
-                                cols={12}
-                                label={objectMappingTypeInput.label}
-                                hideLabel={false}
-                                name={objectMappingTypeInput.name}
-                                value={objectMapping.mappingType}
-                                options={this.getCodeOptions(codes.CD_MAPPING_TYPE)}
-                                placeholder={objectMappingTypeInput.placeholder}
-                                onChange={this.onChange}
-                                isMulti={false}
-                                error={errors[objectMappingTypeInput.name]}
-                                isReadOnly={false}
-                            />
-                            <TextInput
-                                cols={12}
-                                label={objectMappingValueInput.label}
-                                hideLabel={false}
-                                name={objectMappingValueInput.name}
-                                value={objectMapping.mappingValue || defaults.string}
-                                placeholder={objectMappingValueInput.placeholder}
-                                onChange={this.onChange}
-                                inputRef={(input: any) => { }}
-                                isReadOnly={false}
-                                error={errors[objectMappingValueInput.name]}
-                            />
-                            <div className="form-group col-sm-12">
-                                <CancelButton className={"btn-space-right"} onClick={this.onCancel} />
-                                <SaveButton onClick={performReplaceOnSave ? this.onReplace : this.onSave} buttonText=" Save Mapping" />                        
-                            </div>
-                        </form>
-                    )
-                ]
-
-            }
-
-            {/*  Too much wrong to correct moving to new template.  Functionaly not complete
-            <ObjectMappingList
-                questionId={questionId}
-                className={""}
-                noResultsMessage={""}
-                onEdit={this.onEdit}
-                onRemove={this.onRemove}
-                maxHeight={""}
-                {...this.props}
-
-            />
-            */}
-        </div>
     }
 }
 export default connect(

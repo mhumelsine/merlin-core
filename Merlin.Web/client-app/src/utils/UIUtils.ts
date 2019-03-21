@@ -14,19 +14,19 @@ export function createToast(errors: any, successMessage: string) {
     if (keys.length > 0) {
         console.dir(errors);
         console.dir(keys);
-        keys.map(key => errors[key].map((error:string) => toast.error(error)));
+        keys.map(key => errors[key].map((error: string) => toast.error(error)));
     } else {
         toast.success(successMessage);
     }
 }
 
-//did not find any references
-//function getCssTransition() {
+// did not find any references
+// function getCssTransition() {
 //    return cssTransition({
 //        enter: 'flip',
 //        exit: 'flip'
 //    });
-//}
+// }
 
 function getDefaultValue(instance: any) {
     switch (typeof instance) {
@@ -52,7 +52,7 @@ export function isNullOrEmpty(s: any) {
 
 export function getOptions(options: any[]) {
     return options.map(option => {
-        return { label: option.description, value: option.code }
+        return { label: option.description, value: option.code };
     });
 }
 
@@ -61,21 +61,19 @@ export function stringContains(testValue: string, keyword: string) {
 }
 
 export function CalculatePercent(partial: any, total: any) {
-    return (((partial * 10 / total * 10).toFixed(1))) + '%'
+    return (((partial * 10 / total * 10).toFixed(1))) + '%';
 }
 
 export function calculateAttackRate(cases: any, exposedCases: any) {
-    let rate = "";
+    let rate = '';
     if (exposedCases > 0 && cases <= exposedCases) {
         rate = CalculatePercent(cases, exposedCases);
-    }
-    else {
+    } else {
         if (!isNaN(cases) && !isNaN(exposedCases)) {
 
-            rate = "0";
-        }
-        else
-            rate = "";
+            rate = '0';
+        } else
+            rate = '';
     }
     return rate;
 }
@@ -84,8 +82,8 @@ export function isViewOnlyPathname(pathname: string) {
     return (pathname.startsWith('/survey/merlin') || /^(\/Outbreak\/(V|v))[0-9]+$/.test(pathname));
 }
 
-export function compareValues(key:any, order = 'asc') {
-    return function (a:any, b:any) {
+export function compareValues(key: any, order = 'asc') {
+    return function (a: any, b: any) {
         if (!a.hasOwnProperty(key) ||
             !b.hasOwnProperty(key)) {
             return 0;
@@ -108,8 +106,8 @@ export function compareValues(key:any, order = 'asc') {
     };
 }
 
-export function columnOrder(key:any) {
-    return function (x:any, y:any) {
+export function columnOrder(key: any) {
+    return function (x: any, y: any) {
         return x == key ? -1 : y == key ? 1 : 0;
-    }
+    };
 }

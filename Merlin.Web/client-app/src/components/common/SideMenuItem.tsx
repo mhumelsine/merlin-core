@@ -8,7 +8,7 @@ type SideMenuItemProps = {
     className?: string;
     isActive: boolean;
     isCollapsed?: boolean;
-}
+};
 
 export default class SideMenuItem extends React.Component<SideMenuItemProps, {}> {
 
@@ -20,14 +20,14 @@ export default class SideMenuItem extends React.Component<SideMenuItemProps, {}>
         const { icon, itemType, onClick, className, children, isActive, href, isCollapsed } = this.props;
 
 
-        return <button            
+        return <button
             className={`btn btn-link nav-link rounded-0 ${isActive ? 'active' : ''}`}
             data-href={href}
             onClick={onClick}
             name={itemType}
             style={{ overflow: 'hidden' }}
         >
-            {icon} <span className={`${isCollapsed ? 'd-none ' : 'd-inline '}`}>{" "} {children}</span>
+            {icon} <span className={`${isCollapsed ? 'd-none ' : 'd-inline '}`}>{' '} {children}</span>
         </button>;
     }
-} 
+}

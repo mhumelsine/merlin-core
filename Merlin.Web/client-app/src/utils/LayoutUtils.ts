@@ -24,13 +24,13 @@ export function getEmptyAnswerObject(layout: Layout) {
         switch (item.type) {
             case layoutItemType.question:
                 obj[item.id] = '';
-            //no break on purpose, question can also be a container
+            // no break on purpose, question can also be a container
             case layoutItemType.section:
                 break;
             case layoutItemType.control:
                 obj[item.id] = [];
             default:
-            //never === item.type;
+            // never === item.type;
         }
         return false;
     });
@@ -64,50 +64,50 @@ export function getAllIds(ids: any, items: any) {
     }
 }
 
-//define the scheme 1.) -> a.)
+// define the scheme 1.) -> a.)
 
 export function autoNumber(layout: Layout) {
- 
+
     function shouldAssignNumber(item: LayoutItem): boolean {
         return item.type === layoutItemType.question
             && item.isNumbered === true;
     }
-    
-	function walkLayout(section: LayoutItem, next: () => string) {
+
+	   function walkLayout(section: LayoutItem, next: () => string) {
 
         if (section === undefined) {
             return;
         }
 
-		for (let item of section.items || []) {
+		      for (let item of section.items || []) {
 			let currentChar = 'a';
 			let currentNumber = 1;
-			
+
 			const nextChar = () => {
 				const returnValue = currentChar;
 				currentChar = String.fromCharCode(currentChar.charCodeAt(0) + 1);
 				return returnValue;
-			}
+			};
 
 			const nextNumber = () => {
 				const returnValue = currentNumber;
 				currentNumber++;
 				currentChar = 'a';
 				return returnValue.toString();
-            }
+            };
 
-            if (shouldAssignNumber(item)) {
+   if (shouldAssignNumber(item)) {
                 item.number = next();
 
                 if (item.items && item.items.length > 0) {
-                    walkLayout(item, (!isNaN(Number(item.number))) ? nextChar : nextNumber)
+                    walkLayout(item, (!isNaN(Number(item.number))) ? nextChar : nextNumber);
                 }
             }
 		}
 
-	} 
+	}
 
-	(function () {
+	   (function () {
 		let questionCounter = 1;
 
 		for (let item of layout.items) {
@@ -118,7 +118,7 @@ export function autoNumber(layout: Layout) {
 
 		function nextNumber() {
 			const returnValue = questionCounter;
-			questionCounter++; 
+			questionCounter++;
 			return returnValue.toString();
 		}
 	})();
@@ -128,7 +128,7 @@ export function autoNumber(layout: Layout) {
 
 export function getItemBytype(layout: Layout, type: string): LayoutItem[] {
     let itemlist: LayoutItem[] = [];
-  
+
     walkLayoutitems(layout.items, (item: LayoutItem) => {
         if (item.type === type) {
 

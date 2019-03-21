@@ -17,10 +17,33 @@ type DropdownProps = {
     isReadOnly?: boolean;
     inputRef?: (ref: any) => void;
     className?: string;
-}
+};
 
 class Dropdown extends React.Component<DropdownProps> {
-    //we are expecting the format of { label: '', value: ''}
+
+    public render() {
+
+        const { name, placeholder, value, isMulti, isReadOnly, options, inputRef, className } = this.props;
+
+        const onChange = (isMulti ? this.onMultiChange : this.onChange)
+            .bind(this);
+
+        return <span>
+            <Select
+                id={name}
+                className={`${className || ''} dropdown`}
+                ref={inputRef}
+                options={options}
+                placeholder={placeholder}
+                name={name}
+                value={this.getSelectedOptions()}
+                onChange={onChange}
+                isMulti={isMulti}
+                isDisabled={isReadOnly}
+            />
+        </span>;
+    }
+    // we are expecting the format of { label: '', value: ''}
     private onChange(newValue: any) {
         const value = newValue.value || '';
 
@@ -29,7 +52,7 @@ class Dropdown extends React.Component<DropdownProps> {
         this.props.onChange(this.props.name, value);
     }
 
-    //we are expecting the format of [ { label: '', value: ''}, { label: '', value: ''},  ... ]
+    // we are expecting the format of [ { label: '', value: ''}, { label: '', value: ''},  ... ]
     private onMultiChange(newValue: any) {
         const values = newValue.map((option: any) => option.value);
 
@@ -53,29 +76,6 @@ class Dropdown extends React.Component<DropdownProps> {
                 return '';
             }
         }
-    }
-
-    public render() {
-
-        const { name, placeholder, value, isMulti, isReadOnly, options, inputRef, className } = this.props;
-
-        const onChange = (isMulti ? this.onMultiChange : this.onChange)
-            .bind(this);
-
-        return <span>
-            <Select
-                id={name}
-                className={`${className || ''} dropdown`}
-                ref={inputRef}
-                options={options}
-                placeholder={placeholder}
-                name={name}
-                value={this.getSelectedOptions()}
-                onChange={onChange}
-                isMulti={isMulti}
-                isDisabled={isReadOnly}
-            />
-        </span>;
     }
 }
 

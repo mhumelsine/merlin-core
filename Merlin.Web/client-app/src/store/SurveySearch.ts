@@ -12,7 +12,7 @@ export interface SurveySearchState {
     isLoading: boolean;
     surveyTypes: string[];
     name: string;
-    icd9: string;   
+    icd9: string;
     surveys: PagedList<Survey>;
     questions: PagedList<Question>;
     subText: string;
@@ -20,7 +20,7 @@ export interface SurveySearchState {
 
 export interface Survey {
 	surveyType: string;
-	surveyIdNumber: string
+	surveyIdNumber: string;
     surveyId: number;
     description: string;
     name: string;
@@ -46,8 +46,8 @@ export interface Question {
 }
 
 export interface PagedList<T> {
-    paging: Paging,
-    list: T[]
+    paging: Paging;
+    list: T[];
 }
 
 export interface Paging {
@@ -118,7 +118,7 @@ export const actionCreators = {
                 || !ArrayUtils.containSameItems(surveyTypes, currentState.surveyTypes)
                 || page !== currentState.surveys.paging.page
                 || currentState.surveys.list.length === 0;
-			
+
             if (isNewSearch) {
 				AjaxUtils.get(`api/Survey?name=${name}&icd9=${icd9}&page=${page}&${ArrayUtils.queryStringEncode('surveyTypes', surveyTypes, code => code)}`)
 				    .then(response => response as Promise<PagedList<Survey>>)
@@ -133,7 +133,7 @@ export const actionCreators = {
                         history.replace(defaults.urls.loadFailureUrl);
                     });
 
-                dispatch({
+    dispatch({
                     type: 'REQUEST_SURVEYS',
                     icd9,
                     name,
@@ -141,7 +141,7 @@ export const actionCreators = {
                 });
             }
         }
-    //requestQuestions: (subText: string, page: number, history: any): AppThunkAction<KnownAction> =>
+    // requestQuestions: (subText: string, page: number, history: any): AppThunkAction<KnownAction> =>
     //    async (dispatch, getState) => {
     //        // Only load data if it's something we don't already have (and are not already loading)
     //        const currentState = getState().questions;
@@ -195,7 +195,7 @@ export const reducer: Reducer<SurveySearchState> = (state: SurveySearchState = u
                 icd9: action.icd9,
                 isLoading: true
             });
-        
+
         case 'RECEIVE_SURVEYS':
             return Object.assign({}, state, {
                 surveys: action.surveys,
@@ -203,8 +203,8 @@ export const reducer: Reducer<SurveySearchState> = (state: SurveySearchState = u
             });
 
         case 'REQUEST_SURVEY_TYPES':
-            return Object.assign({}, state, { 
-                isLoading: true 
+            return Object.assign({}, state, {
+                isLoading: true
             });
 
         case 'RECEIVE_SURVEY_TYPES':
@@ -214,8 +214,8 @@ export const reducer: Reducer<SurveySearchState> = (state: SurveySearchState = u
             });
 
         case 'REQUEST_ICD9_CODES':
-            return Object.assign({}, state, { 
-                isLoading: true 
+            return Object.assign({}, state, {
+                isLoading: true
             });
 
         case 'RECEIVE_ICD9_CODES':

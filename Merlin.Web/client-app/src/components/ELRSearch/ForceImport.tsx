@@ -28,12 +28,12 @@ type State = {
     searching: boolean,
     profile: any,
     errors: any
-}
+};
 
-class ForceImport extends React.Component<Props, State>{
+class ForceImport extends React.Component<Props, State> {
     state = {
-        profileId: "",
-        stateno: "",
+        profileId: '',
+        stateno: '',
         loading: false,
         profile: undefined,
         searching: false,
@@ -66,7 +66,7 @@ class ForceImport extends React.Component<Props, State>{
 
         try {
             await AjaxUtils.post(`api/elrsearch/force-import`,
-                {
+                                 {
                     stateno,
                     profileId,
                     observationKeys: this.props.selectedObservationKeys
@@ -83,10 +83,6 @@ class ForceImport extends React.Component<Props, State>{
         } finally {
             this.setState({ loading: false });
         }
-    }
-
-    private onError(errors: any) {
-        this.setState({ errors });
     }
 
 
@@ -115,7 +111,11 @@ class ForceImport extends React.Component<Props, State>{
                     saveButtonText={loading ? 'Saving...' : 'Save'}
                 />
             </div>
-        </form>
+        </form>;
+    }
+
+    private onError(errors: any) {
+        this.setState({ errors });
     }
 }
 

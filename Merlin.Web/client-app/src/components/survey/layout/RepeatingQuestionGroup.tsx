@@ -21,11 +21,21 @@ class RepeatingQuestionGroup extends React.Component<RepeatingGroupQuestionProps
     constructor(props: RepeatingGroupQuestionProps) {
         super(props);
 
-        this.onChange = this.onChange.bind(this); 
+        this.onChange = this.onChange.bind(this);
         this.onBlur = this.onBlur.bind(this);
     }
     public componentWillMount() {
 		this.setState({ repeatingGroup: this.props.item });
+    }
+
+    public render(): any {
+
+        const { item, onAnswerChanged, answers, children } = this.props;
+
+        return <div>
+            {this.editableTitle()}
+            {children}
+            </div>;
     }
 
     private onKeyPress(event: any) {
@@ -40,7 +50,7 @@ class RepeatingQuestionGroup extends React.Component<RepeatingGroupQuestionProps
     private onBlur() {
         const { repeatingGroup } = this.state;
 
-		if (!isNullOrEmpty(repeatingGroup.title)) {
+		      if (!isNullOrEmpty(repeatingGroup.title)) {
 			const parentId = repeatingGroup.parentId ? repeatingGroup.parentId : '0';
 			repeatingGroup.isEditMode = false;
 
@@ -57,46 +67,36 @@ class RepeatingQuestionGroup extends React.Component<RepeatingGroupQuestionProps
     }
 
     private editableTitle() {
-        const { sectionTitleInput } = defaults.inputs.textInputs
-		const { repeatingGroup } = this.state;
+        const { sectionTitleInput } = defaults.inputs.textInputs;
+		      const { repeatingGroup } = this.state;
 
-		if (repeatingGroup.isEditMode) {
+		      if (repeatingGroup.isEditMode) {
 			return <TextInput
 				cols={6}
-				label={""}
+				label={''}
 				hideLabel={true}
 				name={sectionTitleInput.name}
 				value={repeatingGroup.title}
 				placeholder={sectionTitleInput.placeholder}
 				onChange={this.onChange}
 				isReadOnly={false}
-				error={""}
+				error={''}
 				autoFocus={true}
 				onBlur={this.onBlur}
 				onKeyPress={this.onKeyPress}
-			/>
+			/>;
 		} else {
-			return <div style={{ margin: "10px" }}>
+			return <div style={{ margin: '10px' }}>
 				{repeatingGroup.title}
-			</div>	
+			</div>;
 			}
-	
+
 		}
-	
-    public render(): any {
-
-        const { item, onAnswerChanged, answers, children } = this.props;
-
-        return <div>
-            {this.editableTitle()}
-            {children}
-            </div>;
-    }
 } export default connect(
     (state: ApplicationState) => {
         return {
             layout: state.layout
-        }
+        };
     }, LayoutStore.actionCreators
 )(RepeatingQuestionGroup);
 

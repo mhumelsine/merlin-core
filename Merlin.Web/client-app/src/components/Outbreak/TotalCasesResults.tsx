@@ -8,7 +8,7 @@ import ButtonRadio from '../common/ButtonRadio';
 import { int32 } from '../../utils/Global';
 import * as utils from '../../utils/UIUtils';
 
-//[{ label: "Exact", value: "exact" }, { label: "Estimated", value: "Estimated" }, { label: "Unknown", value: "Unknown" }]
+// [{ label: "Exact", value: "exact" }, { label: "Estimated", value: "Estimated" }, { label: "Unknown", value: "Unknown" }]
 
 type TotalCasesProps = {
     results: Results,
@@ -21,15 +21,7 @@ class TotalCasesResults extends React.Component<TotalCasesProps> {
     constructor(props: TotalCasesProps) {
         super(props);
 
-        this.onChange = this.onChange.bind(this)
-    }
-
-    private onChange(name: string, value: any) {
-        const results = Object.assign({}, this.props.results) as any;
-
-        results[name] = value;
-
-        this.props.updateResults(results);
+        this.onChange = this.onChange.bind(this);
     }
 
     public render() {
@@ -123,6 +115,14 @@ class TotalCasesResults extends React.Component<TotalCasesProps> {
                 />
             </div>
         </div>;
+    }
+
+    private onChange(name: string, value: any) {
+        const results = Object.assign({}, this.props.results) as any;
+
+        results[name] = value;
+
+        this.props.updateResults(results);
     }
 }
 export default connect(

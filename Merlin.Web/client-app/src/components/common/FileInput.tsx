@@ -16,11 +16,11 @@ type FileInputProps = {
     error?: string;
     autoComplete?: string;
     autoFocus?: boolean;
-}
+};
 
 class FileInput extends React.Component<FileInputProps> {
     state = {
-        fileName:''
+        fileName: ''
     };
 
     constructor(props: FileInputProps) {
@@ -28,18 +28,6 @@ class FileInput extends React.Component<FileInputProps> {
 
         this.onFileNameChanged = this.onFileNameChanged.bind(this);
         this.onChange = this.onChange.bind(this);
-    }
-
-    private onChange(event: React.ChangeEvent<HTMLInputElement>) {
-        const file = event!.currentTarget!.files![0];
-
-        this.setState({ fileName: file.name });
-
-        this.props.onChange(this.props.name, file);
-    }
-
-    private onFileNameChanged(e: any) {
-        this.setState({ fileName: e.currentTarget.value });
     }
 
     public render() {
@@ -63,6 +51,18 @@ class FileInput extends React.Component<FileInputProps> {
                 </label>
             </div>
         </div>;
+    }
+
+    private onChange(event: React.ChangeEvent<HTMLInputElement>) {
+        const file = event!.currentTarget!.files![0];
+
+        this.setState({ fileName: file.name });
+
+        this.props.onChange(this.props.name, file);
+    }
+
+    private onFileNameChanged(e: any) {
+        this.setState({ fileName: e.currentTarget.value });
     }
 }
 

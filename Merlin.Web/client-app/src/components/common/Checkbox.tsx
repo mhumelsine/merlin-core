@@ -2,7 +2,7 @@
 import { defaults } from '../../utils/Global';
 import FormField from './FormField';
 
-type CheckboxProps = {    
+type CheckboxProps = {
     name: string;
     value: string;
     label: string;
@@ -19,20 +19,16 @@ type CheckboxProps = {
     onBlur?: (event: any) => void;
     inputClassName?: string;
     isChecked: boolean;
-}
+};
 
 export default class Checkbox extends React.Component<CheckboxProps> {
 
+
     constructor(props: CheckboxProps) {
         super(props);
-        this.onClick = this.onClick.bind(this);        
+        this.onClick = this.onClick.bind(this);
     }
 
-    private onClick(e: any) {        
-        const { name, value, onChange, isChecked } = this.props;
-        onChange(name, isChecked ? value : "");
-    };
-        
     public render() {
         const { label, cols, isChecked, hideLabel  } = this.props;
         const value = this.props.value || label;
@@ -51,6 +47,10 @@ export default class Checkbox extends React.Component<CheckboxProps> {
             </div>
         );
     }
-}
 
-//export default FormField(Checkbox);
+    private onClick(e: any) {
+        const { name, value, onChange, isChecked } = this.props;
+        onChange(name, isChecked ? value : '');
+    }}
+
+// export default FormField(Checkbox);

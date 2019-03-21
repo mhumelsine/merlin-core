@@ -24,6 +24,8 @@ type QuestionActivationProps = {
 
 class QuestionActivation extends React.Component<QuestionActivationProps> {
 
+
+
     constructor(props: QuestionActivationProps) {
         super(props);
         this.onRadioChange = this.onRadioChange.bind(this);
@@ -32,153 +34,12 @@ class QuestionActivation extends React.Component<QuestionActivationProps> {
         this.getQuestionOperators = this.getQuestionOperators.bind(this);
     }
 
-    private onRadioChange(name: string, value: any) {
-        const { questionId, activation, updateActivationState } = this.props;
-        const changedActivation = Object.assign({}, activation) as any;
-        const filteredName = name.replace(questionId, "");
-
-        changedActivation[filteredName] = value;
-
-        if (filteredName === "initialState" && value === "ACTIVE") {
-            changedActivation.operator = '';
-            changedActivation.triggerQuestionId = '';
-            changedActivation.activationType = '';
-            changedActivation.triggerValues = [];
-        }
-
-        updateActivationState(questionId, changedActivation);
-
-    };
-
-    //private onClickOperator(name: string, value: any) {
-
-    //    const { questionId, activation, updateActivationState } = this.props;
-    //    const newActivation = Object.assign({}, activation, { operator: value });
-
-    //    updateActivationState(questionId, newActivation);
-    //}
-
-    private onChange(name: string, value: any) {
-        const { questionId, activation, updateActivationState } = this.props;
-        const newActivation = Object.assign({}, activation) as any;
-        const filteredName = name.replace(questionId, "");
-
-        newActivation[filteredName] = value;
-
-        updateActivationState(questionId, newActivation);
-    }
-
-    private onTriggerAnswerChange(name: string, value: any) {
-        const { questionId, activation, updateActivationState } = this.props;
-        const newActivation = Object.assign({}, activation) as any;
-
-        newActivation[name] = [value];
-        updateActivationState(questionId, newActivation);
-    }
-
-    private getQuestionOperators() {
-        const { questionId, activation, questionList, updateActivationState } = this.props;
-        const triggerQuestion = (questionList || [])
-            .filter(trigger => trigger.id === activation.triggerQuestionId)[0];
-
-        if (triggerQuestion && triggerQuestion.questionType) {
-            switch (triggerQuestion.questionType) {
-                case LayoutQuestionType.Dropdown:
-                case LayoutQuestionType.YesNo:
-                case LayoutQuestionType.YesNoUnknown:
-                case LayoutQuestionType.Radio:
-                    return [
-                        { label: LayoutQuestionOperator.Equals, value: LayoutQuestionOperator.Equals },
-                        { label: LayoutQuestionOperator.NotEqual, value: LayoutQuestionOperator.NotEqual }
-                    ]
-                case LayoutQuestionType.Text:
-                case LayoutQuestionType.Email:
-                case LayoutQuestionType.Phone:
-                case LayoutQuestionType.Multi_Line_Text:
-                    return [
-                        { label: LayoutQuestionOperator.Equals, value: LayoutQuestionOperator.Equals }
-                    ]
-
-                case LayoutQuestionType.Number:
-                case LayoutQuestionType.Date:
-                    return [
-                        { label: LayoutQuestionOperator.GreaterThan, value: LayoutQuestionOperator.GreaterThan },
-                        { label: LayoutQuestionOperator.LessThan, value: LayoutQuestionOperator.LessThan },
-                        { label: LayoutQuestionOperator.LessThanOrEqualTo, value: LayoutQuestionOperator.LessThanOrEqualTo },
-                        { label: LayoutQuestionOperator.GreaterThanOrEqualTo, value: LayoutQuestionOperator.GreaterThanOrEqualTo },
-                        { label: LayoutQuestionOperator.Equals, value: LayoutQuestionOperator.Equals },
-                        { label: LayoutQuestionOperator.NotEqual, value: LayoutQuestionOperator.NotEqual }
-                    ]
-                default:
-                    return [
-                        { label: LayoutQuestionOperator.Equals, value: LayoutQuestionOperator.Equals }
-                    ]
-            }
-        }
-    }
-
-    private renderTriggerValues() {
-        const { questionId, activation, questionList, updateActivationState } = this.props;
-        const triggerQuestion = (questionList || [])
-            .filter(trigger => trigger.id === activation.triggerQuestionId)[0];
-
-        if (triggerQuestion) {
-            const props = {
-                name: "triggerValues",
-                value: (activation.triggerValues || [""])[0],
-                label: "Value",
-                isRequired: true,
-                hideLabel: false,
-                placeholder: '',
-                multi: false,
-                isReadOnly: false,
-                labelCols: 0,
-                inputCols: 12,
-                offsetCols: 0,
-                options: this.getCodeOptions(triggerQuestion.choices || []),
-                onChange: this.onTriggerAnswerChange
-            };
-
-            switch (triggerQuestion.questionType) {
-                case LayoutQuestionType.YesNo:
-                    return <YesNo {...props} />
-                case LayoutQuestionType.YesNoUnknown:
-                    return <YesNoUnknown  {...props} />
-                case LayoutQuestionType.Text:
-                    return <TextInput  {...props} />
-                case LayoutQuestionType.Multi_Line_Text:
-                    return <TextAreaInput {...props} />
-                case LayoutQuestionType.Dropdown:
-                    return <Dropdown {...props} />
-                case LayoutQuestionType.Radio:
-                    return <ButtonRadio {...props} />
-                case LayoutQuestionType.Date:
-                    return <CustomDatePicker {...props} />
-                case LayoutQuestionType.Number:
-                    return <NumberInput {...props} />
-                case LayoutQuestionType.Phone:
-                    return <PhoneInput {...props} />
-                case LayoutQuestionType.Email:
-                    return <EmailInput {...props} />
-                case LayoutQuestionType.Check:
-                    return <ButtonCheckGroup {...props} isVertical={true} />
-            }
-        }
-        return null;
-    };
-
-    private getCodeOptions(options: any[]) {
-        return options.map(option => {
-            return { label: option.description, value: option.code }
-        });
-    }
-
     public render() {
         const { questionId, activation, questionList, updateActivationState } = this.props;
         const questionChoices = (questionList || [])
             .filter(question => question.id !== questionId)
             .map(question => {
-                return { label: `${question.number} - ${question.text}`, value: question.id }
+                return { label: `${question.number} - ${question.text}`, value: question.id };
             });
         let activationRadioValue = (function () {
             switch (activation.operator) {
@@ -186,7 +47,7 @@ class QuestionActivation extends React.Component<QuestionActivationProps> {
                 case LayoutQuestionAnswer.IsNotAnswered:
                     return activation.operator;
                 default:
-                    return LayoutQuestionAnswer.HasSpecificAnswer
+                    return LayoutQuestionAnswer.HasSpecificAnswer;
             }
         })();
 
@@ -254,6 +115,145 @@ class QuestionActivation extends React.Component<QuestionActivationProps> {
                 </div>
             }
         </div>;
+    }
+
+    private onRadioChange(name: string, value: any) {
+        const { questionId, activation, updateActivationState } = this.props;
+        const changedActivation = Object.assign({}, activation) as any;
+        const filteredName = name.replace(questionId, '');
+
+        changedActivation[filteredName] = value;
+
+        if (filteredName === 'initialState' && value === 'ACTIVE') {
+            changedActivation.operator = '';
+            changedActivation.triggerQuestionId = '';
+            changedActivation.activationType = '';
+            changedActivation.triggerValues = [];
+        }
+
+        updateActivationState(questionId, changedActivation);
+
+    }
+    // private onClickOperator(name: string, value: any) {
+
+    //    const { questionId, activation, updateActivationState } = this.props;
+    //    const newActivation = Object.assign({}, activation, { operator: value });
+
+    //    updateActivationState(questionId, newActivation);
+    // }
+
+    private onChange(name: string, value: any) {
+        const { questionId, activation, updateActivationState } = this.props;
+        const newActivation = Object.assign({}, activation) as any;
+        const filteredName = name.replace(questionId, '');
+
+        newActivation[filteredName] = value;
+
+        updateActivationState(questionId, newActivation);
+    }
+
+    private onTriggerAnswerChange(name: string, value: any) {
+        const { questionId, activation, updateActivationState } = this.props;
+        const newActivation = Object.assign({}, activation) as any;
+
+        newActivation[name] = [value];
+        updateActivationState(questionId, newActivation);
+    }
+
+    private getQuestionOperators() {
+        const { questionId, activation, questionList, updateActivationState } = this.props;
+        const triggerQuestion = (questionList || [])
+            .filter(trigger => trigger.id === activation.triggerQuestionId)[0];
+
+        if (triggerQuestion && triggerQuestion.questionType) {
+            switch (triggerQuestion.questionType) {
+                case LayoutQuestionType.Dropdown:
+                case LayoutQuestionType.YesNo:
+                case LayoutQuestionType.YesNoUnknown:
+                case LayoutQuestionType.Radio:
+                    return [
+                        { label: LayoutQuestionOperator.Equals, value: LayoutQuestionOperator.Equals },
+                        { label: LayoutQuestionOperator.NotEqual, value: LayoutQuestionOperator.NotEqual }
+                    ];
+                case LayoutQuestionType.Text:
+                case LayoutQuestionType.Email:
+                case LayoutQuestionType.Phone:
+                case LayoutQuestionType.Multi_Line_Text:
+                    return [
+                        { label: LayoutQuestionOperator.Equals, value: LayoutQuestionOperator.Equals }
+                    ];
+
+                case LayoutQuestionType.Number:
+                case LayoutQuestionType.Date:
+                    return [
+                        { label: LayoutQuestionOperator.GreaterThan, value: LayoutQuestionOperator.GreaterThan },
+                        { label: LayoutQuestionOperator.LessThan, value: LayoutQuestionOperator.LessThan },
+                        { label: LayoutQuestionOperator.LessThanOrEqualTo, value: LayoutQuestionOperator.LessThanOrEqualTo },
+                        { label: LayoutQuestionOperator.GreaterThanOrEqualTo, value: LayoutQuestionOperator.GreaterThanOrEqualTo },
+                        { label: LayoutQuestionOperator.Equals, value: LayoutQuestionOperator.Equals },
+                        { label: LayoutQuestionOperator.NotEqual, value: LayoutQuestionOperator.NotEqual }
+                    ];
+                default:
+                    return [
+                        { label: LayoutQuestionOperator.Equals, value: LayoutQuestionOperator.Equals }
+                    ];
+            }
+        }
+    }
+
+    private renderTriggerValues() {
+        const { questionId, activation, questionList, updateActivationState } = this.props;
+        const triggerQuestion = (questionList || [])
+            .filter(trigger => trigger.id === activation.triggerQuestionId)[0];
+
+        if (triggerQuestion) {
+            const props = {
+                name: 'triggerValues',
+                value: (activation.triggerValues || [''])[0],
+                label: 'Value',
+                isRequired: true,
+                hideLabel: false,
+                placeholder: '',
+                multi: false,
+                isReadOnly: false,
+                labelCols: 0,
+                inputCols: 12,
+                offsetCols: 0,
+                options: this.getCodeOptions(triggerQuestion.choices || []),
+                onChange: this.onTriggerAnswerChange
+            };
+
+            switch (triggerQuestion.questionType) {
+                case LayoutQuestionType.YesNo:
+                    return <YesNo {...props} />;
+                case LayoutQuestionType.YesNoUnknown:
+                    return <YesNoUnknown  {...props} />;
+                case LayoutQuestionType.Text:
+                    return <TextInput  {...props} />;
+                case LayoutQuestionType.Multi_Line_Text:
+                    return <TextAreaInput {...props} />;
+                case LayoutQuestionType.Dropdown:
+                    return <Dropdown {...props} />;
+                case LayoutQuestionType.Radio:
+                    return <ButtonRadio {...props} />;
+                case LayoutQuestionType.Date:
+                    return <CustomDatePicker {...props} />;
+                case LayoutQuestionType.Number:
+                    return <NumberInput {...props} />;
+                case LayoutQuestionType.Phone:
+                    return <PhoneInput {...props} />;
+                case LayoutQuestionType.Email:
+                    return <EmailInput {...props} />;
+                case LayoutQuestionType.Check:
+                    return <ButtonCheckGroup {...props} isVertical={true} />;
+            }
+        }
+        return null;
+    }
+    private getCodeOptions(options: any[]) {
+        return options.map(option => {
+            return { label: option.description, value: option.code };
+        });
     }
 }
 

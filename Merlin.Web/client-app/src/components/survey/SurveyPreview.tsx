@@ -24,7 +24,7 @@ class SurveyPreview extends React.Component<SurveyPreviewProps, {}> {
         isLoading: defaults.boolean,
         errors: {} as any,
         answers: {} as any
-    }
+    };
 
     constructor(props: SurveyPreviewProps) {
         super(props);
@@ -41,7 +41,7 @@ class SurveyPreview extends React.Component<SurveyPreviewProps, {}> {
             this.props.requestSurveyAndLayout((this.props.match.params as any).surveyId, this.props.history);
         } catch (e) {
             console.log(e);
-            //TODO: manage the errors...
+            // TODO: manage the errors...
         }
     }
 
@@ -55,15 +55,6 @@ class SurveyPreview extends React.Component<SurveyPreviewProps, {}> {
         }
     }
 
-    private onAnswerChange(name: string, newValue: any) {
-        let newState = Object.assign({}, this.state);
-        newState.answers[name] = newValue;
-        Object.keys(newState.answers)
-            .filter((key: any) => (newState.answers[key] === defaults.string) || (newState.answers[key] == undefined))
-            .forEach(key => delete newState.answers[key]);
-        this.setState(newState);
-    }
-
     public render() {
         const { isLoading, history, survey, layout } = this.props;
         const { errors, answers } = this.state;
@@ -71,7 +62,7 @@ class SurveyPreview extends React.Component<SurveyPreviewProps, {}> {
         if (isLoading) {
             return <Loading />;
         }
-        
+
         return <div>
             <h1>
                 Preview Layout
@@ -83,6 +74,15 @@ class SurveyPreview extends React.Component<SurveyPreviewProps, {}> {
             />
             <BackButton goBack={history.goBack} />
         </div>;
+    }
+
+    private onAnswerChange(name: string, newValue: any) {
+        let newState = Object.assign({}, this.state);
+        newState.answers[name] = newValue;
+        Object.keys(newState.answers)
+            .filter((key: any) => (newState.answers[key] === defaults.string) || (newState.answers[key] == undefined))
+            .forEach(key => delete newState.answers[key]);
+        this.setState(newState);
     }
 }
 

@@ -5,22 +5,18 @@ type CardGroupCardProps = {
     heading: any;
     initiallyCollapsed?: boolean;
     headingPosition?: string;
-}
+};
 
 export default class CardGroupCard extends React.Component<CardGroupCardProps> {
     state = {
         collapsed: false
-    }
+    };
     constructor(props: CardGroupCardProps) {
         super(props);
 
         this.state.collapsed = props.initiallyCollapsed || false;
 
         this.onChange = this.onChange.bind(this);
-    }
-    private onChange(event: any) {
-        event.preventDefault();
-        this.setState({ collapsed: !this.state.collapsed });
     }
 
     public render() {
@@ -40,4 +36,8 @@ export default class CardGroupCard extends React.Component<CardGroupCardProps> {
             </div>
         </div>;
     }
-};
+    private onChange(event: any) {
+        event.preventDefault();
+        this.setState({ collapsed: !this.state.collapsed });
+    }
+}

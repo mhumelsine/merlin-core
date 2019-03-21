@@ -4,7 +4,7 @@ import * as AjaxUtils from '../utils/AjaxUtils';
 
 export interface SmartGoalsState {
     criteria: PerformanceSearch;
-    performanceInfo: any[]; 
+    performanceInfo: any[];
     userNameInfo: any[];
 }
 
@@ -15,15 +15,15 @@ export interface PerformanceSearch {
 }
 
 interface LoadPerformanceSearch {
-    type: 'LOAD_PERFORMANCE_SEARCH'
-    lastQuarterInfo: any,
-    userNameInfo: any[],
-    userName:string
+    type: 'LOAD_PERFORMANCE_SEARCH';
+    lastQuarterInfo: any;
+    userNameInfo: any[];
+    userName: string;
 }
 
 interface UpdatePerformanceSearch {
-    type: 'UPDATE_PERFORMANCE_SEARCH'
-    criteria: PerformanceSearch
+    type: 'UPDATE_PERFORMANCE_SEARCH';
+    criteria: PerformanceSearch;
 }
 
 interface ReceivePerformanceAction {
@@ -31,7 +31,7 @@ interface ReceivePerformanceAction {
     performanceInfo: any;
 }
 interface ClearPerformanceInfo {
-    type: 'CLEAR_PERFORMANCE_INFO'
+    type: 'CLEAR_PERFORMANCE_INFO';
 }
 
 type KnownAction = UpdatePerformanceSearch
@@ -50,15 +50,15 @@ export const actionCreators = {
         },
     loadPerformanceResults: (): AppThunkAction<KnownAction> =>
         async (dispatch, getState) => {
-           
-                const criteria = Object.assign({}, getState().smartGoals.criteria);               
+
+                const criteria = Object.assign({}, getState().smartGoals.criteria);
                 const performanceInfo = await AjaxUtils.post(`api/SmartGoals/results`,  criteria);
 
                 dispatch({
                     type: 'RECEIVE_PERFORMANCE',
                     performanceInfo
-                });               
-        }, 
+                });
+        },
     clearPerformanceInfo: (): AppThunkAction<KnownAction> =>
         (dispatch, getState) => {
 
@@ -66,7 +66,7 @@ export const actionCreators = {
                 type: 'CLEAR_PERFORMANCE_INFO',
             });
         },
-    loadPerformanceSearch: (userName:string): AppThunkAction<KnownAction> =>
+    loadPerformanceSearch: (userName: string): AppThunkAction<KnownAction> =>
         async (dispatch, getState) => {
 
             const lastQuarterInfo = await AjaxUtils.get(`api/smartgoals/last-quarter`);
@@ -78,15 +78,15 @@ export const actionCreators = {
                 userNameInfo,
                 userName
             });
-        }, 
-}
+        },
+};
 
 // REDUCER - For a given state and action, returns the new state. To support time travel, this must not mutate the old state.
 
 const unloadedState: SmartGoalsState = {
-    criteria: { startDate: '', endDate: '', user:'' },
+    criteria: { startDate: '', endDate: '', user: '' },
     performanceInfo: [],
-    userNameInfo:[]
+    userNameInfo: []
 };
 
 
@@ -111,7 +111,7 @@ export const reducer: Reducer<SmartGoalsState> = (state: SmartGoalsState = unloa
                     endDate: action.lastQuarterInfo.endDate,
                     user: action.userName
                 },
-                userNameInfo:action.userNameInfo
+                userNameInfo: action.userNameInfo
             });
         default:
             // The following line guarantees that every action in the KnownAction union has been covered by a case above

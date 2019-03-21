@@ -6,16 +6,16 @@ import { defaults } from '../../utils/Global';
 import Highlight from 'react-highlighter';
 
 interface SurveyListItemDetailProps {
-    survey: SurveyStore.Survey 
+    survey: SurveyStore.Survey;
 }
 
 class SurveyListItemDetail extends React.Component<SurveyListItemDetailProps, {}> {
-   
+
     public render() {
         const { survey } = this.props;
         const {urls} = defaults;
         const title = `${survey.name} - ${survey.effectiveDate}`;
-        
+
         return <div>
             <h4> {title} </h4>
 

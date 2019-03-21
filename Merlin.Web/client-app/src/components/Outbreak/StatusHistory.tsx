@@ -13,30 +13,30 @@ import { RouteComponentProps } from 'react-router-dom';
 
 type Props = {
     outbreakId: number
-}
-// Hint:  I would add a boolean loading flag and an errors object to the component state.  
-// Set loading before and after the Ajax call and errors if code enters the catch block. 
+};
+// Hint:  I would add a boolean loading flag and an errors object to the component state.
+// Set loading before and after the Ajax call and errors if code enters the catch block.
 // Update the render method to use the newly added state to show the loading spinner and error summary.
 type State = {
     loading: boolean,
     errors: any,
     statusHistoryList: any[]
-} 
+};
 
 
 
-export default class StatusHistory extends React.Component<Props, State>{
+export default class StatusHistory extends React.Component<Props, State> {
     state = {
         loading: false,
         errors: {} as any,
         statusHistoryList: [] as any[]
-    }
+    };
 
     // component is on the screen, in the dom
     public async componentDidMount() {
         try {
-            this.setState({ loading: true });       
-            var data = await AjaxUtils.get(`api/outbreak/${this.props.outbreakId}/status-history`);
+            this.setState({ loading: true });
+            let data = await AjaxUtils.get(`api/outbreak/${this.props.outbreakId}/status-history`);
             this.setState({
                 statusHistoryList: data // await data ?
             });
@@ -46,7 +46,7 @@ export default class StatusHistory extends React.Component<Props, State>{
             this.setState({ loading: false });
         }
    }
-    
+
     public render() {
         const { loading, errors, statusHistoryList } = this.state;
         if (loading) {
@@ -56,7 +56,7 @@ export default class StatusHistory extends React.Component<Props, State>{
             return <Alert alertType="info"><FaExclamationTriangle /> No status history found</Alert>;
         }
         return (
-            <div>    
+            <div>
                 <ErrorSummary errors={errors} />
 
                 <div className="table-responsive">

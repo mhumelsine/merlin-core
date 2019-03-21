@@ -37,25 +37,6 @@ interface FormFieldProps {
 export default function asFormField<P>(WrappedComponent: any) {
     return class extends React.Component<FormFieldProps> {
 
-        private getLabel() {
-
-            let className = '';
-
-            if (this.props.hideLabel) {
-                className = 'sr-only';
-            }
-
-            if (this.props.isRequired) {
-                className += ' required';
-            }
-
-            return <label
-                htmlFor={this.props.name}
-                className={className}>
-                {this.props.label}
-            </label>;
-        }
-
         public render() {
 
             const { name, label, cols, offset, error, success, feedback } = this.props;
@@ -95,5 +76,24 @@ export default function asFormField<P>(WrappedComponent: any) {
                 }
             </div>;
         }
-    }
+
+        private getLabel() {
+
+            let className = '';
+
+            if (this.props.hideLabel) {
+                className = 'sr-only';
+            }
+
+            if (this.props.isRequired) {
+                className += ' required';
+            }
+
+            return <label
+                htmlFor={this.props.name}
+                className={className}>
+                {this.props.label}
+            </label>;
+        }
+    };
 }

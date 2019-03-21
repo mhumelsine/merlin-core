@@ -1,4 +1,4 @@
-﻿//import { fetch } from 'domain-task';
+﻿// import { fetch } from 'domain-task';
 
 
 /* new get method */
@@ -30,8 +30,8 @@ export async function uploadFile(url: string, formData: any): Promise<any> {
     try {
 
         const headers = getHeaders();
-        //headers['content-type'] = 'multipart/form-data';
-        delete headers["content-type"];
+        // headers['content-type'] = 'multipart/form-data';
+        delete headers['content-type'];
 
         const response = await fetch(url, {
             method: 'POST',
@@ -42,13 +42,12 @@ export async function uploadFile(url: string, formData: any): Promise<any> {
             credentials: 'include'
         });
 
-        //TODO:  Need to handle 401 when bearer token is not valid from the server-side
+        // TODO:  Need to handle 401 when bearer token is not valid from the server-side
 
         throwIfError(response);
 
         return Promise.resolve(await getJson(response));
-    }
-    catch (errors) {
+    } catch (errors) {
         return Promise.reject(await getJson(errors));
     }
 }
@@ -77,8 +76,7 @@ async function sendRequest(method: string, url: string, data?: any): Promise<any
                 method: 'GET',
                 headers: getHeaders()
             });
-        }
-        else {
+        } else {
             response = await fetch(url, {
                 body: JSON.stringify(data),
                 cache: 'no-cache',
@@ -88,13 +86,12 @@ async function sendRequest(method: string, url: string, data?: any): Promise<any
             });
         }
 
-        //TODO:  Need to handle 401 when bearer token is not valid from the server-side
+        // TODO:  Need to handle 401 when bearer token is not valid from the server-side
 
         throwIfError(response);
 
         return Promise.resolve(await getJson(response));
-    }
-    catch (errors) {
+    } catch (errors) {
         return Promise.reject(await getJson(errors));
     }
 }
@@ -102,9 +99,8 @@ async function sendRequest(method: string, url: string, data?: any): Promise<any
 export async function getJson(response: any) {
     try {
         return await response.json();
-    }
-    catch (err) {
-        return "";
+    } catch (err) {
+        return '';
     }
 }
 

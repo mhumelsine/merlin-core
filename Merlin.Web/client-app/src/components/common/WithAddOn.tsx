@@ -12,5 +12,5 @@ export default function withAddOn(WrappedComponent: any) {
                 </div>
             </div>;
         }
-    }
+    };
 }

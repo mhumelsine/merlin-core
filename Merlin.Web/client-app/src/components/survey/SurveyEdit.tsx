@@ -17,7 +17,7 @@ import ErrorSummary from '../common/ErrorSummary';
 import { FaCheck } from 'react-icons/fa';
 import Loading from '../common/Loading';
 import { defaults } from '../../utils/Global';
-import * as CodeStore from '../../store/Code'
+import * as CodeStore from '../../store/Code';
 import SurveyTypeControl from './SurveyTypeControl';
 import { Layout } from '../../store/Layout';
 import SaveButton from '../common/SaveButton';
@@ -32,7 +32,7 @@ type SurveyEditProps =
 class SurveyEdit extends React.Component<SurveyEditProps, {}> {
     state = {
         survey: {
-            surveyIdNumber:defaults.string,
+            surveyIdNumber: defaults.string,
             surveyType: defaults.string,
             surveyId: defaults.guid,
             description: defaults.string,
@@ -63,8 +63,8 @@ class SurveyEdit extends React.Component<SurveyEditProps, {}> {
     componentWillMount() {
         try {
             const {surveyId} = this.props.match.params as any;
-            
-            if(surveyId !== this.props.survey.surveyId){
+
+            if (surveyId !== this.props.survey.surveyId) {
                 this.setState({ isLoading: true });
                 this.props.requestSurveyAndLayout(surveyId, this.props.history);
                 this.props.requestAffectedSurveys(surveyId, 1, this.props.history);
@@ -87,20 +87,6 @@ class SurveyEdit extends React.Component<SurveyEditProps, {}> {
         }
     }
 
-    private onChange(name: string, newValue: any) {
-        const newState = Object.assign({}, this.state);
-        (newState.survey as any)[name] = newValue;
-        this.setState(newState);
-    }
-
-    private onSave(event: any) {
-        event.preventDefault();
-        this.setState({ isLoading: true });
-        (this.props.updateSurvey(this.state.survey) as any)
-            .then((res: any) => this.setState({ saveSuccessful: true, isLoading: defaults.boolean }))
-            .catch((errors: any) => this.setState({ errors, isLoading: defaults.boolean }));
-    }
-
     componentDidUpdate() {
         if (this.input !== undefined && this.initialLoad) {
             this.input.focus();
@@ -109,11 +95,11 @@ class SurveyEdit extends React.Component<SurveyEditProps, {}> {
     }
 
     public render() {
-        const { history, codes, loadDropdown } = this.props
-        const { errors, survey, saveSuccessful, isLoading } = this.state
-        const { surveyTypeInput, outbreakInput, diseaseCodeInput, layoutDescriptionInput } = defaults.inputs.dropdowns
-        const { surveyNameInput, surveyDescriptionInput } = defaults.inputs.textInputs
-        const { effectiveDateInput } = defaults.inputs.datePickers
+        const { history, codes, loadDropdown } = this.props;
+        const { errors, survey, saveSuccessful, isLoading } = this.state;
+        const { surveyTypeInput, outbreakInput, diseaseCodeInput, layoutDescriptionInput } = defaults.inputs.dropdowns;
+        const { surveyNameInput, surveyDescriptionInput } = defaults.inputs.textInputs;
+        const { effectiveDateInput } = defaults.inputs.datePickers;
 
         if (isLoading) {
             return <Loading />;
@@ -127,7 +113,7 @@ class SurveyEdit extends React.Component<SurveyEditProps, {}> {
                 />}
             {saveSuccessful &&
                 <Alert alertType="success">
-                    {"Survey saved!"}
+                    {'Survey saved!'}
                 </Alert>
             }
             <div className="row">
@@ -163,7 +149,7 @@ class SurveyEdit extends React.Component<SurveyEditProps, {}> {
                             value={survey.name}
                             placeholder={surveyNameInput.placeholder}
                             onChange={this.onChange}
-                            inputRef={(input:any) => { this.input = input }}
+                            inputRef={(input: any) => { this.input = input; }}
                             isReadOnly={false}
                             error={errors[surveyNameInput.name]}
                         />
@@ -196,8 +182,8 @@ class SurveyEdit extends React.Component<SurveyEditProps, {}> {
                                 goBack={history.goBack}
                                 className="btn-space-right"
                             />
-                            <SaveButton onClick={this.onSave} className={"btn-space-right"} />
-                            <Link className="btn btn-info" to={`${defaults.urls.layoutEditUrl}/${survey.surveyId}`}><FaEdit fontSize={15} style={{ paddingRight: "5px" }}/>Edit Layout</Link>
+                            <SaveButton onClick={this.onSave} className={'btn-space-right'} />
+                            <Link className="btn btn-info" to={`${defaults.urls.layoutEditUrl}/${survey.surveyId}`}><FaEdit fontSize={15} style={{ paddingRight: '5px' }}/>Edit Layout</Link>
                         </div>
                     </form>
                 </div>
@@ -217,6 +203,20 @@ class SurveyEdit extends React.Component<SurveyEditProps, {}> {
                 </div>
             </div>
         </div>;
+    }
+
+    private onChange(name: string, newValue: any) {
+        const newState = Object.assign({}, this.state);
+        (newState.survey as any)[name] = newValue;
+        this.setState(newState);
+    }
+
+    private onSave(event: any) {
+        event.preventDefault();
+        this.setState({ isLoading: true });
+        (this.props.updateSurvey(this.state.survey) as any)
+            .then((res: any) => this.setState({ saveSuccessful: true, isLoading: defaults.boolean }))
+            .catch((errors: any) => this.setState({ errors, isLoading: defaults.boolean }));
     }
 }
 export default connect(

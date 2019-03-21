@@ -14,10 +14,18 @@ import OutbreakLabList from '../Outbreak/OutbreakLabList';
 
 export default class SurveyControl extends React.Component<LayoutItemProps> {
 
+    public render() {
+		const { item, isEditable } = this.props;
+
+		return <Section item={item}>
+            {this.renderControl()}
+        </Section>;
+    }
+
     private renderControl() {
         const { item } = this.props;
 
-		switch (item.id) { 
+		      switch (item.id) {
             case ControlType.LabResults:
                 return <LabList />;
             case ControlType.Symptoms:
@@ -25,13 +33,13 @@ export default class SurveyControl extends React.Component<LayoutItemProps> {
             case ControlType.HealthCareVisits:
                 return <HealthCareVisitList/>;
             case ControlType.Epilinks:
-                return <EpiLinks/> 
+                return <EpiLinks/>;
             case ControlType.TravelHistory:
                 return <TravelHistory/>;
             case ControlType.LabSummary:
                 return <LabSummary/>;
             case ControlType.VaccinationHistory:
-                return <div>Vaccination History incomplete</div>;//<VaccinationHistory />;
+                return <div>Vaccination History incomplete</div>; // <VaccinationHistory />;
             case ControlType.Treatments:
                 return <Treatments />;
             case ControlType.OutbreakLabList:
@@ -39,13 +47,5 @@ export default class SurveyControl extends React.Component<LayoutItemProps> {
             default:
                 return <div>{`No control with id '${item.id}'`}</div>;
         }
-    }
-
-    public render() {
-		const { item, isEditable } = this.props;
-
-		return <Section item={item}>
-            {this.renderControl()}
-        </Section>;
     }
 }

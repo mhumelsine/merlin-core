@@ -14,7 +14,7 @@ interface WysiwygEditorProps {
     disableAutoFocus?: boolean;
 }
 
-export default class WysiwygEditor extends React.Component<WysiwygEditorProps>{
+export default class WysiwygEditor extends React.Component<WysiwygEditorProps> {
     state = {
         editorState: {} as EditorState
     };
@@ -31,6 +31,30 @@ export default class WysiwygEditor extends React.Component<WysiwygEditorProps>{
 
         this.onEditorStateChange = this.onEditorStateChange.bind(this);
         this.onEditComplete = this.onEditComplete.bind(this);
+    }
+
+    public render() {
+        const { editorClassName, hideCompleteButton } = this.props;
+
+        return <div>
+            <Editor
+                editorState={this.state.editorState}
+                onEditorStateChange={this.onEditorStateChange}
+                editorClassName={!isNullOrEmpty(editorClassName) ? editorClassName : ''}
+            />
+            {!hideCompleteButton &&
+                <div>
+                    <hr />
+                    <button type="button"
+                        onClick={this.onEditComplete}
+                        className="btn btn-primary"
+                        hidden={hideCompleteButton}
+                    >
+                        Done
+                    </button>
+                </div>
+            }
+        </div>;
     }
 
     private onEditorStateChange(editorState: EditorState) {
@@ -56,29 +80,5 @@ export default class WysiwygEditor extends React.Component<WysiwygEditorProps>{
         if (onEditComplete) {
             onEditComplete(this.encodeState());
         }
-    }
-
-    public render() {
-        const { editorClassName, hideCompleteButton } = this.props;
-
-        return <div>
-            <Editor
-                editorState={this.state.editorState}
-                onEditorStateChange={this.onEditorStateChange}
-                editorClassName={!isNullOrEmpty(editorClassName) ? editorClassName : ""}
-            />
-            {!hideCompleteButton &&
-                <div>
-                    <hr />
-                    <button type="button"
-                        onClick={this.onEditComplete}
-                        className="btn btn-primary"
-                        hidden={hideCompleteButton}
-                    >
-                        Done
-                    </button>
-                </div>
-            }
-        </div>;
     }
 }

@@ -18,7 +18,7 @@ type DocumentsProps = {
 class Documents extends React.Component<DocumentsProps> {
     state = {
         loading: true
-    }
+    };
 
     constructor(props: DocumentsProps) {
         super(props);

@@ -20,7 +20,7 @@ type EpiComPostProps = {
 }
     & typeof OutbreakActions;
 
-class EpiComPost extends React.Component<EpiComPostProps>{
+class EpiComPost extends React.Component<EpiComPostProps> {
     state = {
         loading: false,
         searching: false
@@ -32,33 +32,6 @@ class EpiComPost extends React.Component<EpiComPostProps>{
         this.createPost = this.createPost.bind(this);
         this.onChange = this.onChange.bind(this);
         this.findPost = this.findPost.bind(this);
-    }
-
-    private async createPost() {
-        const { createEpiComPost } = this.props;
-        try {
-            this.setState({ loading: true });
-            await createEpiComPost();
-        } catch (err) {
-            console.log(err);
-        } finally {
-            this.setState({ loading: false });
-        }
-    }
-
-    private onChange(name: string, value: any) {
-        this.props.updateEpiComPostID(value);
-    }
-
-    private async findPost() {
-        try {
-            this.setState({ searching: true });
-            await this.props.findEpiComPost();
-        } catch (err) {
-            console.log(err);
-        } finally {
-            this.setState({ searching: false });
-        }
     }
 
     public async componentDidMount() {
@@ -138,17 +111,44 @@ class EpiComPost extends React.Component<EpiComPostProps>{
                 {epiComPostBeingEdited === undefined && <AddButton
                     onClick={this.createPost}
                     disabled={loading}
-                    buttonText={loading ? "Creating Post..." : "New EpiCom Post"} />
+                    buttonText={loading ? 'Creating Post...' : 'New EpiCom Post'} />
                 }
                 {epiComPostBeingEdited && <Modal
                     visible={true}
                     toggle={cancelEpiComPostEdit}
-                    title={`New EpiCom Post ${epiComPostBeingEdited.title ? ` - ${epiComPostBeingEdited.title}` : ""}`}
+                    title={`New EpiCom Post ${epiComPostBeingEdited.title ? ` - ${epiComPostBeingEdited.title}` : ''}`}
                     body={<EpiComPostForm post={epiComPostBeingEdited} />}
                     modalWidth={ModalWidth.large}
                 />}
             </Secure>
         </div>;
+    }
+
+    private async createPost() {
+        const { createEpiComPost } = this.props;
+        try {
+            this.setState({ loading: true });
+            await createEpiComPost();
+        } catch (err) {
+            console.log(err);
+        } finally {
+            this.setState({ loading: false });
+        }
+    }
+
+    private onChange(name: string, value: any) {
+        this.props.updateEpiComPostID(value);
+    }
+
+    private async findPost() {
+        try {
+            this.setState({ searching: true });
+            await this.props.findEpiComPost();
+        } catch (err) {
+            console.log(err);
+        } finally {
+            this.setState({ searching: false });
+        }
     }
 }
 
@@ -157,7 +157,7 @@ export default connect(
         return {
             epiComPostBeingEdited: state.outbreak.epiComPostBeingEdited,
             epiComPost: state.outbreak.epiComPost
-        }
+        };
     },
     OutbreakActions
 )(EpiComPost);

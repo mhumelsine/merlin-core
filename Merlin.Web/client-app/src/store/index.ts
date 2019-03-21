@@ -20,7 +20,7 @@ export interface ApplicationState {
     session: Session.SessionState;
     case: Case.CaseState;
     outbreak: Outbreak.OutbreakState;
-    elrSearch: ELRSearch.ELRSearchState;  
+    elrSearch: ELRSearch.ELRSearchState;
     smartGoals: SmartGoals.SmartGoalsState;
 }
 

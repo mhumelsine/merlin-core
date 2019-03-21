@@ -16,20 +16,10 @@ type SmartGoalsResultsProps = {
 
 class SmartGoalsResults extends React.Component<SmartGoalsResultsProps> {
 
+
     constructor(props: SmartGoalsResultsProps) {
         super(props);
-    };
-
-    private performanceData(name: string, count: string,classname:string,data ?:any,info?:string) {
-        return <button type="button" className={classname}>
-            <h1 style={{ borderBottom: "0px" }}>
-               <span className="badge badge-light">{count}</span><br /> {name}
-            </h1>
-           <h2> <span className="badge badge-light">{info}</span></h2>
-           <span className="badge badge-light col-md-12">{data}</span>
-        </button>
     }
-
     public render() {
 
         const { results } = this.props;
@@ -49,7 +39,7 @@ class SmartGoalsResults extends React.Component<SmartGoalsResultsProps> {
                 animateScale: true,
                 backgroundColor: ['red', 'green']
             }]
-        }
+        };
 
         const resolvedData = {
             labels: ['Resolved Assignments', 'Open Assignments'],
@@ -58,7 +48,7 @@ class SmartGoalsResults extends React.Component<SmartGoalsResultsProps> {
                 animateScale: true,
                 backgroundColor: ['green', 'orange'],
             }]
-        }
+        };
 
         const outStandingdata = {
             labels: results.map(i => i.halRegion),
@@ -68,7 +58,7 @@ class SmartGoalsResults extends React.Component<SmartGoalsResultsProps> {
                 fill: false,
                 borderColor: 'blue'
             }]
-        }
+        };
 
         const options = {
             scales: {
@@ -85,11 +75,11 @@ class SmartGoalsResults extends React.Component<SmartGoalsResultsProps> {
                     }
                 }],
             }
-        }
+        };
 
         return <div className="mt-3">
             <Link className={`${defaults.theme.buttons.class} justify-content-end m-4`} to={`${defaults.urls.performanceReport}`}>
-                <FaFolderOpen fontSize={defaults.iconSize} style={{ verticalAlign: "bottom" }} />{" "}
+                <FaFolderOpen fontSize={defaults.iconSize} style={{ verticalAlign: 'bottom' }} />{' '}
                 View Report
             </Link>
 
@@ -99,22 +89,32 @@ class SmartGoalsResults extends React.Component<SmartGoalsResultsProps> {
                 </div>
 
                 <div className="row m-3 justify-content-center">
-                    {this.performanceData("Days Average", results[0].avgDaysToResolve, "btn btn-info m-2")}
-                    {this.performanceData("Open Assignments", results[0].openAssignments, "btn btn-warning m-2")}
+                    {this.performanceData('Days Average', results[0].avgDaysToResolve, 'btn btn-info m-2')}
+                    {this.performanceData('Open Assignments', results[0].openAssignments, 'btn btn-warning m-2')}
                 </div>
 
                 <div className="row m-3 justify-content-center">
-                    {this.performanceData("Resolved", results[0].resolved, "btn btn-success m-2",
-                        <Doughnut data={resolvedData} />, `${results[0].disposPerDay} / day`)}
+                    {this.performanceData('Resolved', results[0].resolved, 'btn btn-success m-2',
+                                          <Doughnut data={resolvedData} />, `${results[0].disposPerDay} / day`)}
 
-                    {this.performanceData("Rejected", results[0].rejected, "btn btn-danger m-2",
-                        <Doughnut data={rejectedData} />, `${results[0].percentRejected}%`)}
+                    {this.performanceData('Rejected', results[0].rejected, 'btn btn-danger m-2',
+                                          <Doughnut data={rejectedData} />, `${results[0].percentRejected}%`)}
 
-                    {this.performanceData("Total Oustanding", results.map(item => item.outStandingDays).reduce((prev, next) => prev + next),
-                        "btn btn-info m-2", <Line data={outStandingdata} options={options} />)}                       
-                </div>               
+                    {this.performanceData('Total Oustanding', results.map(item => item.outStandingDays).reduce((prev, next) => prev + next),
+                                          'btn btn-info m-2', <Line data={outStandingdata} options={options} />)}
+                </div>
             </CardGroupCard>
         </div>;
+    }
+
+    private performanceData(name: string, count: string, classname: string, data ?: any, info?: string) {
+        return <button type="button" className={classname}>
+            <h1 style={{ borderBottom: '0px' }}>
+               <span className="badge badge-light">{count}</span><br /> {name}
+            </h1>
+           <h2> <span className="badge badge-light">{info}</span></h2>
+           <span className="badge badge-light col-md-12">{data}</span>
+        </button>;
     }
 }
 
@@ -122,7 +122,7 @@ export default connect(
     (state: ApplicationState) => {
         return {
             results: state.smartGoals.performanceInfo,
-        }
+        };
     },
     actionCreators
 )(SmartGoalsResults);

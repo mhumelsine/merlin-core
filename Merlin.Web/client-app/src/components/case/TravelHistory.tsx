@@ -6,12 +6,12 @@ import { TravelHistoryCase, Address } from '../../store/Case';
 import * as CaseState from '../../store/Case';
 import TravelHistoryItem, { TravelType } from './TravelHistoryItem';
 import ExposureLocation from './ExposureLocation';
-import Loading from '../common/Loading'; 
+import Loading from '../common/Loading';
 import { defaults } from '../../utils/Global';
 import Alert from '../common/Alert';
 
 type TravelHistoryProps = {
-    caseId: number; 
+    caseId: number;
     travelHistory: TravelHistoryCase;
 } & typeof CaseState.actionCreators;
 
@@ -27,15 +27,50 @@ class TravelHistory extends React.Component<TravelHistoryProps> {
         this.onRemoveLocation = this.onRemoveLocation.bind(this);
         this.onAddressChange = this.onAddressChange.bind(this);
     }
-    
-    public componentWillReceiveProps(nextProps: TravelHistoryProps){ 
-        if(nextProps.caseId !== this.state.caseId){
+
+    public componentWillReceiveProps(nextProps: TravelHistoryProps) {
+        if (nextProps.caseId !== this.state.caseId) {
             this.loadData(nextProps.caseId);
         }
      }
 
     public async componentWillMount() {
         this.loadData(this.props.caseId);
+    }
+
+    public render() {
+        const { travelHistory } = this.props;
+        const { travelHistoryItems } = travelHistory;
+        const { isLoading, caseId } = this.state;
+
+        if (isLoading) {
+            return <Loading />;
+        }
+
+        return <div>
+            <ExposureLocation
+                onAddLocation={this.onAddLocation}
+                onRemoveLocation={this.onRemoveLocation}
+            />
+            <Card
+                header="Travel History"
+            >
+                {travelHistoryItems && travelHistoryItems.map(item => {
+                    return <ul key={item.travelId} className="list-group list-group-flush">
+                        <li className="list-group-item">
+                            <TravelHistoryItem
+                                key={item.travelId}
+                                travelId={item.travelId}
+                                travelHistoryItem={item}
+                                travelType={item.travelType}
+                                onAddressChange={this.onAddressChange}
+                            />
+                        </li>
+                    </ul>;
+                }
+                )}
+            </Card>
+        </div>;
     }
 
 
@@ -46,14 +81,14 @@ class TravelHistory extends React.Component<TravelHistoryProps> {
             await loadTravelHistoryForCase(caseId ? caseId : 0);
         }
         finally {
-            this.setState(  { 
-                isLoading: false, 
+            this.setState(  {
+                isLoading: false,
                 caseId: caseId
             });
         }
     }
     private onAddressChange(travelId: number, name: string, value: any) {
-         
+
         const newTravelHistoryItems = [...this.props.travelHistory.travelHistoryItems];
 
         let travelHistoryItem = newTravelHistoryItems.find(item => {
@@ -61,11 +96,11 @@ class TravelHistory extends React.Component<TravelHistoryProps> {
         });
 
         if (travelHistoryItem) {
-            travelHistoryItem.address[name] = value; 
+            travelHistoryItem.address[name] = value;
             this.props.editTravelHistory(travelHistoryItem);
-        }  
+        }
     }
-     
+
     private onAddLocation(location: any) {
         let newItem = {
             address: {} as Address
@@ -77,7 +112,7 @@ class TravelHistory extends React.Component<TravelHistoryProps> {
 
         switch (zoneCode) {
             case 1:
-                if (zoneName === "FL") {
+                if (zoneName === 'FL') {
                     newItem.travelType = TravelType.FLORIDA;
 
                 } else {
@@ -107,60 +142,24 @@ class TravelHistory extends React.Component<TravelHistoryProps> {
         let zoneValue = location.split('~')[1];
 
         if (zoneCode == 1) {
-            //use State
+            // use State
             travelHistoryItem = travelHistoryItems.find(item => {
                 return item.address.state === zoneValue;
             });
-        }
-        else {
-            //use country  
+        } else {
+            // use country
             travelHistoryItem = travelHistoryItems.find(item => {
                 return item.address.country === zoneValue;
             });
         }
         this.props.removeTravelHistory(travelHistoryItem.travelId);
     }
-
-    public render() {
-        const { travelHistory } = this.props;
-        const { travelHistoryItems } = travelHistory;
-        const { isLoading, caseId } = this.state;
-
-        if (isLoading) {
-            return <Loading />
-        }  
-
-        return <div>
-            <ExposureLocation
-                onAddLocation={this.onAddLocation}
-                onRemoveLocation={this.onRemoveLocation}
-            />
-            <Card
-                header="Travel History"
-            >           
-                {travelHistoryItems && travelHistoryItems.map(item => {
-                    return <ul key={item.travelId} className="list-group list-group-flush">
-                        <li className="list-group-item">
-                            <TravelHistoryItem
-                                key={item.travelId}
-                                travelId={item.travelId}
-                                travelHistoryItem={item}
-                                travelType={item.travelType}
-                                onAddressChange={this.onAddressChange}
-                            />
-                        </li>
-                    </ul>
-                }
-                )}
-            </Card>
-        </div>;
-    }
 }
 export default connect(
     (state: ApplicationState) => {
         return {
             caseId: state.case.caseDetails.caseId,
-            travelHistory: state.case.travelHistory 
+            travelHistory: state.case.travelHistory
         };
     },
     CaseState.actionCreators

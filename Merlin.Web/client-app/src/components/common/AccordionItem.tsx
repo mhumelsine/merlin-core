@@ -2,7 +2,7 @@
 import { FaPlus, FaMinus } from 'react-icons/fa';
 import { defaults } from '../../utils/Global';
 import NextButton from './NextButton';
-import { isNullOrEmpty } from "../../utils/UIUtils";
+import { isNullOrEmpty } from '../../utils/UIUtils';
 import { isAbsolute } from 'path';
 
 interface AccordionItemProps {
@@ -31,9 +31,9 @@ export default class AccordionItem extends React.Component<AccordionItemProps> {
             <button type="button" onClick={onClick}
                 className={`btn btn-link btn-sm ${className} ${isActive(heading) ? '' : 'collapsed'}`}
                 name={heading}>
-                {isActive(heading) ? <FaMinus /> : <FaPlus />}{" "}{heading}
+                {isActive(heading) ? <FaMinus /> : <FaPlus />}{' '}{heading}
             </button>
-            <div className={`collapse ${isActive(heading) ? "show" : ""}`} aria-labelledby={heading}>
+            <div className={`collapse ${isActive(heading) ? 'show' : ''}`} aria-labelledby={heading}>
                 {children}
             </div>
         </div>;

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Dropdown from '../common/Dropdown'; 
+import Dropdown from '../common/Dropdown';
 import * as CaseState from '../../store/Case';
 import { getOptions } from '../../utils/UIUtils';
 import { ApplicationState } from '../../store/index';
@@ -10,29 +10,29 @@ import TextInput from '../common/TextInput';
 import { defaults } from '../../utils/Global';
 import Loading from '../common/Loading';
 
-type TreatmentItemItemProps = { 
-    treatmentItem: CaseState.TreatmentItem;   
-    onChangeTreatment: (treatmentItem: CaseState.TreatmentItem) => void; 
-}   
-& CodeStore.CodeState 
+type TreatmentItemItemProps = {
+    treatmentItem: CaseState.TreatmentItem;
+    onChangeTreatment: (treatmentItem: CaseState.TreatmentItem) => void;
+}
+& CodeStore.CodeState
 & typeof CodeStore.actionCreators;
 
 class TreatmentItem extends React.Component<TreatmentItemItemProps> {
+    state = {
+        isLoading: defaults.boolean
+    };
 
     constructor(props: TreatmentItemItemProps) {
         super(props);
 
-        this.onChangeTreatment = this.onChangeTreatment.bind(this); 
-    }
-    state = {
-        isLoading: defaults.boolean
+        this.onChangeTreatment = this.onChangeTreatment.bind(this);
     }
 
     public async componentWillMount() {
         const { loadDropdown } = this.props;
         try {
             this.setState({ isLoading: true });
-           await loadDropdown(CodeStore.CodeType.antibiotics); 
+            await loadDropdown(CodeStore.CodeType.antibiotics);
         }
         finally {
             this.setState({
@@ -41,26 +41,17 @@ class TreatmentItem extends React.Component<TreatmentItemItemProps> {
         }
     }
 
-    private onChangeTreatment(name: string, newValue: any) {
-        const { onChangeTreatment, treatmentItem } = this.props;
-        const newState  = Object.assign({}, treatmentItem);
-
-        newState[name] = newValue;
-
-        onChangeTreatment(newState);
-    }
-    
-    public render() { 
+    public render() {
         const { isLoading } = this.state;
-        const { codes, treatmentItem } = this.props; 
+        const { codes, treatmentItem } = this.props;
         const { antibioticType, numberOfDaysTaken, dateStarted } = treatmentItem;
-        const { dropdowns,textInputs, datePickers } = defaults.inputs;
+        const { dropdowns, textInputs, datePickers } = defaults.inputs;
 
         if (isLoading) {
-            return <Loading />
-        } 
-        return <div className="row" style={{paddingTop: "20px" }}>
-        
+            return <Loading />;
+        }
+        return <div className="row" style={{paddingTop: '20px' }}>
+
             <Dropdown
                 name={dropdowns.antibioticTypeInput.name}
                 value={antibioticType}
@@ -77,19 +68,28 @@ class TreatmentItem extends React.Component<TreatmentItemItemProps> {
                 label={datePickers.dateStartedInput.label}
                 hideLabel={false}
                 onChange={this.onChangeTreatment}
-            /> 
+            />
             <TextInput
                 name={textInputs.numberOfDaysTakenInput.name}
-                value={numberOfDaysTaken ? numberOfDaysTaken: ""}
+                value={numberOfDaysTaken ? numberOfDaysTaken : ''}
                 cols={4}
                 label={textInputs.numberOfDaysTakenInput.label}
                 hideLabel={false}
                 onChange={this.onChangeTreatment}
             />
-        </div>
+        </div>;
+    }
+
+    private onChangeTreatment(name: string, newValue: any) {
+        const { onChangeTreatment, treatmentItem } = this.props;
+        const newState  = Object.assign({}, treatmentItem);
+
+        newState[name] = newValue;
+
+        onChangeTreatment(newState);
     }
 }
-export default connect( 
+export default connect(
         (state: ApplicationState) =>  state.codes,
-         CodeStore.actionCreators
+        CodeStore.actionCreators
 )(TreatmentItem);

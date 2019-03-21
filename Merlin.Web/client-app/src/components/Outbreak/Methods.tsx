@@ -25,15 +25,7 @@ class Methods extends React.Component<MethodProps> {
     constructor(props: MethodProps) {
         super(props);
 
-        this.onChange = this.onChange.bind(this)
-    }
-
-    private onChange(name: string, newValue: any) {
-        const methods = Object.assign({}, this.props.methods) as any;
-
-        methods[name] = newValue;
-
-        this.props.updateMethods(methods);
+        this.onChange = this.onChange.bind(this);
     }
 
     public async componentDidMount() {
@@ -52,14 +44,14 @@ class Methods extends React.Component<MethodProps> {
     }
 
     public render() {
-        const { methods, errors, codes } = this.props
+        const { methods, errors, codes } = this.props;
 
         return <div>
             <div className="row" >
                 <TextAreaInput
-                    name={"caseDefinition"}
+                    name={'caseDefinition'}
                     value={methods.caseDefinition}
-                    label={"Outbreak Case Definition:"}
+                    label={'Outbreak Case Definition:'}
                     hideLabel={false}
                     placeholder={''}
                     isReadOnly={false}
@@ -71,9 +63,9 @@ class Methods extends React.Component<MethodProps> {
             </div>
             <div className="row" >
                 <Dropdown
-                    name={"studyDesigns"}
+                    name={'studyDesigns'}
                     value={methods.studyDesigns}
-                    label={"Primary Study Design:"}
+                    label={'Primary Study Design:'}
                     hideLabel={false}
                     placeholder={''}
                     options={utils.getOptions(codes.OB_STUDY_DESIGN)}
@@ -84,9 +76,9 @@ class Methods extends React.Component<MethodProps> {
                     error={errors.studyDesigns}
                 />
                 <Dropdown
-                    name={"investigationMethods"}
+                    name={'investigationMethods'}
                     value={methods.investigationMethods}
-                    label={"Investigation Methods:"}
+                    label={'Investigation Methods:'}
                     hideLabel={false}
                     placeholder={''}
                     options={utils.getOptions(codes.OB_INVESTIGATION)}
@@ -100,9 +92,9 @@ class Methods extends React.Component<MethodProps> {
             <div className="row" >
                 <div className="col-md-6">
                     <TextAreaInput
-                        name={"staffConsulted"}
+                        name={'staffConsulted'}
                         value={methods.staffConsulted}
-                        label={"State Office Staff Consulted:"}
+                        label={'State Office Staff Consulted:'}
                         hideLabel={false}
                         placeholder={''}
                         isReadOnly={false}
@@ -115,9 +107,9 @@ class Methods extends React.Component<MethodProps> {
                 <div className="col-md-6">
                     <div className="row">
                         <Dropdown
-                            name={"regulatoryAgencies"}
+                            name={'regulatoryAgencies'}
                             value={methods.regulatoryAgencies}
-                            label={"Regulatory Agencies Contacted:"}
+                            label={'Regulatory Agencies Contacted:'}
                             hideLabel={false}
                             placeholder={''}
                             options={utils.getOptions(codes.OB_REGULATORY)}
@@ -128,9 +120,9 @@ class Methods extends React.Component<MethodProps> {
                             error={errors.regulatoryAgencies}
                         />
                         <TextInput
-                            name={"investigator"}
+                            name={'investigator'}
                             value={methods.investigator}
-                            label={"Primary Investigator:"}
+                            label={'Primary Investigator:'}
                             hideLabel={false}
                             placeholder={''}
                             isReadOnly={false}
@@ -143,6 +135,14 @@ class Methods extends React.Component<MethodProps> {
                 </div>
             </div>
         </div>;
+    }
+
+    private onChange(name: string, newValue: any) {
+        const methods = Object.assign({}, this.props.methods) as any;
+
+        methods[name] = newValue;
+
+        this.props.updateMethods(methods);
     }
 }
 

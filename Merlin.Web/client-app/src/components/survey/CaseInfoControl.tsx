@@ -24,6 +24,29 @@ class CaseInfoControl extends React.Component<CaseInfoControlProps> {
         this.onTextCaseChange = this.onTextCaseChange.bind(this);
     }
 
+    public render() {
+        const { caseId, isLoading } = this.state;
+        const { caseDetails } = this.props;
+        const { name, dateOfBirth, icd9, caseEventDate, caseStatus } = caseDetails;
+
+        if (isLoading) {
+            return <Loading />;
+        }
+
+        return <div>
+            <li className="list-group-item">
+                <div className="d-flex" style={{ 'flexWrap': 'wrap' }}>
+                    {this.columnRender('Case Id', this.renderCaseInput())}
+                    {this.columnRender('Name', name)}
+                    {this.columnRender('Date of Birth', dateOfBirth)}
+                    {this.columnRender('Disease Code', icd9)}
+                    {this.columnRender('Event Date', caseEventDate)}
+                    {this.columnRender('Case Status', caseStatus)}
+                </div>
+            </li>
+        </div>;
+    }
+
     private onTextCaseChange(event: ChangeEvent<HTMLInputElement>) {
         this.setState({ caseId: event.currentTarget.value });
     }
@@ -45,47 +68,24 @@ class CaseInfoControl extends React.Component<CaseInfoControlProps> {
 
     private columnRender(title: string, value: any) {
         if (value) {
-            return <div style={{ paddingLeft: "2rem" }}>
+            return <div style={{ paddingLeft: '2rem' }}>
                 <div>
                     <h6>{title}</h6>
                 </div>
                 <div>
                     {value}
                 </div>
-            </div>
+            </div>;
         }
     }
 
     private renderCaseInput() {
         return <div className="input-group mb-3">
-            <input type={"text"} className={"form-control"} placeholder="Enter Case Id" value={this.state.caseId} onChange={this.onTextCaseChange} />
+            <input type={'text'} className={'form-control'} placeholder="Enter Case Id" value={this.state.caseId} onChange={this.onTextCaseChange} />
             <div className="input-group-append">
                 <button className={defaults.theme.buttons.class} type="button" onClick={this.onSubmit}>Submit</button>
             </div>
-        </div>
-    }
-
-    public render() {
-        const { caseId, isLoading } = this.state;
-        const { caseDetails } = this.props;
-        const { name, dateOfBirth, icd9, caseEventDate, caseStatus } = caseDetails;
-
-        if (isLoading) {
-            return <Loading />;
-        }
-
-        return <div>
-            <li className="list-group-item">
-                <div className="d-flex" style={{ "flexWrap": "wrap" }}>
-                    {this.columnRender("Case Id", this.renderCaseInput())}
-                    {this.columnRender("Name", name)}
-                    {this.columnRender("Date of Birth", dateOfBirth)}
-                    {this.columnRender("Disease Code", icd9)}
-                    {this.columnRender("Event Date", caseEventDate)}
-                    {this.columnRender("Case Status", caseStatus)}
-                </div>
-            </li>
-        </div>
+        </div>;
     }
 }
 export default connect(

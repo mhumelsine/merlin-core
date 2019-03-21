@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { RouteComponentProps } from "react-router-dom";
+import { RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { ApplicationState } from '../../store/index';
 import * as SurveyQuestionStore from '../../store/SurveyQuestion';
@@ -21,11 +21,6 @@ type ObjectMappingListProps =
     & RouteComponentProps<{}>;
 
 class ObjectMappingList extends React.Component<ObjectMappingListProps, {}> {
-    private movePage(page: number) {
-        const { questionId } = this.props;
-
-        this.props.requestObjectMappings(questionId, this.props.history);
-    }
 
     public render() {
         const { objectMappings, onEdit, onRemove } = this.props;
@@ -47,6 +42,11 @@ class ObjectMappingList extends React.Component<ObjectMappingListProps, {}> {
             )
             }
         </ul>;
+    }
+    private movePage(page: number) {
+        const { questionId } = this.props;
+
+        this.props.requestObjectMappings(questionId, this.props.history);
     }
 }
 

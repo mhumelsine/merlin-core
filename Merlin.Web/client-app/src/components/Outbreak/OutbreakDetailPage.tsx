@@ -53,44 +53,6 @@ class OutbreakDetailPage extends React.Component<OutbreakDetailProps> {
         this.updateSurveyAnswers = this.updateSurveyAnswers.bind(this);
     }
 
-    private async save() {
-        this.setState({ saving: true });
-        await this.saveOutbreak(false);
-    }
-
-    private async submit() {
-        this.setState({ submitting: true });
-        await this.saveOutbreak(true);
-    }
-
-    private async saveOutbreak(isSubmit: boolean) {
-        const { saveOutbreak, loadCaseReview, loadNoteList } = this.props;
-
-        try {
-            const errors = await saveOutbreak(isSubmit);
-
-            if (Object.keys(errors).length === 0) {
-                this.setState({ lastSaved: moment().format("MM/DD/YYYY hh:mm:ss a") });
-                loadCaseReview();
-                loadNoteList();
-                toast.success("Successfully saved.");
-            }
-            else {
-                toast.error("Unsuccessful save.Check field validation errors.");
-            }
-
-            this.setState({ errors });
-        } catch (err) {
-            console.log(err);
-        } finally {
-            this.setState({ saving: false, submitting: false });
-        }
-    }
-
-    private updateSurveyAnswers(newAnswers: any) {
-        this.props.updateSurveyAnswers(newAnswers);
-    }
-
     public async componentWillMount() {
         const { outbreakId } = this.props.match.params;
         const { setOutbreak, loadOutbreakLayoutUid, loadSurveyAnswers } = this.props;
@@ -121,11 +83,11 @@ class OutbreakDetailPage extends React.Component<OutbreakDetailProps> {
                             <span className="text-muted">
                                 {lastSaved && <span className="text-success">Last saved on: {lastSaved}</span>}
                             </span>
-                            {" "}
-                            <SaveButton onClick={this.save} buttonText={`${saving ? "Saving..." : "Save"}`} disabled={disableSave} />
-                            {" "}
-                            <SubmitButton onClick={this.submit} buttonText={`${submitting ? "Submitting..." : "Submit"}`} disabled={disableSave} />
-                            {" "}
+                            {' '}
+                            <SaveButton onClick={this.save} buttonText={`${saving ? 'Saving...' : 'Save'}`} disabled={disableSave} />
+                            {' '}
+                            <SubmitButton onClick={this.submit} buttonText={`${submitting ? 'Submitting...' : 'Submit'}`} disabled={disableSave} />
+                            {' '}
                             <PrintButton />
                         </div>
                     </div>
@@ -219,6 +181,43 @@ class OutbreakDetailPage extends React.Component<OutbreakDetailProps> {
                 </CardGroupCard>
             </CardGroup>
         </div>;
+    }
+
+    private async save() {
+        this.setState({ saving: true });
+        await this.saveOutbreak(false);
+    }
+
+    private async submit() {
+        this.setState({ submitting: true });
+        await this.saveOutbreak(true);
+    }
+
+    private async saveOutbreak(isSubmit: boolean) {
+        const { saveOutbreak, loadCaseReview, loadNoteList } = this.props;
+
+        try {
+            const errors = await saveOutbreak(isSubmit);
+
+            if (Object.keys(errors).length === 0) {
+                this.setState({ lastSaved: moment().format('MM/DD/YYYY hh:mm:ss a') });
+                loadCaseReview();
+                loadNoteList();
+                toast.success('Successfully saved.');
+            } else {
+                toast.error('Unsuccessful save.Check field validation errors.');
+            }
+
+            this.setState({ errors });
+        } catch (err) {
+            console.log(err);
+        } finally {
+            this.setState({ saving: false, submitting: false });
+        }
+    }
+
+    private updateSurveyAnswers(newAnswers: any) {
+        this.props.updateSurveyAnswers(newAnswers);
     }
 }
 

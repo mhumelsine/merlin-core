@@ -15,7 +15,7 @@ import NumberInput from '../common/NumberInput';
 type ClinicalResultsProps = {
     clinicalResults?: OutreakClinicalResults,
     errors: any,
-    codes?:Codes
+    codes?: Codes
 }
     & typeof CodeActions
     & typeof OutbreakActions;
@@ -27,23 +27,7 @@ class ClinicalResults extends React.Component<ClinicalResultsProps> {
 
     constructor(props: ClinicalResultsProps) {
         super(props);
-        this.onChange = this.onChange.bind(this)
-    }
-
-    private onChange(name: string, value: any) {
-        const clinicalResults = Object.assign({}, this.props.clinicalResults) as any;
-
-        clinicalResults[name] = value;
-
-        if (name === "symptom" && !this.containsOther(value)) {
-            clinicalResults.otherSymptom = '';
-        }
-
-        this.props.updateClinicalResults(clinicalResults);
-    }
-
-    private containsOther(symptoms: string[]) {
-        return symptoms.some(symptom => symptom === 'OTHER');
+        this.onChange = this.onChange.bind(this);
     }
 
     public async componentDidMount() {
@@ -62,7 +46,7 @@ class ClinicalResults extends React.Component<ClinicalResultsProps> {
     }
 
     public render() {
-        const { errors, codes, clinicalResults } = this.props
+        const { errors, codes, clinicalResults } = this.props;
         const { loading } = this.state;
 
         if (loading || clinicalResults === undefined || codes === undefined) {
@@ -72,9 +56,9 @@ class ClinicalResults extends React.Component<ClinicalResultsProps> {
         return <div>
             <div className="row" >
                 <Dropdown
-                    name={"symptom"}
+                    name={'symptom'}
                     value={clinicalResults.symptom}
-                    label={"Symptoms:"}
+                    label={'Symptoms:'}
                     hideLabel={false}
                     placeholder={''}
                     options={utils.getOptions(codes.SYMPTOMS)}
@@ -87,9 +71,9 @@ class ClinicalResults extends React.Component<ClinicalResultsProps> {
                 />
 
                 <TextInput
-                    name={"otherSymptom"}
+                    name={'otherSymptom'}
                     value={clinicalResults.otherSymptom}
-                    label={"Other Symptoms:"}
+                    label={'Other Symptoms:'}
                     hideLabel={false}
                     placeholder={''}
                     isReadOnly={!this.containsOther(clinicalResults.symptom)}
@@ -101,61 +85,61 @@ class ClinicalResults extends React.Component<ClinicalResultsProps> {
             </div>
             <div className="row" >
                 <CustomDatePicker
-                    name={"firstExposureDate"}
+                    name={'firstExposureDate'}
                     value={clinicalResults.firstExposureDate}
-                    label={"First Exposure date:"}
+                    label={'First Exposure date:'}
                     hideLabel={false}
-                    placeholder={"mm/dd/yyyy"}
+                    placeholder={'mm/dd/yyyy'}
                     isReadOnly={false}
                     onChange={this.onChange}
                     cols={3}
                     error={errors.firstExposureDate}
-                //ignoreError={true}
+                // ignoreError={true}
                 />
                 <CustomDatePicker
-                    name={"lastExposureDate"}
+                    name={'lastExposureDate'}
                     value={clinicalResults.lastExposureDate}
-                    label={"Last Exposure date:"}
+                    label={'Last Exposure date:'}
                     hideLabel={false}
-                    placeholder={"mm/dd/yyyy"}
+                    placeholder={'mm/dd/yyyy'}
                     isReadOnly={false}
                     onChange={this.onChange}
                     cols={3}
                     error={errors.lastExposureDate}
-                //ignoreError={true}
+                // ignoreError={true}
                 />
             </div>
             <div className="row" >
                 <CustomDatePicker
-                    name={"firstOnsetDate"}
+                    name={'firstOnsetDate'}
                     value={clinicalResults.firstOnsetDate}
-                    label={"First Onset date:"}
+                    label={'First Onset date:'}
                     hideLabel={false}
-                    placeholder={"mm/dd/yyyy"}
+                    placeholder={'mm/dd/yyyy'}
                     isReadOnly={false}
                     onChange={this.onChange}
                     cols={3}
                     error={errors.firstOnsetDate}
-                //ignoreError={true}
+                // ignoreError={true}
                 />
                 <CustomDatePicker
-                    name={"lastOnsetDate"}
+                    name={'lastOnsetDate'}
                     value={clinicalResults.lastOnsetDate}
-                    label={"Last Onset date:"}
+                    label={'Last Onset date:'}
                     hideLabel={false}
-                    placeholder={"mm/dd/yyyy"}
+                    placeholder={'mm/dd/yyyy'}
                     isReadOnly={false}
                     onChange={this.onChange}
                     cols={3}
                     error={errors.lastOnsetDate}
-                //ignoreError={true}
+                // ignoreError={true}
                 />
             </div>
             <div className="row" >
                 <NumberInput
-                    name={"duration"}
+                    name={'duration'}
                     value={clinicalResults.duration}
-                    label={"Median Duration of Symptoms:"}
+                    label={'Median Duration of Symptoms:'}
                     onChange={this.onChange}
                     cols={3}
                     error={errors.duration}
@@ -163,9 +147,9 @@ class ClinicalResults extends React.Component<ClinicalResultsProps> {
                     max={int32.max}
                 />
                 <Dropdown
-                    name={"timeUnit"}
+                    name={'timeUnit'}
                     value={clinicalResults.timeUnit}
-                    label={""}
+                    label={''}
                     hideLabel={false}
                     placeholder={''}
                     options={utils.getOptions(codes.TIME_UNIT)}
@@ -184,8 +168,24 @@ class ClinicalResults extends React.Component<ClinicalResultsProps> {
                     value={clinicalResults.outbreakEventDate}
                 />
             </div>
-        </div>
+        </div>;
 
+    }
+
+    private onChange(name: string, value: any) {
+        const clinicalResults = Object.assign({}, this.props.clinicalResults) as any;
+
+        clinicalResults[name] = value;
+
+        if (name === 'symptom' && !this.containsOther(value)) {
+            clinicalResults.otherSymptom = '';
+        }
+
+        this.props.updateClinicalResults(clinicalResults);
+    }
+
+    private containsOther(symptoms: string[]) {
+        return symptoms.some(symptom => symptom === 'OTHER');
     }
 }
 

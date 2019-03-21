@@ -35,31 +35,11 @@ class UploadDocument extends React.Component<UploadDocumentProps> {
         this.onSubmit = this.onSubmit.bind(this);
     }
 
-    private onChange(name: string, value: any) {
-        const doc = Object.assign({}, this.props.doc) as any;
-
-        doc[name] = value;
-
-        this.props.updateDocument(doc);
-    }
-
-    private async onSubmit(e: any) {
-        e.preventDefault();
-
-        this.setState({ saving: true });
-
-        const formData = new FormData(e.target);
-
-        const errors = await this.props.uploadDocument(formData);
-
-        this.setState({ errors, saving: false });
-    }
-
     public async componentDidMount() {
         const { loadDropdown } = this.props;
         try {
             this.setState({ loading: true });
-            await loadDropdown(CodeType.docsEvent)
+            await loadDropdown(CodeType.docsEvent);
         } catch (err) {
             console.log(err);
         } finally {
@@ -127,13 +107,33 @@ class UploadDocument extends React.Component<UploadDocumentProps> {
                 </div>
                 <div className="row">
                     <div className="col-md-12 text-right">
-                        <SaveButton disabled={saving} buttonText={saving ? "Uploading..." : "Upload"} />
-                        {" "}
+                        <SaveButton disabled={saving} buttonText={saving ? 'Uploading...' : 'Upload'} />
+                        {' '}
                         <CancelButton onClick={cancelDocumentEdit} />
                     </div>
                 </div>
             </form>
         </div>;
+    }
+
+    private onChange(name: string, value: any) {
+        const doc = Object.assign({}, this.props.doc) as any;
+
+        doc[name] = value;
+
+        this.props.updateDocument(doc);
+    }
+
+    private async onSubmit(e: any) {
+        e.preventDefault();
+
+        this.setState({ saving: true });
+
+        const formData = new FormData(e.target);
+
+        const errors = await this.props.uploadDocument(formData);
+
+        this.setState({ errors, saving: false });
     }
 }
 
@@ -143,7 +143,7 @@ export default connect(
             codes: state.codes.codes,
             doc: state.outbreak.documentBeingEdited,
             outbreakId: state.outbreak.outbreakId
-        }
+        };
     },
     Object.assign(CodeActions, OutbreakActions)
-)(UploadDocument); 
+)(UploadDocument);

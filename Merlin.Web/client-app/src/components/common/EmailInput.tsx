@@ -15,17 +15,9 @@ type EmailInputProps = {
     onChange: (name: string, selectedValue: any) => void;
     error?: string;
     autoComplete?: string;
-}
+};
 
-class EmailInput extends React.Component<EmailInputProps, {}>{
-    private onChange(event: ChangeEvent<HTMLInputElement>) {
-        this.props.onChange(this.props.name, event.currentTarget.value);
-    }
-    private moveCaretAtEnd(e: any) {
-        var temp_value = e.target.value;
-        e.target.value = '';
-        e.target.value = temp_value;
-    }
+class EmailInput extends React.Component<EmailInputProps, {}> {
     public render() {
 
         const { name, label, placeholder, cols, autoComplete, value, inputRef, isReadOnly } = this.props;
@@ -41,8 +33,16 @@ class EmailInput extends React.Component<EmailInputProps, {}>{
             onFocus={this.moveCaretAtEnd}
             ref={inputRef}
             readOnly={isReadOnly}
-            autoComplete={autoComplete || "on"}
+            autoComplete={autoComplete || 'on'}
         />;
+    }
+    private onChange(event: ChangeEvent<HTMLInputElement>) {
+        this.props.onChange(this.props.name, event.currentTarget.value);
+    }
+    private moveCaretAtEnd(e: any) {
+        let temp_value = e.target.value;
+        e.target.value = '';
+        e.target.value = temp_value;
     }
 }
 

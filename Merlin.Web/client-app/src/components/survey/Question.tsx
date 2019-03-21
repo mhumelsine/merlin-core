@@ -32,17 +32,17 @@ const { radio, dropdown, yn, ynu, text, email, phone, multiLineText, number, dat
 
 type QuestionProps = {
     smallViewport?: boolean,
-    index? : number
+    index?: number
 } & LayoutItemProps;
 
 export default class Question extends React.Component<QuestionProps> {
     state = {
-        selectedValue: "ACTIVE",
+        selectedValue: 'ACTIVE',
         questionList: {} as any,
         validation: defaults.string,
         validationValue: defaults.string,
         message: defaults.string,
-        messageType: "DEFAULT",
+        messageType: 'DEFAULT',
         errors: {} as any,
         targetItemId: defaults.string,
 
@@ -54,6 +54,85 @@ export default class Question extends React.Component<QuestionProps> {
 
         this.getDefaultMessageFor = this.getDefaultMessageFor.bind(this);
 
+    }
+
+    public render() {
+        const question = this.props.item;
+        const { targetItemId, questionList, messageType, message, validation, validationValue } = this.state;
+        const { answers, disabled, children, isSubQuestion, smallViewport, errors } = this.props;
+        // const onAnswerChanged = this.props.onAnswerChanged || getAnswerChangeHandler(this.props);
+        const onAnswerChanged = this.onAnswerChange;
+        const questionId = question.id.replace(/-\d$/, '');
+        const answer = answers ? answers[questionId] : 'undefined';
+        const text = question.text || '';
+        const questionType = (question.questionType || '').toUpperCase();
+        const choices = question.choices || [] as any;
+        const getCodeOptions = this.getCodeOptions.bind(this);
+        let labelCols = isSubQuestion ? 6 : 7;
+        let inputCols = 5;
+        const offsetCols = isSubQuestion ? 1 : 0;
+
+        // force full width stacking
+        if (smallViewport) {
+            labelCols = 12;
+            inputCols = 12;
+        }
+
+        const props = {
+            name: question.id,
+            value: answer,
+            label: <QuestionLabel text={text} questionNumber={question.number} />,
+            hideLabel: question.textHidden,
+            placeholder: '',
+            multi: false,
+            onChange: onAnswerChanged,
+            isReadOnly: disabled,
+            labelCols: labelCols,
+            inputCols: inputCols,
+            offsetCols: offsetCols,
+            options: getCodeOptions(choices) || [],
+            error: errors && (Array.isArray(errors[question.id.toLowerCase()]) ? errors[question.id.toLowerCase()][0] : errors[question.id])
+        };
+
+
+        return <div title={question.id}>
+            {(function () {
+                switch (questionType) {
+                    case 'YN':
+                        return <HorizontalYesNo {...props} />;
+                    case 'YNU':
+                        return <HorizontalYesNoUnknown  {...props} />;
+                    case 'TEXT':
+                        return <HorizontalTextInput  {...props} />;
+                    case 'MULTI_LINE_TEXT':
+                        return <HorizontalTextAreaInput {...props} />;
+                    case 'DROPDOWN':
+                        return <HorizontalDropdown {...props} />;
+                    case 'RADIO':
+                        return <HorizontalButtonRadio {...props} />;
+                    case 'DATE':
+                        return <HorizontalCustomDatePicker {...props} />;
+                    case 'NUMBER':
+                        return <HorizontalNumberInput {...props} />;
+                    case 'PHONE':
+                        return <HorizontalPhoneInput {...props} />;
+                    case 'EMAIL':
+                        return <HorizontalEmailInput {...props} />;
+                    case 'CHECK':
+                        return <HorizontalButtonCheck {...props} isVertical={true} />;
+                    default:
+                        return <div className="col-md-6">
+                            <p>{question.text}</p>
+
+                            {question.questionType != '' &&
+                                <div className="alert alert-danger">
+                                    Unrecognized question type: '{questionType}'
+                        </div>}
+                        </div>;
+                }
+            })()}
+            {children}
+        </div >;
     }
 
 
@@ -95,86 +174,7 @@ export default class Question extends React.Component<QuestionProps> {
 
     private getCodeOptions(options: any[]) {
         return options.map(option => {
-            return { label: option.description, value: option.code }
+            return { label: option.description, value: option.code };
         });
     }
-
-    public render() {
-        const question = this.props.item;
-        const { targetItemId, questionList, messageType, message, validation, validationValue } = this.state;
-        const { answers, disabled, children, isSubQuestion, smallViewport, errors } = this.props;
-        //const onAnswerChanged = this.props.onAnswerChanged || getAnswerChangeHandler(this.props);
-        const onAnswerChanged = this.onAnswerChange;
-        const questionId = question.id.replace(/-\d$/, '');
-        const answer = answers ? answers[questionId] : 'undefined';
-        const text = question.text || '';
-        const questionType = (question.questionType || "").toUpperCase();
-        const choices = question.choices || [] as any;
-        const getCodeOptions = this.getCodeOptions.bind(this);
-        let labelCols = isSubQuestion ? 6 : 7;
-        let inputCols = 5;
-        const offsetCols = isSubQuestion ? 1 : 0;
-
-        //force full width stacking
-        if (smallViewport) {
-            labelCols = 12;
-            inputCols = 12;
-        }
-
-        const props = {
-            name: question.id,
-            value: answer,
-            label: <QuestionLabel text={text} questionNumber={question.number} />,
-            hideLabel: question.textHidden,
-            placeholder: '',
-            multi: false,
-            onChange: onAnswerChanged,
-            isReadOnly: disabled,
-            labelCols: labelCols,
-            inputCols: inputCols,
-            offsetCols: offsetCols,
-            options: getCodeOptions(choices) || [],
-            error: errors && (Array.isArray(errors[question.id.toLowerCase()]) ? errors[question.id.toLowerCase()][0] : errors[question.id])
-        };
-        
-
-        return <div title={question.id}>
-            {(function () {
-                switch (questionType) {
-                    case 'YN':
-                        return <HorizontalYesNo {...props} />
-                    case 'YNU':
-                        return <HorizontalYesNoUnknown  {...props} />
-                    case 'TEXT':
-                        return <HorizontalTextInput  {...props} />
-                    case 'MULTI_LINE_TEXT':
-                        return <HorizontalTextAreaInput {...props} />
-                    case 'DROPDOWN':
-                        return <HorizontalDropdown {...props} />
-                    case 'RADIO':
-                        return <HorizontalButtonRadio {...props} />
-                    case 'DATE':
-                        return <HorizontalCustomDatePicker {...props} />
-                    case 'NUMBER':
-                        return <HorizontalNumberInput {...props} />
-                    case 'PHONE':
-                        return <HorizontalPhoneInput {...props} />
-                    case 'EMAIL':
-                        return <HorizontalEmailInput {...props} />
-                    case 'CHECK':
-                        return <HorizontalButtonCheck {...props} isVertical={true} />
-                    default:
-                        return <div className="col-md-6">
-                            <p>{question.text}</p>
-
-                            {question.questionType != "" &&
-                                <div className="alert alert-danger">
-                                    Unrecognized question type: '{questionType}'
-                        </div>}
-                        </div>;
-                }
-            })()}
-            {children}
-        </div >
-    }
-};
+}

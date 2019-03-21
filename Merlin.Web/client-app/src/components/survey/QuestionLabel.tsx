@@ -9,8 +9,8 @@ export default class QuestionLabel extends React.Component<QuestionLabelProps> {
     public render() {
         const { text, questionNumber } = this.props;
         const style = {
-            //purposely using == here to get null, undefined, and empty string, questions start at 1, so no 0 to worry about
-            paddingLeft: questionNumber == null ? "0px" : "25px" 
+            // purposely using == here to get null, undefined, and empty string, questions start at 1, so no 0 to worry about
+            paddingLeft: questionNumber == null ? '0px' : '25px'
         };
 
         return <div style={{ position: 'relative' }}>

@@ -20,7 +20,7 @@ class SettingInformation extends React.Component<SettingInfoProps> {
 
     state = {
         loading: true
-    }
+    };
 
     constructor(props: SettingInfoProps) {
         super(props);

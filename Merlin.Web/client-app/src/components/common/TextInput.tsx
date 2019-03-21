@@ -22,9 +22,35 @@ export type TextInputProps = {
     onBlur?: (event: any) => void;
     inputClassName?: string;
     maxLength?: number;
-}
+};
 
-class TextInput extends React.Component<TextInputProps>{
+class TextInput extends React.Component<TextInputProps> {
+    public render() {
+
+        const { name, label, placeholder, cols, autoComplete, value, inputRef, isReadOnly, autoFocus, inputClassName, maxLength } = this.props;
+
+        this.onChange = this.onChange.bind(this);
+        this.onKeyPress = this.onKeyPress.bind(this);
+        this.onBlur = this.onBlur.bind(this);
+
+        return <input type="text"
+            value={value ? value : ''}
+            className={`form-control ${isReadOnly ? 'disabled' : ''} ${!isNullOrEmpty(inputClassName) ? inputClassName : ''}`}
+            id={name}
+            name={name}
+            aria-describedby={label}
+            placeholder={placeholder}
+            onChange={this.onChange}
+            onFocus={this.moveCaretAtEnd}
+            ref={inputRef}
+            readOnly={isReadOnly}
+            autoComplete={autoComplete || 'on'}
+            autoFocus={autoFocus || false}
+            onKeyPress={this.onKeyPress}
+            onBlur={this.onBlur}
+            maxLength={maxLength}
+        />;
+    }
 
     private onChange(event: ChangeEvent<HTMLInputElement>) {
         this.props.onChange(this.props.name, event.currentTarget.value);
@@ -48,35 +74,9 @@ class TextInput extends React.Component<TextInputProps>{
 
     private moveCaretAtEnd(e: any) {
         e.preventDefault();
-        var temp_value = e.target.value;
+        let temp_value = e.target.value;
         e.target.value = '';
         e.target.value = temp_value;
-    }
-    public render() {
-
-        const { name, label, placeholder, cols, autoComplete, value, inputRef, isReadOnly, autoFocus, inputClassName, maxLength } = this.props;
-
-        this.onChange = this.onChange.bind(this);
-        this.onKeyPress = this.onKeyPress.bind(this);
-        this.onBlur = this.onBlur.bind(this);
-
-        return <input type="text"
-            value={value ? value : ""}
-            className={`form-control ${isReadOnly ? "disabled" : ""} ${!isNullOrEmpty(inputClassName) ? inputClassName : ''}`}
-            id={name}
-            name={name}
-            aria-describedby={label}
-            placeholder={placeholder}
-            onChange={this.onChange}
-            onFocus={this.moveCaretAtEnd}
-            ref={inputRef}
-            readOnly={isReadOnly}
-            autoComplete={autoComplete || "on"}
-            autoFocus={autoFocus || false}
-            onKeyPress={this.onKeyPress}
-            onBlur={this.onBlur}
-            maxLength={maxLength}
-        />;
     }
 }
 

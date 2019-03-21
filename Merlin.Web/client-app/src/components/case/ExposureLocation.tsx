@@ -2,22 +2,22 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { ApplicationState } from '../../store/index';
 import StaticInput from '../common/StaticInput';
-import Dropdown from '../common/Dropdown'; 
+import Dropdown from '../common/Dropdown';
 import * as CaseState from '../../store/Case';
 import { defaults } from '../../utils/Global';
 import { getOptions } from '../../utils/UIUtils';
 import Loading from '../common/Loading';
 
 type ExposureLocationProps = {
-    caseId: number; 
+    caseId: number;
     onAddLocation: (element: any) => void;
     onRemoveLocation: (element: any) => void;
 } & typeof CaseState.actionCreators
   & CaseState.CaseState;
 
 class ExposureLocation extends React.Component<ExposureLocationProps> {
-    state = { 
-        importedSelection: defaults.string, 
+    state = {
+        importedSelection: defaults.string,
         isLoading: defaults.boolean
     };
 
@@ -31,7 +31,7 @@ class ExposureLocation extends React.Component<ExposureLocationProps> {
 
 
         if (this.props.travelHistory.exposureLocation) {
-            
+
             this.setState({ isLoading: true });
             const { travelHistoryItems, exposureLocation } = this.props.travelHistory;
             const { locationsExposed } = exposureLocation;
@@ -41,7 +41,7 @@ class ExposureLocation extends React.Component<ExposureLocationProps> {
                 if (locationsExposed && location.locationExposed !== '') {
                     const codeValues = locationsExposed.find(
                         (item) => {
-                            return item.description === location.locationExposed
+                            return item.description === location.locationExposed;
                         });
                     if (codeValues) {
                         locations.push(codeValues.code);
@@ -53,15 +53,56 @@ class ExposureLocation extends React.Component<ExposureLocationProps> {
         this.setState({ isLoading: false });
     }
 
+    public render() {
+        const { importedSelection, isLoading } = this.state;
+
+        if (isLoading) {
+           return <Loading />;
+        }
+        const { exposureLocation } = this.props.travelHistory;
+
+        if (exposureLocation) {
+        const { imported, locationsExposed, origin, locationExposedSelected } = exposureLocation;
+
+        return <div>
+            <Dropdown
+                name="locationsExposed"
+                label="Location(s) where exposed"
+                value={locationExposedSelected}
+                options={getOptions(locationsExposed ? locationsExposed : [])}
+                onChange={this.onDropdownChange}
+                isMulti={true}
+                hideLabel={false}
+            />
+            <Dropdown
+                name="imported"
+                label="Imported"
+                value={importedSelection}
+                options={getOptions(imported ? imported : [])}
+                hideLabel={false}
+                onChange={() => { }}
+                isReadOnly={true}
+            />
+            <StaticInput
+                name="origin"
+                label="Origin"
+                value={origin ? origin.toString() : ''}
+                hideLabel={false}
+            />
+        </div>;
+        }
+        return null;
+    }
+
     private onDropdownChange(name: string, newValue: string[]) {
-        const { onAddLocation, onRemoveLocation, travelHistory } = this.props; 
+        const { onAddLocation, onRemoveLocation, travelHistory } = this.props;
         const { locationExposedSelected } = travelHistory.exposureLocation;
 
         if (newValue.length > locationExposedSelected.length) {
             // add
             onAddLocation(newValue[newValue.length - 1]);
         } else if (newValue.length < locationExposedSelected.length) {
-            //remove
+            // remove
             const elementRemoved = locationExposedSelected.find(item => {
                 return (newValue.indexOf(item) == -1);
             });
@@ -79,8 +120,8 @@ class ExposureLocation extends React.Component<ExposureLocationProps> {
             zoneSelected = this.getZoneSelected(newValue);
             origin = this.getOrigin(newValue);
         }
-         
-        newState.importedSelection = this.getImported(zoneSelected); 
+
+        newState.importedSelection = this.getImported(zoneSelected);
         this.setState(newState, async () => await this.props.saveExposureLocation(origin, newValue));
     }
 
@@ -98,11 +139,11 @@ class ExposureLocation extends React.Component<ExposureLocationProps> {
 
         let zoneSelected = 0;
 
-        zone['florida'] = false;
-        zone['anotherState'] = false;
-        zone['usTerritory'] = false;
-        zone['outsideUsa'] = false;
-        zone['unknown'] = false;
+        zone.florida = false;
+        zone.anotherState = false;
+        zone.usTerritory = false;
+        zone.outsideUsa = false;
+        zone.unknown = false;
 
         (locations as string[]).map(selection => {
             const zoneObj = selection.split('~');
@@ -111,7 +152,7 @@ class ExposureLocation extends React.Component<ExposureLocationProps> {
 
             switch (zoneCode) {
                 case 1:
-                    if (zoneName === "FL") {
+                    if (zoneName === 'FL') {
                         zone.florida = true;
                     } else {
                         zone.anotherState = true;
@@ -142,62 +183,21 @@ class ExposureLocation extends React.Component<ExposureLocationProps> {
     private getImported(zoneValue: number) {
         switch (true) {
             case (zoneValue == 0):
-                return "";
+                return '';
             case (zoneValue == 1):
-                return "FLORIDA";
+                return 'FLORIDA';
             case (zoneValue == 2):
             case (zoneValue == 3):
-                return "ANOTHER_STATE";
+                return 'ANOTHER_STATE';
             case (zoneValue > 3 && zoneValue < 8):
-                return "US_TERRITORY"
+                return 'US_TERRITORY';
             case (zoneValue == 8):
-                return "OUT_OF_US";
+                return 'OUT_OF_US';
             case (zoneValue > 8 && zoneValue < 16):
-                return "ANYWHERE"
+                return 'ANYWHERE';
             default:
-                return "UNKNOWN";
+                return 'UNKNOWN';
         }
-    }
-
-    public render() {
-        const { importedSelection, isLoading } = this.state;
-
-        if (isLoading) {
-           return <Loading />;
-        }
-        const { exposureLocation } = this.props.travelHistory;
- 
-        if (exposureLocation){
-        const { imported, locationsExposed, origin, locationExposedSelected } = exposureLocation;
-       
-        return <div>
-            <Dropdown
-                name="locationsExposed"
-                label="Location(s) where exposed"
-                value={locationExposedSelected}
-                options={getOptions(locationsExposed ? locationsExposed : [])}
-                onChange={this.onDropdownChange}
-                isMulti={true}
-                hideLabel={false}
-            />
-            <Dropdown
-                name="imported"
-                label="Imported"
-                value={importedSelection}
-                options={getOptions(imported ? imported : [])}
-                hideLabel={false}
-                onChange={() => { }}
-                isReadOnly={true}
-            />
-            <StaticInput
-                name="origin"
-                label="Origin"
-                value={origin ? origin.toString() : ""}
-                hideLabel={false}
-            />
-        </div>;
-        }
-        return null;
     }
 }
 export default connect(

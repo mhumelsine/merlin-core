@@ -3,15 +3,14 @@ import { defaults } from '../../utils/Global';
 import SaveButton from './SaveButton';
 import DeleteButton from './DeleteButton';
 
-type SaveDeleteButtonProps =
-    {
+type SaveDeleteButtonProps = {
         saveOnClick?: any;
         iconFontSize?: number;
         deleteOnClick?: any;
-        deleteDisabled?:boolean
+        deleteDisabled?: boolean
         saveDisabled?: boolean;
         saveButtonText?: string
-    }
+    };
 
 export default class SaveDeleteButton extends React.Component<SaveDeleteButtonProps, {}> {
     public render() {
@@ -26,7 +25,7 @@ export default class SaveDeleteButton extends React.Component<SaveDeleteButtonPr
                         iconFontSize={iconFontSize}
                         disabled={deleteDisabled}
                     />
-                    {" "}
+                    {' '}
                     <div className="btn-group " role="group" >
                         <SaveButton onClick={saveOnClick}
                             iconFontSize={iconFontSize}
@@ -34,6 +33,6 @@ export default class SaveDeleteButton extends React.Component<SaveDeleteButtonPr
                             buttonText={saveButtonText}
                         />
                     </div>
-            </div>
+            </div>;
     }
 }
