@@ -1,0 +1,106 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace Merlin.Core.Data
+{
+    public partial class LeadExtEnvironmental
+    {
+        public int IdCase { get; set; }
+        public int IdEnvironmental { get; set; }
+        public string DsAddress1 { get; set; }
+        public string DsAddress2 { get; set; }
+        public string DsZip { get; set; }
+        public string DsCity { get; set; }
+        public string CdState { get; set; }
+        public string CdCounty { get; set; }
+        public short? AmYearBuilt { get; set; }
+        public string CdInvestigator { get; set; }
+        public string DsInvestigationReasonType { get; set; }
+        public string DsInvestigationReason { get; set; }
+        public DateTime? DtInvestigation { get; set; }
+        public byte? InPrimaryResidenceInvestigation { get; set; }
+        public string DsPrimaryResidenceInvestigation { get; set; }
+        public string CdDwellingType { get; set; }
+        public string DsDwellingType { get; set; }
+        public string CdOwnership { get; set; }
+        public string NmOwner { get; set; }
+        public string CdOwnerHomePhone { get; set; }
+        public string CdOwnerOtherPhone { get; set; }
+        public string DsOwnerAddress1 { get; set; }
+        public string DsOwnerAddress2 { get; set; }
+        public string DsOwnerZip { get; set; }
+        public string DsOwnerCity { get; set; }
+        public string CdOwnerState { get; set; }
+        public byte? InDwellingTesting { get; set; }
+        public string CdDwellingLocation { get; set; }
+        public string DsDwellingLocation { get; set; }
+        public byte? InHighXref { get; set; }
+        public string CdXrfType { get; set; }
+        public decimal? AmXrfResult { get; set; }
+        public string CdXrfUnit { get; set; }
+        public byte? InHighFloordust { get; set; }
+        public string CdFloordustType { get; set; }
+        public decimal? AmFloordustResult { get; set; }
+        public string CdFloordustUnit { get; set; }
+        public byte? InHighWindowsill { get; set; }
+        public decimal? AmWindowsillResult { get; set; }
+        public string CdWindowsillUnit { get; set; }
+        public byte? InHighWindowwell { get; set; }
+        public decimal? AmWindowwellResult { get; set; }
+        public string CdWindowwellUnit { get; set; }
+        public byte? InHighPaintchip { get; set; }
+        public decimal? AmPaintchipResult { get; set; }
+        public string CdPaintchipUnit { get; set; }
+        public byte? InLeadPaintHazard { get; set; }
+        public byte? InPotentialSourceHazard { get; set; }
+        public byte? InHighWatersample { get; set; }
+        public decimal? AmWatersampleResult { get; set; }
+        public string CdWatersampleUnit { get; set; }
+        public byte? InHighSoilsample { get; set; }
+        public decimal? AmSoilsampleResult { get; set; }
+        public string CdSoilsampleUnit { get; set; }
+        public byte? InImportFood { get; set; }
+        public decimal? AmImportFoodResult { get; set; }
+        public string CdImportFoodUnit { get; set; }
+        public byte? InImportRemedyCosmetic { get; set; }
+        public decimal? AmImportRemedyCosmeticResult { get; set; }
+        public string CdImportRemedyCosmeticUnit { get; set; }
+        public byte? InImportFirePottery { get; set; }
+        public decimal? AmImportFirePotteryResult { get; set; }
+        public string CdImportFirePotteryUnit { get; set; }
+        public string CdImportFirePotteryTest { get; set; }
+        public byte? InVinylBlind { get; set; }
+        public decimal? AmVinylBlindResult { get; set; }
+        public string CdVinylBlindUnit { get; set; }
+        public string CdVinylBlindTest { get; set; }
+        public byte? InToysJewelery { get; set; }
+        public decimal? AmToysJeweleryResult { get; set; }
+        public string CdToysJeweleryUnit { get; set; }
+        public string CdToysJeweleryTest { get; set; }
+        public byte? InFloorCountertop { get; set; }
+        public decimal? AmFloorCountertopResult { get; set; }
+        public string CdFloorCountertopUnit { get; set; }
+        public string CdFloorCountertopTest { get; set; }
+        public byte? InHouseholdOccupationLeadHazard { get; set; }
+        public string CdHouseholdOccupationLeadHazard { get; set; }
+        public string DsHouseholdOccupationLeadHazard { get; set; }
+        public byte? InPotentialIndustryHazard { get; set; }
+        public string DsPotentialIndustryHazard { get; set; }
+        public string CdEpaCertifiedLeadHazard { get; set; }
+        public string DsEpaCertifiedLeadHazard { get; set; }
+        public string DsOtherFindings { get; set; }
+        public DateTime? DtInvestigationComplete { get; set; }
+        public DateTime? DtReportLandlord { get; set; }
+        public DateTime? DtReportPatient { get; set; }
+        public string DsComments { get; set; }
+        public string IdAdded { get; set; }
+        public DateTime DtAdded { get; set; }
+        public string IdChanged { get; set; }
+        public DateTime? DtChanged { get; set; }
+        public byte? InOtherLeadHazards { get; set; }
+        public string DsOtherLeadHazards { get; set; }
+        public decimal? AmOtherLeadHazardsResult { get; set; }
+        public string CdOtherLeadHazardsUnit { get; set; }
+        public string CdOtherLeadHazardsTest { get; set; }
+    }
+}

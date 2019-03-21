@@ -1,0 +1,79 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Isf.Core.Cqrs.Web;
+using Merlin.Core.Survey.DTOsBuilder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+
+namespace Merlin.Web.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class SurveyController : CqrsApiController
+    {
+        #region Question
+        [HttpGet("question/{questionId}")]
+        public async Task<IActionResult> GetQuestionAsync([FromRoute]GetQuestionByIdQuery query)
+        {
+            return await DispatchQueryAsync(query);
+        }
+
+        [HttpGet("question/{subText}/{page:int}")]
+        public async Task<IActionResult> GetAsync([FromRoute]GetQuestionsBySubTextQuery query)
+        {
+            return await DispatchQueryAsync(query);
+        }
+
+        [HttpGet("question/{questionId}/layouts/{page:int}")]
+        public async Task<IActionResult> GetLayoutsWithQuestionAsync([FromRoute]GetLayoutsWithQuestionQuery query)
+        {
+            return await DispatchQueryAsync(query);
+        }
+
+        [HttpPost("question")]
+        public async Task<IActionResult> PostQuestionAsync([FromBody]CreateQuestionCommand command)
+        {
+            return await DispatchCommandAsync(command);
+        }
+
+        [HttpPut("question")]
+        public async Task<IActionResult> PutQuestionAsync([FromBody]UpdateQuestionCommand command)
+        {
+            return await DispatchCommandAsync(command);
+        }
+#endregion
+        #region Object Mapping
+        [HttpGet("question/{questionId}/mapping")]
+        public async Task<IActionResult> GetMappingsForQuestion([FromRoute]GetMappingsForQuestionQuery query)
+        {
+            return await DispatchQueryAsync(query);
+        }
+
+        [HttpPost("question/{questionId}/mapping")]
+        public async Task<IActionResult> PostMappingAsync([FromBody]CreateObjectMappingCommand command)
+        {
+            return await DispatchCommandAsync(command, result =>
+            {
+                var uri = Url.Action("Get", new { id = result.AggregateRoot.AggregateRootId });
+
+                return Created(uri, result.AggregateRoot);
+            });
+        }
+
+        [HttpPut("question/{questionId}/mapping")]
+        public async Task<IActionResult> PutMappingAsync([FromBody]UpdateObjectMappingCommand command)
+        {
+            return await DispatchCommandAsync(command);
+        }
+
+        [HttpDelete("question/{questionId}/mapping/{aggregateRootId}")]
+        public async Task<IActionResult> DeleteMappingAsync([FromRoute]DeleteObjectMappingCommand command)
+        {
+            return await DispatchCommandAsync(command);
+        }
+
+        #endregion
+    }
+}

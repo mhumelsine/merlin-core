@@ -1,0 +1,323 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup Label="Globals">
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+    <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
+    <IsPackable>false</IsPackable>
+    <SpaRoot>client-app\</SpaRoot>
+    <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Isf.Core.Data" Version="1.0.9" />
+    <PackageReference Include="Isf.Core.Security" Version="1.0.1" />
+    <PackageReference Include="Isf.Core.Utils" Version="1.0.29" />
+    <PackageReference Include="Isf.Core.Web" Version="1.0.15" />
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Don't publish the SPA source files, but do show them in the project files list -->
+    <Compile Remove="client-app\**" />
+    <Content Remove="$(SpaRoot)**" />
+    <Content Remove="client-app\**" />
+    <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="client-app\**" />
+    <None Remove="client-app\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="client-app\package-lock.json" />
+    <Content Include="client-app\package.json" />
+    <Content Include="client-app\public\favicon.ico" />
+    <Content Include="client-app\public\index.html" />
+    <Content Include="client-app\public\manifest.json" />
+    <Content Include="client-app\src\css\bootstrap.theme.min.css" />
+    <Content Include="client-app\src\css\img\merlinlogo.png" />
+    <Content Include="client-app\src\css\site.css" />
+    <Content Include="client-app\tsconfig.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="client-app\.gitignore" />
+    <None Include="client-app\README.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Merlin.Core\Merlin.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="client-app\src\App.test.tsx" />
+    <TypeScriptCompile Include="client-app\src\App.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\case\EpiLinkItem.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\case\EpiLinks.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\case\ExposureLocation.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\case\HealthCareVisitItem.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\case\HealthCareVisitList.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\case\LabList.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\case\LabListItem.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\case\LabSummary.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\case\SymptomItem.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\case\Symptoms.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\case\TravelHistory.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\case\TravelHistoryItem.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\case\TreatmentItem.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\case\Treatments.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\case\VaccinationHistItem.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\case\VaccinationHistory.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\Accordion.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\AccordionItem.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\AccordionPanel.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\AddButton.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\Address.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\AddressInline.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\Alert.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\BackButton.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\ButtonCheckGroup.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\ButtonRadio.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\CancelButton.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\Card.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\CardBody.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\CardGroup.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\CardGroupCard.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\Checkbox.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\CollapsibleCard.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\CustomDatePicker.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\DateRange.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\DeleteButton.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\DragContainer.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\DragItem.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\Dropdown.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\DropDownButton.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\DropDownForm.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\DropdownMenu.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\DropdownMenuItem.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\EditButton.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\EditCharm.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\EditListItem.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\EmailInput.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\ErrorSummary.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\FileInput.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\FormField.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\GenericTable.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\HorizontalFormField.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\InlineLoader.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\LoadFailure.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\Loading.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\Modal.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\NextButton.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\NumberInput.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\PagedList.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\PageNotFound.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\Pagination.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\PaginationLink.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\PhoneInput.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\PrintButton.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\RadioButton.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\SaveButton.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\SaveCancelButton.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\SaveDeleteButtons.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\SearchButton.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\Secure.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\SideMenu.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\SideMenuItem.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\SingleSelectListGroup.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\Slider.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\StaticInput.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\Sticky.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\SubmitButton.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\TagInput.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\TextAreaInput.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\TextInput.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\WithAddOn.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\WysiwygEditor.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\YesNo.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\common\YesNoUnknown.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\ELRSearch\AdvancedSearch.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\ELRSearch\AdvancedSearchCriteria.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\ELRSearch\AssignmentHistory.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\ELRSearch\CreateAssignment.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\ELRSearch\ElrSearchPage.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\ELRSearch\FilterEvents.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\ELRSearch\ForceImport.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\ELRSearch\LoincMaster.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\ELRSearch\Notes.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\ELRSearch\ProcessingHistory.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\ELRSearch\SearchForm.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\ELRSearch\SearchResultsTable.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\ELRSearch\SearchResultTableRow.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\ELRSearch\Snomed.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\ELRSearch\StatenoProfileIdSearch.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\ELRSearch\TemplateDropdown.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\ELRSearch\TemplateInfoBar.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\Home.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\Layout.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\LogOff.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\NavMenu.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\NavMenuItem.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\Outbreak\AuditInfo.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\Outbreak\Background.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\Outbreak\CaseReview.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\Outbreak\ClinicalResults.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\Outbreak\Conclusions.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\Outbreak\DocumentItem.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\Outbreak\DocumentList.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\Outbreak\DocumentListItem.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\Outbreak\Documents.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\Outbreak\EpiComPost.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\Outbreak\EpiComPostForm.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\Outbreak\GeographicLocation.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\Outbreak\LaboratoryResults.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\Outbreak\Methods.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\Outbreak\NoteForm.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\Outbreak\NoteList.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\Outbreak\NoteListItem.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\Outbreak\Notes.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\Outbreak\OutbreakDetailPage.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\Outbreak\OutbreakLabList.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\Outbreak\Results.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\Outbreak\SettingForm.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\Outbreak\SettingInformation.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\Outbreak\SettingList.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\Outbreak\SettingListItem.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\Outbreak\StaffResults.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\Outbreak\TotalCasesResults.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\Outbreak\Transmission.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\Outbreak\UploadDocument.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\SessionLoader.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\SmartGoals\SmartGoalsPage.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\SmartGoals\SmartGoalsResults.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\SmartGoals\SmartGoalsSearch.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\AffectedSurveysList.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\AttachSurveys.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\CaseInfoControl.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\ControlList.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\EditLayoutItem.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\EditLayoutViewer.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\LayoutItem.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\LayoutViewer.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\layout\AffectedLayoutList.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\layout\CopyExistingLayout.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\layout\Edit.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\layout\EditItem.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\layout\ImportLayout.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\layout\ImportLayoutList.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\layout\LayoutList.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\layout\LayoutPreview.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\layout\LayoutSearchForm.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\layout\LayoutSearchPage.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\layout\LayoutSurveyList.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\layout\MessageForm.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\layout\NewLayoutPage.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\layout\PropertyManager.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\layout\QuestionActivation.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\layout\QuestionAdd.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\layout\QuestionCreate.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\layout\QuestionEdit.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\layout\QuestionEditFromLayout.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\layout\QuestionInfo.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\layout\QuestionList.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\layout\QuestionListItem.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\layout\QuestionManager.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\layout\QuestionSearch.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\layout\QuestionSearchForm.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\layout\QuestionValidation.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\layout\RepeatingQuestionGroup.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\layout\RepeatingQuestionGroupRow.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\layout\RepeatingQuestionGroupView.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\layout\SaveLayoutControl.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\layout\SectionForm.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\LineBreak.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\MerlinSurvey.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\MerlinSurveyAnswered.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\Message.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\ObjectMappingList.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\ObjectMappingManager.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\Question.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\QuestionLabel.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\QuestionTypeControl.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\Section.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\Spacer.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\SurveyCollection.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\SurveyControl.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\SurveyCreate.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\SurveyEdit.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\SurveyInfo.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\SurveyList.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\SurveyListHistory.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\SurveyListItem.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\SurveyListItemDetail.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\SurveyPreview.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\SurveySearch.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\SurveySearchForm.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\SurveyTypeControl.tsx" />
+    <TypeScriptCompile Include="client-app\src\components\survey\WidthProvider.tsx" />
+    <TypeScriptCompile Include="client-app\src\index.tsx" />
+    <TypeScriptCompile Include="client-app\src\react-app-env.d.ts" />
+    <TypeScriptCompile Include="client-app\src\serviceWorker.ts" />
+    <TypeScriptCompile Include="client-app\src\store\Case.ts" />
+    <TypeScriptCompile Include="client-app\src\store\Code.tsx" />
+    <TypeScriptCompile Include="client-app\src\store\configureStore.ts" />
+    <TypeScriptCompile Include="client-app\src\store\ELRSearch.ts" />
+    <TypeScriptCompile Include="client-app\src\store\index.ts" />
+    <TypeScriptCompile Include="client-app\src\store\Layout.ts" />
+    <TypeScriptCompile Include="client-app\src\store\Outbreak.tsx" />
+    <TypeScriptCompile Include="client-app\src\store\Session.ts" />
+    <TypeScriptCompile Include="client-app\src\store\SmartGoals.ts" />
+    <TypeScriptCompile Include="client-app\src\store\Survey.ts" />
+    <TypeScriptCompile Include="client-app\src\store\SurveyQuestion.ts" />
+    <TypeScriptCompile Include="client-app\src\store\SurveySearch.ts" />
+    <TypeScriptCompile Include="client-app\src\utils\AjaxUtils.ts" />
+    <TypeScriptCompile Include="client-app\src\utils\ArrayUtils.ts" />
+    <TypeScriptCompile Include="client-app\src\utils\Global.ts" />
+    <TypeScriptCompile Include="client-app\src\utils\Interpreter.ts" />
+    <TypeScriptCompile Include="client-app\src\utils\LayoutUtils.ts" />
+    <TypeScriptCompile Include="client-app\src\utils\UIUtils.ts" />
+    <TypeScriptCompile Include="client-app\src\utils\ValidationUtils.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
+    <!-- Ensure Node.js is installed -->
+    <Exec Command="node --version" ContinueOnError="true">
+      <Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
+    </Exec>
+    <Error Condition="'$(ErrorCode)' != '0'" Text="Node.js is required to build and run this project. To continue, please install Node.js from https://nodejs.org/, and then restart your command prompt or IDE." />
+    <Message Importance="high" Text="Restoring dependencies using 'npm'. This may take several minutes..." />
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
+  </Target>
+
+  <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
+    <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build" />
+
+    <!-- Include the newly-built files in the publish output -->
+    <ItemGroup>
+      <DistFiles Include="$(SpaRoot)build\**; $(SpaRoot)build-ssr\**" />
+      <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
+        <RelativePath>%(DistFiles.Identity)</RelativePath>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </ResolvedFileToPublish>
+    </ItemGroup>
+  </Target>
+
+</Project>

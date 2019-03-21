@@ -1,0 +1,113 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace Merlin.Core.Data
+{
+    public partial class PediatricFluExt
+    {
+        public int IdCase { get; set; }
+        public string InAutopsyPerformed { get; set; }
+        public string InCardiacArrestOutsideHospital { get; set; }
+        public string CdLocationOfDeath { get; set; }
+        public string DsLocationOfDeathOther { get; set; }
+        public DateTime? DtHospitalAdmission { get; set; }
+        public string InPathologySpecimensSent { get; set; }
+        public string DsPathologySpecimensSentLab { get; set; }
+        public string InOriginalClinicalMaterialSent { get; set; }
+        public string DsOriginalClinicalMaterialSent { get; set; }
+        public string InStaphAureusSentLab { get; set; }
+        public string DsStaphAureusSentLab { get; set; }
+        public string InTestTypeCommercial { get; set; }
+        public DateTime? DtTestCollectionDate { get; set; }
+        public string CdTestResult { get; set; }
+        public string InPatientAdmittedRelated { get; set; }
+        public string InMechanicalVentilation { get; set; }
+        public string InComplications { get; set; }
+        public string InComplicationsPneumonia { get; set; }
+        public string InComplicationsArds { get; set; }
+        public string InComplicationsCroup { get; set; }
+        public string InComplicationsSeizures { get; set; }
+        public string InComplicationsBronchiolitis { get; set; }
+        public string InComplicationsEncephalitis { get; set; }
+        public string InComplicationsReye { get; set; }
+        public string InComplicationsShock { get; set; }
+        public string InComplicationsSepsis { get; set; }
+        public string InComplicationsHemorrhagic { get; set; }
+        public string InComplicationsCardiomyopathy { get; set; }
+        public string DsComplicationsAnotherViral { get; set; }
+        public string DsComplicationsOther { get; set; }
+        public string InExistingConditions { get; set; }
+        public string DsExistingConditionsNeuromuscular { get; set; }
+        public string InExistingConditionsModerate { get; set; }
+        public string InExistingConditionsSickleCell { get; set; }
+        public string InExistingConditionsAsthma { get; set; }
+        public string InExistingConditionsDiabetes { get; set; }
+        public string InExistingConditionsFebrileSeizures { get; set; }
+        public string InExistingConditionsSeizureDisorder { get; set; }
+        public string DsExistingConditionsCardiacDisease { get; set; }
+        public string DsExistingConditionsRenalDisease { get; set; }
+        public string InExistingConditionsSsti { get; set; }
+        public string DsExistingConditionsChromosonalAbnormality { get; set; }
+        public string DsExistingConditionsMitoDisorder { get; set; }
+        public string InExistingConditionsCysticFibrosis { get; set; }
+        public string DsExistingConditionsChronicPulmonary { get; set; }
+        public string DsExistingConditionsImmunosuppressive { get; set; }
+        public string DsExistingConditionsCancer { get; set; }
+        public string DsExistingConditionsEndoDisorder { get; set; }
+        public string InExistingConditionsObesity { get; set; }
+        public string InExistingConditionsCerebralPalsy { get; set; }
+        public string DsExistingConditionsPrematurity { get; set; }
+        public string DsExistingConditionsOtherNeurological { get; set; }
+        public string DsExistingConditionsPregnantAge { get; set; }
+        public string DsExistingConditionsOther { get; set; }
+        public string InReceivingTherapy { get; set; }
+        public string InReceivingTherapyAntiviral { get; set; }
+        public string InReceivingTherapyChemo { get; set; }
+        public string InReceivingTherapyChronicAspirin { get; set; }
+        public string InReceivingTherapySteroids { get; set; }
+        public string DsReceivingTherapyOther { get; set; }
+        public string InReceivingTherapyAfter { get; set; }
+        public string DsReceivingTherapyAfterAntibiotic { get; set; }
+        public string DsReceivingTherapyAfterAntiviral { get; set; }
+        public string InVaccineHistReceivingSeasonalVaccine { get; set; }
+        public string InVaccineHistTiv { get; set; }
+        public string InVaccineHistLaiv { get; set; }
+        public string IdAdded { get; set; }
+        public DateTime? DtAdded { get; set; }
+        public string IdChanged { get; set; }
+        public DateTime? DtChanged { get; set; }
+        public string InComplicationsOther { get; set; }
+        public string InExistingConditionsNeuromuscular { get; set; }
+        public string InExistingConditionsCardiacDisease { get; set; }
+        public string InExistingConditionsRenalDisease { get; set; }
+        public string InExistingConditionsChromosonalAbnormality { get; set; }
+        public string InExistingConditionsChronicPulmonary { get; set; }
+        public string InExistingConditionsImmunosuppressive { get; set; }
+        public string InExistingConditionsEndoDisorder { get; set; }
+        public string InExistingConditionsPrematurity { get; set; }
+        public string InExistingConditionsOtherNeurological { get; set; }
+        public string InExistingConditionsPregnantAge { get; set; }
+        public string InExistingConditionsOther { get; set; }
+        public string InReceivingTherapyOther { get; set; }
+        public string InReceivingTherapyAfterAntibiotic { get; set; }
+        public string InReceivingTherapyAfterAntiviral { get; set; }
+        public string InVaccineHistUnknown { get; set; }
+        public string InComplicationsAnotherViral { get; set; }
+        public string InExistingConditionsMitoDisorder { get; set; }
+        public string InExistingConditionsCancer { get; set; }
+        public string InVaccineDose1 { get; set; }
+        public string InVaccineDose2 { get; set; }
+        public string InVaccineDose1Days { get; set; }
+        public string InVaccineDose2Days { get; set; }
+        public DateTime? DtVaccineFirstDoseDate { get; set; }
+        public DateTime? DtVaccineSecondDoseDate { get; set; }
+        public string InVaccinePrevious { get; set; }
+        public string InDeathAge { get; set; }
+        public string InTwoDose { get; set; }
+        public string InDoseH1n1 { get; set; }
+        public string InSpecimenCollected { get; set; }
+
+        public EpiCase IdCaseNavigation { get; set; }
+        public PediatricFluExt2 PediatricFluExt2 { get; set; }
+    }
+}

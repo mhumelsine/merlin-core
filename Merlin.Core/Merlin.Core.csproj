@@ -1,0 +1,80 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup Label="Globals">
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Address_old\**" />
+    <Compile Remove="Commands\**" />
+    <Compile Remove="Services\**" />
+    <EmbeddedResource Remove="Address_old\**" />
+    <EmbeddedResource Remove="Commands\**" />
+    <EmbeddedResource Remove="Services\**" />
+    <None Remove="Address_old\**" />
+    <None Remove="Commands\**" />
+    <None Remove="Services\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="ELRSearch\Commands\ELRSearchUpdate.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Isf.BusinessRules" Version="1.0.5" />
+    <PackageReference Include="Isf.Core.Cqrs" Version="1.0.35" />
+    <PackageReference Include="Isf.Core.Data" Version="1.0.9" />
+    <PackageReference Include="Isf.Core.Utils" Version="1.0.29" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.2.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="System.ServiceModel.Duplex" Version="4.5.3" />
+    <PackageReference Include="System.ServiceModel.Http" Version="4.5.3" />
+    <PackageReference Include="System.ServiceModel.NetTcp" Version="4.5.3" />
+    <PackageReference Include="System.ServiceModel.Security" Version="4.5.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Address\Commands\" />
+    <Folder Include="Address\Queries\" />
+    <Folder Include="Address\Rules\" />
+    <Folder Include="Address\Services\" />
+    <Folder Include="Case\Commands\" />
+    <Folder Include="Case\Queries\" />
+    <Folder Include="Case\Rules\" />
+    <Folder Include="Case\Services\" />
+    <Folder Include="Codes\Commands\" />
+    <Folder Include="Codes\Queries\" />
+    <Folder Include="EpiUser\Commands\" />
+    <Folder Include="EpiUser\Dtos\" />
+    <Folder Include="EpiUser\Queries\" />
+    <Folder Include="EpiUser\Rules\" />
+    <Folder Include="Lab\Commands\" />
+    <Folder Include="Lab\Dtos\" />
+    <Folder Include="Lab\Queries\" />
+    <Folder Include="Lab\Rules\" />
+    <Folder Include="Lab\Services\" />
+    <Folder Include="Outbreak\Rules\" />
+    <Folder Include="Outbreak\Queries\" />
+    <Folder Include="SmartGoals\Commands\" />
+    <Folder Include="SmartGoals\Dtos\" />
+    <Folder Include="SmartGoals\Rules\" />
+    <Folder Include="SmartGoals\Queries\" />
+    <Folder Include="SmartGoals\Services\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services" />
+  </ItemGroup>
+
+</Project>
