@@ -17,9 +17,9 @@ import * as AjaxUtils from '../../utils/AjaxUtils';
 import * as utils from '../../utils/UIUtils';
 
 type SettingFormProps = {
-    errors:any,
+    errors: any,
     setting?: SettingInfo,
-    codes?:Codes
+    codes?: Codes
 }
     & typeof OutbreakActions
     & typeof CodeActions;
@@ -50,15 +50,135 @@ class SettingForm extends React.Component<SettingFormProps> {
         }
     }
 
+    public render() {
+        const { errors, loading, saving } = this.state;
+        const { codes, setting, cancelSettingEdit } = this.props;
+        const hasSettingsDropdown = codes!.SETTING_NAME && codes!.SETTING_NAME.length > 0;
+        let isKnownSetting = !utils.isNullOrEmpty(setting!.settingFacilityId);
+
+        if (loading || setting === undefined || codes === undefined) {
+            return <Loading />;
+        }
+
+        return <div>
+            <ErrorSummary errors={errors} />
+            <form onSubmit={this.onSubmit}>
+                <div className="row">
+                    <Dropdown
+                        name="settingType"
+                        value={setting.settingType}
+                        options={getOptions(codes.OB_SETTING)}
+                        cols={12}
+                        label="Setting Type"
+                        hideLabel={false}
+                        onChange={this.onChange}
+                        error={errors.settingType}
+                    />
+
+                    {hasSettingsDropdown &&
+                        <Dropdown
+                            name="settingFacilityId"
+                            value={setting.settingFacilityId}
+                            options={getOptions(codes.SETTING_NAME)}
+                            cols={12}
+                            label="Setting Name"
+                            hideLabel={false}
+                            onChange={this.onChange}
+                            error={errors.settingFacilityId}
+                        />
+                    }
+                    {!hasSettingsDropdown &&
+                        <TextInput
+                            name={'settingName'}
+                            value={setting.settingName}
+                            label={'Setting Name'}
+                            hideLabel={false}
+                            placeholder={''}
+                            isReadOnly={false}
+                            onChange={this.onChange}
+                            cols={12}
+                            error={errors.settingName}
+                        />
+                    }
+
+                    {setting.settingName === 'OTHER' &&
+                        <TextInput
+                            name={'otherType'}
+                            value={setting.otherType}
+                            label={'Other Setting Type'}
+                            hideLabel={false}
+                            placeholder={''}
+                            isReadOnly={false}
+                            onChange={this.onChange}
+                            cols={12}
+                            error={errors.otherType}
+                        />
+                    }
+
+                    <YesNo
+                        name={'isPrimary'}
+                        label={'Primary Setting'}
+                        value={setting.isPrimary}
+                        hideLabel={false}
+                        onChange={this.onChange}
+                        error={errors.isPrimary}
+                        isBoolean={true}
+                        cols={12}
+                        isReadOnly={false}
+                    />
+
+                </div>
+                <div className="row" >
+                    <TextInput
+                        name={'settingContact'}
+                        value={setting.settingContact}
+                        label={'Setting Contact'}
+                        hideLabel={false}
+                        placeholder={''}
+                        isReadOnly={isKnownSetting}
+                        onChange={this.onChange}
+                        cols={6}
+                        error={errors.settingContact}
+                    />
+                    <PhoneInput
+                        name={'settingContactPhone'}
+                        value={setting.settingContactPhone}
+                        label={'Setting Contact Phone'}
+                        hideLabel={false}
+                        placeholder={''}
+                        isReadOnly={isKnownSetting}
+                        onChange={this.onChange}
+                        cols={6}
+                        error={errors.settingContactPhone}
+                    />
+                </div>
+                <Address
+                    address={setting.address}
+                    name="address"
+                    onChange={this.onChange}
+                    errors={errors}
+                    isReadOnly={isKnownSetting}
+                />
+                <div className="row">
+                    <div className="col-md-12 text-right">
+                        <SaveButton disabled={saving} buttonText={saving ? 'Saving...' : 'Save'} />
+                        {' '}
+                        <CancelButton onClick={cancelSettingEdit} />
+                    </div>
+                </div>
+            </form>
+        </div>;
+    }
+
     private async onChange(name: string, value: any) {
         const setting = Object.assign({}, this.props.setting) as any;
 
-        const settingTypeChanged = name === "settingType"
+        const settingTypeChanged = name === 'settingType'
             && setting && setting.settingType !== value;
 
         setting[name] = value;
 
-        if (name === "settingFacilityId") {
+        if (name === 'settingFacilityId') {
             setting.settingContact = '';
             setting.settingContactPhone = '';
 
@@ -106,126 +226,6 @@ class SettingForm extends React.Component<SettingFormProps> {
         const errors = await this.props.saveSetting();
 
         this.setState({ errors, saving: false });
-    }
-
-    public render() {
-        const { errors, loading, saving } = this.state;
-        const { codes, setting, cancelSettingEdit } = this.props;
-        const hasSettingsDropdown = codes!.SETTING_NAME && codes!.SETTING_NAME.length > 0;
-        let isKnownSetting = !utils.isNullOrEmpty(setting!.settingFacilityId);
-
-        if (loading || setting === undefined || codes === undefined) {
-            return <Loading />;
-        }
-
-        return <div>
-            <ErrorSummary errors={errors} />
-            <form onSubmit={this.onSubmit}>
-                <div className="row">
-                    <Dropdown
-                        name="settingType"
-                        value={setting.settingType}
-                        options={getOptions(codes.OB_SETTING)}
-                        cols={12}
-                        label="Setting Type"
-                        hideLabel={false}
-                        onChange={this.onChange}
-                        error={errors.settingType}
-                    />
-
-                    {hasSettingsDropdown &&
-                        <Dropdown
-                            name="settingFacilityId"
-                            value={setting.settingFacilityId}
-                            options={getOptions(codes.SETTING_NAME)}
-                            cols={12}
-                            label="Setting Name"
-                            hideLabel={false}
-                            onChange={this.onChange}
-                            error={errors.settingFacilityId}
-                        />
-                    }
-                    {!hasSettingsDropdown &&
-                        <TextInput
-                            name={"settingName"}
-                            value={setting.settingName}
-                            label={"Setting Name"}
-                            hideLabel={false}
-                            placeholder={''}
-                            isReadOnly={false}
-                            onChange={this.onChange}
-                            cols={12}
-                            error={errors.settingName}
-                        />
-                    }
-
-                    {setting.settingName === "OTHER" &&
-                        <TextInput
-                            name={"otherType"}
-                            value={setting.otherType}
-                            label={"Other Setting Type"}
-                            hideLabel={false}
-                            placeholder={''}
-                            isReadOnly={false}
-                            onChange={this.onChange}
-                            cols={12}
-                            error={errors.otherType}
-                        />
-                    }
-
-                    <YesNo
-                        name={"isPrimary"}
-                        label={"Primary Setting"}
-                        value={setting.isPrimary}
-                        hideLabel={false}
-                        onChange={this.onChange}
-                        error={errors.isPrimary}
-                        isBoolean={true}
-                        cols={12}
-                        isReadOnly={false}
-                    />
-
-                </div>
-                <div className="row" >
-                    <TextInput
-                        name={"settingContact"}
-                        value={setting.settingContact}
-                        label={"Setting Contact"}
-                        hideLabel={false}
-                        placeholder={''}
-                        isReadOnly={isKnownSetting}
-                        onChange={this.onChange}
-                        cols={6}
-                        error={errors.settingContact}
-                    />
-                    <PhoneInput
-                        name={"settingContactPhone"}
-                        value={setting.settingContactPhone}
-                        label={"Setting Contact Phone"}
-                        hideLabel={false}
-                        placeholder={''}
-                        isReadOnly={isKnownSetting}
-                        onChange={this.onChange}
-                        cols={6}
-                        error={errors.settingContactPhone}
-                    />
-                </div>
-                <Address
-                    address={setting.address}
-                    name="address"
-                    onChange={this.onChange}
-                    errors={errors}
-                    isReadOnly={isKnownSetting}
-                />
-                <div className="row">
-                    <div className="col-md-12 text-right">
-                        <SaveButton disabled={saving} buttonText={saving ? "Saving..." : "Save"} />
-                        {" "}
-                        <CancelButton onClick={cancelSettingEdit} />
-                    </div>
-                </div>
-            </form>
-        </div>;
     }
 }
 

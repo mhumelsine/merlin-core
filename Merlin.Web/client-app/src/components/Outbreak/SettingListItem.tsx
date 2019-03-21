@@ -13,7 +13,7 @@ type SettingListItemProps = {
 }
     & typeof OutbreakActions;
 
-class SettingListItem extends React.Component<SettingListItemProps>{
+class SettingListItem extends React.Component<SettingListItemProps> {
 
     constructor(props: SettingListItemProps) {
         super(props);
@@ -22,17 +22,9 @@ class SettingListItem extends React.Component<SettingListItemProps>{
         this.onDelete = this.onDelete.bind(this);
     }
 
-    private onEdit(event: any) {
-        this.props.selectSettingEdit(event.currentTarget.name);
-    }
-
-    private onDelete(event: any) {
-        this.props.deleteSetting(event.currentTarget.name);
-    }
-
     public render() {
 
-        const { setting } = this.props;   
+        const { setting } = this.props;
 
         return <tr key={setting.id}>
             <td data-title="ID">{setting.id}</td>
@@ -60,6 +52,14 @@ class SettingListItem extends React.Component<SettingListItemProps>{
                 />
             </td>
         </tr>;
+    }
+
+    private onEdit(event: any) {
+        this.props.selectSettingEdit(event.currentTarget.name);
+    }
+
+    private onDelete(event: any) {
+        this.props.deleteSetting(event.currentTarget.name);
     }
 }
 

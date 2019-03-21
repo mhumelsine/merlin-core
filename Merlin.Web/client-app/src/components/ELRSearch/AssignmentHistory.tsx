@@ -4,20 +4,20 @@ import * as AjaxUtils from '../../utils/AjaxUtils';
 import InlineLoader from '../common/InlineLoader';
 
 type Props = {
-    familyId:number
+    familyId: number
 };
 
 type State = {
     loading: boolean,
-    history:any[]
+    history: any[]
 };
 
 export default class AssignmentHistory extends React.Component<Props, State> {
 
     state = {
         loading: false,
-        history:[]
-    }
+        history: []
+    };
 
     public async componentWillMount() {
         const { familyId } = this.props;

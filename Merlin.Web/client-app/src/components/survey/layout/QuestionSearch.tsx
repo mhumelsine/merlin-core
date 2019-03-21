@@ -1,6 +1,6 @@
 ﻿import * as React from 'react';
-import { RouteComponentProps, Link } from "react-router-dom";
-import { FaSearch,FaPlus } from 'react-icons/fa';
+import { RouteComponentProps, Link } from 'react-router-dom';
+import { FaSearch, FaPlus } from 'react-icons/fa';
 import { connect } from 'react-redux';
 import { ApplicationState } from '../../../store';
 import * as SurveyQuestionStore from '../../../store/SurveyQuestion';
@@ -46,13 +46,13 @@ class QuestionSearch extends React.Component<QuestionSearchProps, {}> {
         super(props);
         this.timeout = defaults.number;
         this.state.subText = this.props.subText || this.state.subText;
-        //this.state.questions = (this.props.questions as any) || this.state.questions;       
+        // this.state.questions = (this.props.questions as any) || this.state.questions;
         this.onQuestionAdd = this.onQuestionAdd.bind(this);
         this.onChange = this.onChange.bind(this);
         this.performSearch = this.performSearch.bind(this);
         this.handleSearch = this.handleSearch.bind(this);
     }
-    
+
     public componentWillMount() {
         if (!UIUtils.isNullOrEmpty(this.state.subText)) {
             this.performSearch();
@@ -79,7 +79,7 @@ class QuestionSearch extends React.Component<QuestionSearchProps, {}> {
         const { subText } = this.state;
         const { history, requestQuestions } = this.props;
 
-        //cancel previous timeout
+        // cancel previous timeout
         this.removeTimeout();
         this.timeout = window.setTimeout(
             () => requestQuestions(subText, 1, history),
@@ -88,6 +88,45 @@ class QuestionSearch extends React.Component<QuestionSearchProps, {}> {
 
     public componentWillUnmount() {
         this.removeTimeout();
+    }
+
+    public render() {
+
+        const { subText } = this.state;
+        const { questions, requestQuestions, isInManageMode, history, canAddQuestion, layoutId, isLoading } = this.props;
+
+        return <div className="containsPagedList">
+
+            <form className="row searchForm" onSubmit={this.handleSearch}>
+                <TextInput
+                    cols={12}
+                    label="Keywords"
+                    hideLabel={true}
+                    name="subText"
+                    value={subText}
+                    placeholder="Enter some keywords"
+                    onChange={this.onChange}
+                    inputRef={(input: any) => { this.input = input; }}
+                />
+                {isInManageMode &&
+                    <div className="form-group col-sm-12">
+					<Link className={`${defaults.theme.buttons.class} btn-space-right`} to={`${defaults.urls.questionCreateUrl}${layoutId ? `/${layoutId}` : ''}`}><FaPlus fontSize={15} style={{ paddingRight: '5px' }}/>Create Question</Link>
+                    </div>
+                }
+            </form>
+
+                <QuestionList
+                    questions={questions}
+                    subText={subText}
+                    onQuestionAdd={this.onQuestionAdd}
+                    canAddQuestion={canAddQuestion}
+                    requestQuestions={requestQuestions}
+                    isInManageMode={isInManageMode}
+                    history={history}
+                    isLoading={isLoading}
+                    className={!isInManageMode ? 'pagedList smaller-font' : 'pagedList'}
+                />
+        </div>;
     }
 
     private removeTimeout() {
@@ -103,7 +142,7 @@ class QuestionSearch extends React.Component<QuestionSearchProps, {}> {
         const { addQuestion, parentId } = this.props;
 
         if (addQuestion) {
-            addQuestion(parentId || "", question);
+            addQuestion(parentId || '', question);
         }
     }
 
@@ -111,45 +150,6 @@ class QuestionSearch extends React.Component<QuestionSearchProps, {}> {
         let newState = Object.assign({}, this.state);
         (newState as any)[name] = newValue;
         this.setState(newState, () => this.performSearch());
-    }
-
-    public render() {
-
-        const { subText } = this.state;
-        const { questions, requestQuestions, isInManageMode, history, canAddQuestion, layoutId, isLoading } = this.props;
-
-        return <div className="containsPagedList">
-
-            <form className='row searchForm' onSubmit={this.handleSearch}>
-                <TextInput
-                    cols={12}
-                    label="Keywords"
-                    hideLabel={true}
-                    name="subText"
-                    value={subText}
-                    placeholder="Enter some keywords"
-                    onChange={this.onChange}
-                    inputRef={(input: any) => { this.input = input }}
-                />
-                {isInManageMode &&
-                    <div className="form-group col-sm-12">                   
-					<Link className={`${defaults.theme.buttons.class} btn-space-right`} to={`${defaults.urls.questionCreateUrl}${layoutId ? `/${layoutId}` : ''}`}><FaPlus fontSize={15} style={{ paddingRight: "5px" }}/>Create Question</Link>
-                    </div>
-                }
-            </form>
-                      
-                <QuestionList
-                    questions={questions}
-                    subText={subText}
-                    onQuestionAdd={this.onQuestionAdd}
-                    canAddQuestion={canAddQuestion}
-                    requestQuestions={requestQuestions}
-                    isInManageMode={isInManageMode}
-                    history={history}
-                    isLoading={isLoading}
-                    className={!isInManageMode ? "pagedList smaller-font" : "pagedList"}
-                />
-        </div>;
     }
 }
 export default connect(

@@ -12,13 +12,9 @@ type SingleSelectListGroupProps = {
     cols: number;
     onChange: (name: string, selectedValue: any) => void;
     isReadOnly: boolean;
-}
+};
 
 class SingleSelectListGroup extends React.Component<SingleSelectListGroupProps, {}> {
-    private onChange(event: any) {
-        event.preventDefault();
-        this.props.onChange(this.props.name, event.target.value);
-    }
 
     public render() {
 
@@ -34,10 +30,14 @@ class SingleSelectListGroup extends React.Component<SingleSelectListGroupProps, 
                         disabled={isReadOnly}
                         onClick={this.onChange.bind(this)}>
                         {option.label}
-                    </button>
+                    </button>;
                 })
             }
         </div>;
+    }
+    private onChange(event: any) {
+        event.preventDefault();
+        this.props.onChange(this.props.name, event.target.value);
     }
 }
 

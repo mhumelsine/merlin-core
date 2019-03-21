@@ -6,7 +6,7 @@ import BackButton from '../common/BackButton';
 interface ErrorSummaryProps {
     errors: any;
     showAll?: boolean;
-};
+}
 
 export default class ErrorSummary extends React.Component<ErrorSummaryProps> {
 
@@ -15,7 +15,7 @@ export default class ErrorSummary extends React.Component<ErrorSummaryProps> {
     public componentDidUpdate() {
         const { errors } = this.props;
 
-        //if errors are present, scroll into view
+        // if errors are present, scroll into view
         if (this.errorSummaryElement) {
             this.errorSummaryElement.scrollIntoView();
         }
@@ -24,7 +24,7 @@ export default class ErrorSummary extends React.Component<ErrorSummaryProps> {
     public render() {
         const { errors, showAll } = this.props;
 
-        let errorList = Object.keys(errors).filter(key => showAll || key === "");
+        let errorList = Object.keys(errors).filter(key => showAll || key === '');
 
         if (errorList.length === 0) {
             return null;
@@ -39,11 +39,11 @@ export default class ErrorSummary extends React.Component<ErrorSummaryProps> {
                         <li key={`${key}-${index}`} className="list-group-item list-group-item-danger">
                             {message}
                         </li>
-                    )
+                    );
                 }
                 )}
             </ul>
         </div>;
     }
 }
-;
+

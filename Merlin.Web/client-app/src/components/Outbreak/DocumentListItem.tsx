@@ -12,16 +12,12 @@ type DocumentListItemProps = {
 }
     & typeof OutbreakActions;
 
-class DocumentListItem extends React.Component<DocumentListItemProps>{
+class DocumentListItem extends React.Component<DocumentListItemProps> {
 
     constructor(props: DocumentListItemProps) {
         super(props);
 
         this.onDelete = this.onDelete.bind(this);
-    }
-
-    private onDelete(event: any) {
-        this.props.deleteDocument(event.currentTarget.name);
     }
 
     public render() {
@@ -35,7 +31,7 @@ class DocumentListItem extends React.Component<DocumentListItemProps>{
             <td data-title="User Added">{doc.userAdded}</td>
             <td data-title="Date Add">{doc.dateAdded}</td>
             <td data-title="File Name">{doc.fileName}</td>
-            <td className="d-flex justify-content-end" style={{ minWidth: "75px" }}>
+            <td className="d-flex justify-content-end" style={{ minWidth: '75px' }}>
                 <a
                     href={`api/outbreak/document/${doc.id}`}
                     title="Download Document"
@@ -53,6 +49,10 @@ class DocumentListItem extends React.Component<DocumentListItemProps>{
                 />
             </td>
         </tr>;
+    }
+
+    private onDelete(event: any) {
+        this.props.deleteDocument(event.currentTarget.name);
     }
 }
 

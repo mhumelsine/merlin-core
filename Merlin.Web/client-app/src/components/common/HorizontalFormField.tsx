@@ -30,23 +30,10 @@ interface HorizontalFormFieldProps {
 export default function asHorizontalFormField(WrappedComponent: any) {
     return class extends React.Component<HorizontalFormFieldProps> {
 
-        private getLabel() {
-            const { labelCols, hideLabel } = this.props;
-            const offsetCols = this.props.offsetCols || 0;
-
-            let className = `col-form-label col-md-${labelCols} offset-md-${offsetCols} ${hideLabel ? "sr-only" : ""}`;
-
-            return <label
-                htmlFor={this.props.name}
-                className={className}>
-                {this.props.label}
-            </label>;
-        }
-
         public render() {
             const { name, error, inputCols, hideLabel } = this.props;
 
-            
+
 
             return <div className="form-group row">
                 {this.getLabel()}
@@ -60,5 +47,18 @@ export default function asHorizontalFormField(WrappedComponent: any) {
                 </div>
             </div>;
         }
-    }
+
+        private getLabel() {
+            const { labelCols, hideLabel } = this.props;
+            const offsetCols = this.props.offsetCols || 0;
+
+            let className = `col-form-label col-md-${labelCols} offset-md-${offsetCols} ${hideLabel ? 'sr-only' : ''}`;
+
+            return <label
+                htmlFor={this.props.name}
+                className={className}>
+                {this.props.label}
+            </label>;
+        }
+    };
 }

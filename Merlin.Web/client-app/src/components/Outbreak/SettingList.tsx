@@ -5,7 +5,7 @@ import Alert from '../common/Alert';
 import { FaExclamationTriangle } from 'react-icons/fa/index';
 
 interface SettingListProps {
-    settings: SettingInfo[]
+    settings: SettingInfo[];
 }
 
 export default class SettingList extends React.Component<SettingListProps> {
@@ -35,8 +35,7 @@ export default class SettingList extends React.Component<SettingListProps> {
                     </tbody>
                 </table>
             </div>;
-        }
-        else {
+        } else {
             return <Alert alertType="warning"><FaExclamationTriangle /> No settings to show</Alert>;
         }
     }

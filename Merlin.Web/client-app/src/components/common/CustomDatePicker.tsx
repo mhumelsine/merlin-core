@@ -18,29 +18,15 @@ type CustomDatePickerProps = {
     error?: any;
     ignoreError?: boolean;
     defaultToToday?: boolean;
-}
+};
 
 class CustomDatePicker extends React.Component<CustomDatePickerProps, {}> {
-    private onChange(date: any) {
-        this.props.onChange(this.props.name, date ? moment(date).format("MM/DD/YYYY") : null);
-    }
-
-    private onChangeRaw(event: any) {
-        this.props.onChange(this.props.name, event.target.value);
-    }
-
-    private onBlur(event: any) {
-        if (!isNaN(Date.parse(event.target.value))) {
-            this.props.onChange(this.props.name, (moment(event.target.value).format("MM/DD/YYYY")))
-        }
-        else this.props.onChange(this.props.name, "");
-    }
 
     public render() {
         const { name, label, placeholder, onChange, cols, isReadOnly, error, ignoreError, defaultToToday } = this.props;
         let { value } = this.props;
         // const possiblyIgnoredError = ignoreError ? undefined : error;
-        //ignoring for now
+        // ignoring for now
         const possiblyIgnoredError = undefined;
 
         if (!value && defaultToToday) {
@@ -50,7 +36,7 @@ class CustomDatePicker extends React.Component<CustomDatePickerProps, {}> {
         return <DatePicker
             placeholderText={placeholder}
             name={name}
-            dateFormat={["L"]}
+            dateFormat={['L']}
             className="form-control datePicker"
             selected={value && (possiblyIgnoredError == undefined) ? moment(value, 'MM/DD/YYYY').toDate() : null}
             onChange={this.onChange.bind(this)}
@@ -59,8 +45,21 @@ class CustomDatePicker extends React.Component<CustomDatePickerProps, {}> {
             isClearable={true}
             value={value}
             readOnly={isReadOnly}
-            popperClassName={possiblyIgnoredError ? "hide" : ""}
+            popperClassName={possiblyIgnoredError ? 'hide' : ''}
         />;
+    }
+    private onChange(date: any) {
+        this.props.onChange(this.props.name, date ? moment(date).format('MM/DD/YYYY') : null);
+    }
+
+    private onChangeRaw(event: any) {
+        this.props.onChange(this.props.name, event.target.value);
+    }
+
+    private onBlur(event: any) {
+        if (!isNaN(Date.parse(event.target.value))) {
+            this.props.onChange(this.props.name, (moment(event.target.value).format('MM/DD/YYYY')));
+        } else this.props.onChange(this.props.name, '');
     }
 }
 

@@ -48,6 +48,7 @@
     <Content Include="client-app\src\css\img\merlinlogo.png" />
     <Content Include="client-app\src\css\site.css" />
     <Content Include="client-app\tsconfig.json" />
+    <Content Include="client-app\tslint.json" />
   </ItemGroup>
 
   <ItemGroup>

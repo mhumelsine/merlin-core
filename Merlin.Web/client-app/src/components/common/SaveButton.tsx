@@ -2,14 +2,13 @@
 import { FaRegSave } from 'react-icons/fa';
 import { defaults } from '../../utils/Global';
 
-type SaveButtonProps =
-    {
+type SaveButtonProps = {
         onClick?: any;
         iconFontSize?: number;
         buttonText?: string;
         className?: string;
         disabled?: boolean;
-    }
+    };
 
 export default class SaveButton extends React.Component<SaveButtonProps, {}> {
     public render() {
@@ -20,7 +19,7 @@ export default class SaveButton extends React.Component<SaveButtonProps, {}> {
         const disableSave = this.props.disabled || defaults.boolean;
 
         return <button type="submit" className={`${defaults.theme.buttons.class}  ${className}`} onClick={onClick} disabled={disableSave} >
-            <FaRegSave fontSize={iconFontSize} style={{ verticalAlign: 'bottom' }} />{" "}{buttonText}
+            <FaRegSave fontSize={iconFontSize} style={{ verticalAlign: 'bottom' }} />{' '}{buttonText}
         </button>;
     }
 }

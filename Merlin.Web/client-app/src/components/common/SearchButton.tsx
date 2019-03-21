@@ -2,8 +2,7 @@
 import { FaSearch } from 'react-icons/fa';
 import { defaults } from '../../utils/Global';
 
-type SearchButtonProps =
-    {
+type SearchButtonProps = {
         onClick?: any;
         iconFontSize?: number;
         buttonText?: string;
@@ -11,7 +10,7 @@ type SearchButtonProps =
         disabled?: boolean;
         isSubmit?: boolean;
         title?: string;
-    }
+    };
 
 export default class SearchButton extends React.Component<SearchButtonProps, {}> {
     public render() {
@@ -22,8 +21,8 @@ export default class SearchButton extends React.Component<SearchButtonProps, {}>
         const disableAdd = this.props.disabled || defaults.boolean;
         const title = this.props.title || defaults.string;
 
-        return <button type={isSubmit ? "submit" : "button"} className={`${defaults.theme.buttons.class} ${className}`} title={title} onClick={onClick} disabled={disableAdd}>
-            <FaSearch fontSize={iconFontSize} style={{ verticalAlign: 'bottom' }} />{" "}{buttonText}
+        return <button type={isSubmit ? 'submit' : 'button'} className={`${defaults.theme.buttons.class} ${className}`} title={title} onClick={onClick} disabled={disableAdd}>
+            <FaSearch fontSize={iconFontSize} style={{ verticalAlign: 'bottom' }} />{' '}{buttonText}
         </button>;
     }
 }

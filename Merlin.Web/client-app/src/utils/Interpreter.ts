@@ -1,22 +1,22 @@
-﻿import { hasValue, isNotFutureDate, isValidDate, isLessThan, isLessThanOrEqualTo, isGreaterThan, isGreaterThanOrEqualTo, isEqualTo, isNotEqualTo, isShorterThan, matchesPattern } from "./ValidationUtils";
+﻿import { hasValue, isNotFutureDate, isValidDate, isLessThan, isLessThanOrEqualTo, isGreaterThan, isGreaterThanOrEqualTo, isEqualTo, isNotEqualTo, isShorterThan, matchesPattern } from './ValidationUtils';
 import { stringContains } from './UIUtils';
 
 enum TokenErrorType {
-    unexpected = "Unexpected",
-    unrecognized = "Unrecognized"
+    unexpected = 'Unexpected',
+    unrecognized = 'Unrecognized'
 }
 
 enum TokenType {
     number = 'number',
     operator = 'operator',
     identifier = 'identifier',
-    ClosingParen = ")",
-    OpeningParen = "(",
-    Comma = ",",
-    Equals = "=",
-    Compare = "==",
-    End = "(end)",
-    string = "string"
+    ClosingParen = ')',
+    OpeningParen = '(',
+    Comma = ',',
+    Equals = '=',
+    Compare = '==',
+    End = '(end)',
+    string = 'string'
 }
 
 interface Token {
@@ -45,6 +45,39 @@ class Lexer {
         this.input = '';
         this.tokens = [];
         this.current = '';
+    }
+
+    public getTokens(input: string) {
+
+        this.setInput(input);
+
+        while (this.peek()) {
+            if (this.isWhitespace(this.current)) {
+                this.eatWhitespace();
+                continue;
+            }
+            if (this.isOperator(this.current)) {
+                this.eatOperator();
+                continue;
+            }
+            if (this.isDigit(this.current)) {
+                this.eatDigit();
+                continue;
+            }
+            if (this.isString(this.current)) {
+                this.eatString();
+                continue;
+            }
+            if (this.isIdentifier(this.current)) {
+                this.eatIdentifier();
+                continue;
+            }
+            // default case
+            throw new Error('Unrecognized token: ' + this.current);
+        }
+
+        this.addToken(TokenType.End, TokenType.End, this.position);
+        return this.tokens;
     }
 
     private isOperator(lexeme: string) {
@@ -135,39 +168,6 @@ class Lexer {
         this.input = `${input} `;
         this.current = input[0];
     }
-
-    public getTokens(input: string) {
-
-        this.setInput(input);
-
-        while (this.peek()) {
-            if (this.isWhitespace(this.current)) {
-                this.eatWhitespace();
-                continue;
-            }
-            if (this.isOperator(this.current)) {
-                this.eatOperator();
-                continue;
-            }
-            if (this.isDigit(this.current)) {
-                this.eatDigit();
-                continue;
-            }
-            if (this.isString(this.current)) {
-                this.eatString();
-                continue;
-            }
-            if (this.isIdentifier(this.current)) {
-                this.eatIdentifier();
-                continue;
-            }
-            //default case
-            throw new Error('Unrecognized token: ' + this.current);
-        }
-
-        this.addToken(TokenType.End, TokenType.End, this.position);
-        return this.tokens;
-    }
 }
 
 class Parser {
@@ -189,19 +189,32 @@ class Parser {
         this.addParenSupport();
         this.addStringSupport();
 
-        this.addPrefix("-", 7);
-        this.addInfix("^", 6, 5);
-        this.addInfix("*", 4);
-        this.addInfix("/", 4);
-        this.addInfix("%", 4);
-        this.addInfix("+", 3);
-        this.addInfix("-", 3);
+        this.addPrefix('-', 7);
+        this.addInfix('^', 6, 5);
+        this.addInfix('*', 4);
+        this.addInfix('/', 4);
+        this.addInfix('%', 4);
+        this.addInfix('+', 3);
+        this.addInfix('-', 3);
 
-        this.addInfix("==", 9, 9);
+        this.addInfix('==', 9, 9);
 
-        this.addSymbol(",");
-        this.addSymbol(")");
+        this.addSymbol(',');
+        this.addSymbol(')');
         this.addSymbol(TokenType.End);
+    }
+
+    public getTree(tokens: Token[]) {
+
+        this.setTokens(tokens);
+
+        const tree = [];
+
+        while (this.current.type !== TokenType.End) {
+            tree.push(this.buildExpression(0));
+        }
+
+        return tree;
     }
 
     private getSymbol(): Symbol {
@@ -326,7 +339,7 @@ class Parser {
 
                 this.advance();
 
-                //needs to be removed typescript is getting confused
+                // needs to be removed typescript is getting confused
                 this.current = this.current;
 
                 if (this.current.type !== TokenType.ClosingParen) {
@@ -394,7 +407,7 @@ class Parser {
                 };
             }
 
-            throw new Error("Invalid value for: " + left);
+            throw new Error('Invalid value for: ' + left);
 
         });
     }
@@ -402,19 +415,6 @@ class Parser {
     private setTokens(tokens: Token[]) {
         this.tokens = tokens;
         this.current = tokens[0];
-    }
-
-    public getTree(tokens: Token[]) {
-
-        this.setTokens(tokens);
-
-        const tree = [];
-
-        while (this.current.type !== TokenType.End) {
-            tree.push(this.buildExpression(0));
-        }
-
-        return tree;
     }
 }
 
@@ -431,11 +431,26 @@ class Evaluator {
         this.args = {};
     }
 
+    public evaluate(tree: any) {
+        let output = '';
+
+        const parseNode = this.parseNode.bind(this);
+
+        tree.map((node: any) => {
+            const value = parseNode(node);
+            if (value !== undefined) {
+                output += value + '\n';
+            }
+        });
+
+        return output;
+    }
+
     private parseNode(node: any): any {
         const parseNode = this.parseNode.bind(this);
 
         switch (node.type) {
-            case "==":
+            case '==':
                 return this.parseNode(node.left) == this.parseNode(node.right);
             case TokenType.number:
                 return parseInt(node.value);
@@ -486,21 +501,6 @@ class Evaluator {
         }
 
     }
-
-    public evaluate(tree: any) {
-        let output = '';
-
-        const parseNode = this.parseNode.bind(this);
-
-        tree.map((node: any) => {
-            const value = parseNode(node);
-            if (value !== undefined) {
-                output += value + "\n";
-            }
-        });
-
-        return output;
-    }
 }
 
 class Interpreter {
@@ -543,21 +543,20 @@ class Interpreter {
     public evaluate(id: any, operator: any, args: any) {
 
         try {
-            var resourceValue = this.resource[id];
-            var functionKey = this.aliases[operator];
-            var functionValue = this.functions[functionKey];
-            var evaluation = "";
+            let resourceValue = this.resource[id];
+            let functionKey = this.aliases[operator];
+            let functionValue = this.functions[functionKey];
+            let evaluation = '';
             if (Array.isArray(resourceValue)) {
-                for (var i = 0; i < resourceValue.length; i++) {
-                    evaluation = functionValue(resourceValue[i], args)
-                    if (evaluation === "true") break;
+                for (let i = 0; i < resourceValue.length; i++) {
+                    evaluation = functionValue(resourceValue[i], args);
+                    if (evaluation === 'true') break;
                 }
-            }
-            else evaluation = functionValue(resourceValue, args);
-            switch(evaluation) {
-                case "true":
+            } else evaluation = functionValue(resourceValue, args);
+            switch (evaluation) {
+                case 'true':
                     return 1;
-                case "false":
+                case 'false':
                     return 0;
                 default:
                     return -1;
@@ -569,23 +568,6 @@ class Interpreter {
 
     }
 
-    private mapOperatorToFunction(operator: string) {
-        switch(operator) {
-            case "=":
-            break;
-            case "!=":
-            break;
-            case ">":
-            break;
-            case "<":
-            break;
-            case "IN":
-            break;
-            case "NOT IN":
-            break;
-        }
-    }
-
     public setAnswers(answers: any) {
         const functions = Object.assign({}, this.functions, {
             getAnswerByQuestionId: function (id: string) {
@@ -595,36 +577,53 @@ class Interpreter {
 
         this.evaluator = new Evaluator(this.operators, this.variables, functions);
     }
+
+    private mapOperatorToFunction(operator: string) {
+        switch (operator) {
+            case '=':
+            break;
+            case '!=':
+            break;
+            case '>':
+            break;
+            case '<':
+            break;
+            case 'IN':
+            break;
+            case 'NOT IN':
+            break;
+        }
+    }
 }
 
 const operators = {
-    "+": function (a: any, b: any) {
+    '+': function (a: any, b: any) {
         return parseInt(a) + parseInt(b);
     },
-    "-": function (a: any, b: any) {
+    '-': function (a: any, b: any) {
 
-        if (typeof b === "undefined") {
+        if (typeof b === 'undefined') {
             return -a;
         }
 
         return a - b;
     },
-    "*": function (a: any, b: any) {
+    '*': function (a: any, b: any) {
         return a * b;
     },
-    "/": function (a: any, b: any) {
+    '/': function (a: any, b: any) {
         return a / b;
     },
-    "%": function (a: any, b: any) {
+    '%': function (a: any, b: any) {
         return a % b;
     },
-    "^": function (a: any, b: any) {
+    '^': function (a: any, b: any) {
         return Math.pow(a, b);
     }
 };
 
 
-export default function createDefaultInterpreter(answers:any, functions = {}, aliases = {}) {
+export default function createDefaultInterpreter(answers: any, functions = {}, aliases = {}) {
     return new Interpreter(operators, {}, functions, answers, aliases);
 
 }

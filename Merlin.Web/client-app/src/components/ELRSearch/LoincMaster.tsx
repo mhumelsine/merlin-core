@@ -17,7 +17,7 @@ export default class LoincMaster extends React.Component<Props, State> {
     state = {
         loading: false,
         loincs: []
-    }
+    };
 
     public async componentWillMount() {
         const { observationCode } = this.props;

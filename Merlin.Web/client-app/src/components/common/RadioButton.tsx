@@ -7,12 +7,9 @@ type RadioButtonProps = {
     onChange: (name: string, selectedValue: any) => any;
     option: string;
     name: string;
-}
+};
 
 class RadioButton extends React.Component<RadioButtonProps, {}> {
-    private onChange(event: ChangeEvent<HTMLInputElement>) {
-        this.props.onChange(this.props.name, event.currentTarget.value);
-    }
     public render() {
         const { name, checked, option } = this.props;
 
@@ -29,6 +26,9 @@ class RadioButton extends React.Component<RadioButtonProps, {}> {
                 {option}
             </label>
         </div>;
+    }
+    private onChange(event: ChangeEvent<HTMLInputElement>) {
+        this.props.onChange(this.props.name, event.currentTarget.value);
     }
 }
 

@@ -2,15 +2,14 @@
 import { FaTimes } from 'react-icons/fa';
 import { defaults } from '../../utils/Global';
 
-type CancelButtonProps =
-    {
+type CancelButtonProps = {
         onClick?: any;
         icon?: any;
         iconFontSize?: number;
         buttonText?: string;
         className?: string;
         id?: string;
-    }
+    };
 
 export default class CancelButton extends React.Component<CancelButtonProps, {}> {
     public render() {
@@ -19,8 +18,8 @@ export default class CancelButton extends React.Component<CancelButtonProps, {}>
         const icon = this.props.icon || defaults.cancelIcon;
         const className = this.props.className || defaults.string;
         const buttonText = this.props.buttonText || ' Close';
-        const id =this.props.id || defaults.string
+        const id = this.props.id || defaults.string;
 
-        return <button type="button" id={id} className={`${defaults.theme.buttons.class} ${className}`} onClick={onClick}><FaTimes fontSize={iconFontSize} style={{ verticalAlign: 'bottom' }} />{buttonText}</button>
+        return <button type="button" id={id} className={`${defaults.theme.buttons.class} ${className}`} onClick={onClick}><FaTimes fontSize={iconFontSize} style={{ verticalAlign: 'bottom' }} />{buttonText}</button>;
     }
 }

@@ -50,7 +50,7 @@ export default class App extends Component {
                     <Route exact path={defaults.urls.smartGoals} component={SmartGoalsPage} />
                     <Route exact path={defaults.urls.performanceReport} component={PerformanceReport} />
                     <Route exact path={defaults.urls.outbreak + '/:outbreakId/'} component={OutbreakDetailPage} />
-                
+
 
 
                     <Layout>

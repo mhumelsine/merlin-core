@@ -21,7 +21,7 @@ export default class Modal extends React.Component<ModalProps> {
         if (!visible) { return null; }
 
         return <div>
-            {visible && <div className="modal-backdrop fade in" style={{ "opacity": 0.4 }} />}
+            {visible && <div className="modal-backdrop fade in" style={{ 'opacity': 0.4 }} />}
             <div className={`modal`} style={{ display: visible ? 'block' : 'none' }} tabIndex={-1} role="dialog">
                 <div className={`modal-dialog ${this.props.modalWidth ? this.props.modalWidth : ''}`} role="document">
                     <div className="modal-content">
@@ -31,7 +31,7 @@ export default class Modal extends React.Component<ModalProps> {
                                 <button type="button" className="close text-white" onClick={toggle} aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             </div>
                         }
-                        <div className="modal-body" style={{ maxHeight: "80vh", overflowY: "scroll" }}>
+                        <div className="modal-body" style={{ maxHeight: '80vh', overflowY: 'scroll' }}>
                             {body}
                         </div>
                         {footer &&
@@ -42,7 +42,7 @@ export default class Modal extends React.Component<ModalProps> {
                     </div>
                 </div>
             </div>
-        </div>
+        </div>;
 
     }
 }

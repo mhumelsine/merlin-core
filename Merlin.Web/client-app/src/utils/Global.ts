@@ -32,7 +32,7 @@ export interface DropdownCode {
 export const defaults = {
     activation: {
         triggerQuestionId: null,
-        initialState: "ACTIVE",
+        initialState: 'ACTIVE',
         operator: null,
         triggerValues: null
     } as any,
@@ -41,165 +41,165 @@ export const defaults = {
         arg: any;
     }[],
     activationAliases: {
-        "stringContains": 1,
-        "hasValue": 2,
-        "isNotFutureDate": 3,
-        "isValidDate": 4,
-        "isLessThan": 5,
-        "<": 5,
-        "isLessThanOrEqualTo": 6,
-        "<=": 6,
-        "isGreaterThan": 7,
-        ">": 7,
-        "isGreaterThanOrEqualTo": 8,
-        ">=": 8,
-        "isEqualTo": 9,
-        "=": 9,
-        "isNotEqualTo": 10,
-        "!=": 10,
-        "isShorterThan": 11,
-        "matchesPattern": 12
+        'stringContains': 1,
+        'hasValue': 2,
+        'isNotFutureDate': 3,
+        'isValidDate': 4,
+        'isLessThan': 5,
+        '<': 5,
+        'isLessThanOrEqualTo': 6,
+        '<=': 6,
+        'isGreaterThan': 7,
+        '>': 7,
+        'isGreaterThanOrEqualTo': 8,
+        '>=': 8,
+        'isEqualTo': 9,
+        '=': 9,
+        'isNotEqualTo': 10,
+        '!=': 10,
+        'isShorterThan': 11,
+        'matchesPattern': 12
     },
     validationAliases: {
-        "stringContains": 1,
-        "hasValue": 2,
-        "isNotFutureDate": 3,
-        "isValidDate": 4,
-        "isLessThan": 5,
-        "<": 5,
-        "isLessThanOrEqualTo": 6,
-        "<=": 6,
-        "isGreaterThan": 7,
-        ">": 7,
-        "isGreaterThanOrEqualTo": 8,
-        ">=": 8,
-        "isEqualTo": 9,
-        "=": 9,
-        "isNotEqualTo": 10,
-        "!=": 10,
-        "isShorterThan": 11,
-        "matchesPattern": 12
+        'stringContains': 1,
+        'hasValue': 2,
+        'isNotFutureDate': 3,
+        'isValidDate': 4,
+        'isLessThan': 5,
+        '<': 5,
+        'isLessThanOrEqualTo': 6,
+        '<=': 6,
+        'isGreaterThan': 7,
+        '>': 7,
+        'isGreaterThanOrEqualTo': 8,
+        '>=': 8,
+        'isEqualTo': 9,
+        '=': 9,
+        'isNotEqualTo': 10,
+        '!=': 10,
+        'isShorterThan': 11,
+        'matchesPattern': 12
     },
     activationFunctionsNew: {
         1: function (testValue: any, keyword: string) {
-            var realTestValue = getFirstIndexIfObject(testValue);
+            let realTestValue = getFirstIndexIfObject(testValue);
 
             return (testValue == undefined ? 'false' : stringContains(testValue, keyword).toString());
         },
         2: function (testValue: any) {
-            var realTestValue = getFirstIndexIfObject(testValue);
+            let realTestValue = getFirstIndexIfObject(testValue);
 
             return hasValue(testValue).toString();
         },
         3: function (testDate: any) {
-            var realTestDate = getFirstIndexIfObject(testDate);
+            let realTestDate = getFirstIndexIfObject(testDate);
 
             return (testDate == undefined ? 'false' : isNotFutureDate(testDate).toString());
         },
         4: function (testDate: any) {
-            var realTestDate = getFirstIndexIfObject(testDate);
+            let realTestDate = getFirstIndexIfObject(testDate);
 
             return (testDate == undefined ? 'false' : isValidDate(testDate).toString());
         },
         5: function (testValue: any, limit: number) {
-            var realTestValue = getFirstIndexIfObject(testValue);
+            let realTestValue = getFirstIndexIfObject(testValue);
 
             return (testValue == undefined ? 'false' : isLessThan(testValue, limit).toString());
         },
         6: function (testValue: any, limit: number) {
-            var realTestValue = getFirstIndexIfObject(testValue);
+            let realTestValue = getFirstIndexIfObject(testValue);
 
             return (testValue == undefined ? 'false' : isLessThanOrEqualTo(testValue, limit).toString());
         },
         7: function (testValue: any, limit: number) {
-            var realTestValue = getFirstIndexIfObject(testValue);
+            let realTestValue = getFirstIndexIfObject(testValue);
 
             return (testValue == undefined ? 'false' : isGreaterThan(testValue, limit).toString());
         },
         8: function (testValue: any, limit: number) {
-            var realTestValue = getFirstIndexIfObject(testValue);
+            let realTestValue = getFirstIndexIfObject(testValue);
 
             return (testValue == undefined ? 'false' : isGreaterThanOrEqualTo(testValue, limit).toString());
         },
         9: function (testValue: any, number: number) {
-            var realTestValue = getFirstIndexIfObject(testValue);
+            let realTestValue = getFirstIndexIfObject(testValue);
 
             return (testValue == undefined ? 'false' : isEqualTo(testValue, number).toString());
         },
         10: function (testValue: any, number: number) {
-            var realTestValue = getFirstIndexIfObject(testValue);
+            let realTestValue = getFirstIndexIfObject(testValue);
 
             return (testValue == undefined ? 'false' : isNotEqualTo(testValue, number).toString());
         },
         11: function (testValue: any, limit: number) {
-            var realTestValue = getFirstIndexIfObject(testValue);
+            let realTestValue = getFirstIndexIfObject(testValue);
 
             return (testValue == undefined ? 'false' : isShorterThan(testValue, limit).toString());
         },
         12: function (testValue: any, regExp: string) {
-            var realTestValue = getFirstIndexIfObject(testValue);
+            let realTestValue = getFirstIndexIfObject(testValue);
 
             return (testValue == undefined ? 'false' : matchesPattern(testValue, regExp).toString());
         }
     },
     validationFunctionsNew: {
         1: function (testValue: any, keyword: string) {
-            var realTestValue = getFirstIndexIfObject(testValue);
+            let realTestValue = getFirstIndexIfObject(testValue);
 
             return (testValue == undefined ? 'true' : stringContains(testValue, keyword).toString());
         },
         2: function (testValue: any) {
-            var realTestValue = getFirstIndexIfObject(testValue);
+            let realTestValue = getFirstIndexIfObject(testValue);
 
             return hasValue(testValue).toString();
         },
         3: function (testDate: any) {
-            var realTestDate = getFirstIndexIfObject(testDate);
+            let realTestDate = getFirstIndexIfObject(testDate);
 
             return (testDate == undefined ? 'true' : isNotFutureDate(testDate).toString());
         },
         4: function (testDate: any) {
-            var realTestDate = getFirstIndexIfObject(testDate);
+            let realTestDate = getFirstIndexIfObject(testDate);
 
             return (testDate == undefined ? 'true' : isValidDate(testDate).toString());
         },
         5: function (testValue: any, limit: number) {
-            var realTestValue = getFirstIndexIfObject(testValue);
+            let realTestValue = getFirstIndexIfObject(testValue);
 
             return (testValue == undefined ? 'true' : isLessThan(testValue, limit).toString());
         },
         6: function (testValue: any, limit: number) {
-            var realTestValue = getFirstIndexIfObject(testValue);
+            let realTestValue = getFirstIndexIfObject(testValue);
 
             return (testValue == undefined ? 'true' : isLessThanOrEqualTo(testValue, limit).toString());
         },
         7: function (testValue: any, limit: number) {
-            var realTestValue = getFirstIndexIfObject(testValue);
+            let realTestValue = getFirstIndexIfObject(testValue);
 
             return (testValue == undefined ? 'true' : isGreaterThan(testValue, limit).toString());
         },
         8: function (testValue: any, limit: number) {
-            var realTestValue = getFirstIndexIfObject(testValue);
+            let realTestValue = getFirstIndexIfObject(testValue);
 
             return (testValue == undefined ? 'true' : isGreaterThanOrEqualTo(testValue, limit).toString());
         },
         9: function (testValue: any, number: number) {
-            var realTestValue = getFirstIndexIfObject(testValue);
+            let realTestValue = getFirstIndexIfObject(testValue);
 
             return (testValue == undefined ? 'true' : isEqualTo(testValue, number).toString());
         },
         10: function (testValue: any, number: number) {
-            var realTestValue = getFirstIndexIfObject(testValue);
+            let realTestValue = getFirstIndexIfObject(testValue);
 
             return (testValue == undefined ? 'true' : isNotEqualTo(testValue, number).toString());
         },
         11: function (testValue: any, limit: number) {
-            var realTestValue = getFirstIndexIfObject(testValue);
+            let realTestValue = getFirstIndexIfObject(testValue);
 
             return (testValue == undefined ? 'true' : isShorterThan(testValue, limit).toString());
         },
         12: function (testValue: any, regExp: string) {
-            var realTestValue = getFirstIndexIfObject(testValue);
+            let realTestValue = getFirstIndexIfObject(testValue);
 
             return (testValue == undefined ? 'true' : matchesPattern(testValue, regExp).toString());
         }
@@ -207,7 +207,7 @@ export const defaults = {
     groupAccess: new Array(),
     string: '',
     number: 0,
-    panelFontSize: "0.75em",
+    panelFontSize: '0.75em',
     deleteIcon: FaTrash,
     confirmIcon: FaCheck,
     cancelIcon: FaTimes,
@@ -232,12 +232,12 @@ export const defaults = {
         orderBy: '',
         totalPages: 0,
         totalItems: 0,
-        pageSize:10
+        pageSize: 10
     },
     charmWidth: 300,
     lastSaveTime: '---',
     lastSavedBy: '---',
-    effectiveDate: Moment(new Date()).format("MM/DD/YYYY"),
+    effectiveDate: Moment(new Date()).format('MM/DD/YYYY'),
     urls: {
         surveyEditUrl: '/survey/edit',
         surveySearchUrl: '/surveys',
@@ -247,7 +247,7 @@ export const defaults = {
         attachSurveysUrl: '/survey/attachSurveys',
         layoutEditUrl: '/survey/layout/edit',
         questionManagerUrl: '/survey/layout/questionManager',
-        questionEditUrl: '/survey/layout/questionEdit',       
+        questionEditUrl: '/survey/layout/questionEdit',
         questionCreateUrl: '/survey/layout/questionCreate',
         rulesUrl: '/survey/layout/rules',
 		loadFailureUrl: '/common/LoadFailure',
@@ -290,7 +290,7 @@ export const defaults = {
         datePickers: {
             effectiveDateInput: createInputObject('Effective Date', 'effectiveDate', 'Select an outbreak code'),
             dateStartedInput: createInputObject('Date Started', 'dateStarted', 'Select a date'),
-            ElrDOBInput: createInputObject('Date Of Birth', 'dob','Select a date')
+            ElrDOBInput: createInputObject('Date Of Birth', 'dob', 'Select a date')
         },
         textInputs: {
             surveyNameInput: createInputObject('Name', 'name', 'Enter name'),
@@ -315,23 +315,23 @@ export const defaults = {
         }
     },
     titles: {
-        Add: "Add",
-        Edit: "Edit",
-        Search:"Search",
-        LayoutSearch: "Active Layouts",
-        NewLayout: "Create Layout",
-        EditLayout: "Edit Layout",
-        SurveySearch : "Active Surveys",
-        SurveyCreate: "Create Survey",
-        Preview: "Preview", 
-        AttachSurveys: "Attach Survey",
-        QuestionManager: "Question Manager",
-		CreateQuestion: "Create Question",
-		SurveySearchPage: "Survey Search - Merlin",
-		LayoutSearchPage: "Layout Search - Merlin",
-		CreateLayoutPage: "Create Layout - Merlin",
-		CreateSurveyPage: "Create Survey - Merlin",
-		EditLayoutPage: "Edit Layout - Merlin",
-		PreviewPage: "Preview - Merlin"
+        Add: 'Add',
+        Edit: 'Edit',
+        Search: 'Search',
+        LayoutSearch: 'Active Layouts',
+        NewLayout: 'Create Layout',
+        EditLayout: 'Edit Layout',
+        SurveySearch : 'Active Surveys',
+        SurveyCreate: 'Create Survey',
+        Preview: 'Preview',
+        AttachSurveys: 'Attach Survey',
+        QuestionManager: 'Question Manager',
+		CreateQuestion: 'Create Question',
+		SurveySearchPage: 'Survey Search - Merlin',
+		LayoutSearchPage: 'Layout Search - Merlin',
+		CreateLayoutPage: 'Create Layout - Merlin',
+		CreateSurveyPage: 'Create Survey - Merlin',
+		EditLayoutPage: 'Edit Layout - Merlin',
+		PreviewPage: 'Preview - Merlin'
     }
 };

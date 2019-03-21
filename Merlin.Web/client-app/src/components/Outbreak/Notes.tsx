@@ -19,7 +19,7 @@ class NoteInformation extends React.Component<NoteInfoProps> {
 
     state = {
         loading: true
-    }
+    };
 
     constructor(props: NoteInfoProps) {
         super(props);

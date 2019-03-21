@@ -5,7 +5,7 @@ import { FaExclamationTriangle } from 'react-icons/fa/index';
 import DocumentListItem from './DocumentListItem';
 
 interface DocumentListProps {
-    documentList: Document[]
+    documentList: Document[];
 }
 
 export default class DocumentList extends React.Component<DocumentListProps> {
@@ -35,8 +35,7 @@ export default class DocumentList extends React.Component<DocumentListProps> {
                     </tbody>
                 </table>
             </div>;
-        }
-        else {
+        } else {
             return <Alert alertType="warning"><FaExclamationTriangle /> No documents to show</Alert>;
         }
     }

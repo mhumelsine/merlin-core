@@ -6,7 +6,7 @@ type EditCharmProps = {
     offset: string;
     title: string;
     onCloseCharm: () => void;
-}
+};
 
 export default class EditCharm extends React.Component<EditCharmProps, {}> {
     constructor(props: any) {
@@ -19,7 +19,7 @@ export default class EditCharm extends React.Component<EditCharmProps, {}> {
         const charmClass = isOpen ? 'charmOpen' : 'charmClosed';
         const charmWidth = isOpen ? defaults.charmWidth + 'px' : '0px';
 
-        return <div className={`subMenu ${charmClass}`} style={{ "left": offset, width: charmWidth }}>
+        return <div className={`subMenu ${charmClass}`} style={{ 'left': offset, width: charmWidth }}>
             <div className="close" onClick={onCloseCharm}>x</div>
             <h3 className="text-center text-capitalize">{title}</h3>
 
@@ -27,6 +27,6 @@ export default class EditCharm extends React.Component<EditCharmProps, {}> {
                 {this.props.children}
             </div>
 
-        </div>
+        </div>;
     }
 }

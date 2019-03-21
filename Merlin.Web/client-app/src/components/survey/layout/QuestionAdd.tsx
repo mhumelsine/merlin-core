@@ -41,16 +41,6 @@ type QuestionAddProps = {
     & typeof SurveyQuestionStore.actionCreators;
 
 class QuestionAdd extends React.Component<QuestionAddProps, {}> {
-    constructor(props: QuestionAddProps) {
-        super(props);
-        this.resetForm = this.resetForm.bind(this);
-        this.onChange = this.onChange.bind(this);
-        this.canAddQuestion = this.canAddQuestion.bind(this);
-        this.onAddNewQuestion = this.onAddNewQuestion.bind(this);
-        this.onAddQuestionToLayout = this.onAddQuestionToLayout.bind(this);
-        this.onSaveQuestionToggle = this.onSaveQuestionToggle.bind(this);
-        this.onAnswerChange = this.onAnswerChange.bind(this);
-    }
 
     state = {
         question: {
@@ -73,6 +63,16 @@ class QuestionAdd extends React.Component<QuestionAddProps, {}> {
     };
     questionIsDirty = defaults.boolean;
     timeout = defaults.NULL;
+    constructor(props: QuestionAddProps) {
+        super(props);
+        this.resetForm = this.resetForm.bind(this);
+        this.onChange = this.onChange.bind(this);
+        this.canAddQuestion = this.canAddQuestion.bind(this);
+        this.onAddNewQuestion = this.onAddNewQuestion.bind(this);
+        this.onAddQuestionToLayout = this.onAddQuestionToLayout.bind(this);
+        this.onSaveQuestionToggle = this.onSaveQuestionToggle.bind(this);
+        this.onAnswerChange = this.onAnswerChange.bind(this);
+    }
 
     public async componentWillMount() {
         try {
@@ -100,118 +100,15 @@ class QuestionAdd extends React.Component<QuestionAddProps, {}> {
         }
     }
 
-    private resetForm() {
-        let newState = Object.assign({}, this.state);
-        newState.question.questionText = defaults.string;
-        newState.question.codeType = defaults.string;
-        newState.question.choices = [] as any;
-        newState.question.questionId = defaults.string;
-        newState.question.questionType = defaults.string;
-        newState.question.uid = defaults.guid;
-        newState.question.saveToBank = defaults.boolean;
-        this.setState(newState, () => this.performSearch());
-    }
-
-    private onAnswerChange(name: string, newValue: any) {
-        let newState = Object.assign({}, this.state);
-        newState.answers[name] = newValue;
-        this.setState(newState);
-    }
-
-    private async onChange(name: string, newValue: any) {
-        const { questionCodeTypeInput } = defaults.inputs.dropdowns;
-        let newState = Object.assign({}, this.state);
-        (newState.question as any)[name] = newValue;
-
-        if (name === questionCodeTypeInput.name) {
-            await this.props.loadDropdown(newValue);
-        }
-        this.setState(newState, () => this.performSearch());
-    }
-
     public performSearch() {
         const { question } = this.state;
         const { history, requestQuestions } = this.props;
 
-        //cancel previous timeout
+        // cancel previous timeout
         this.removeTimeout();
         this.timeout = window.setTimeout(
             () => requestQuestions(question.questionText, 1, history),
             defaults.wait_delay);
-    }
-
-    private removeTimeout() {
-        if (this.timeout !== defaults.NULL) {
-            clearTimeout(this.timeout);
-            this.timeout = defaults.NULL;
-        }
-    }
-
-    private canAddQuestion(questionId: any) {
-
-        const { layout } = this.props;
-
-        if (layout) {
-            const item = getItemById(layout, questionId);
-            return item === undefined;
-        }
-
-        return undefined;
-    }
-
-    private onAddQuestionToLayout(question: LayoutStore.LayoutItem) {
-
-        const { addQuestion, parentId, layout } = this.props;
-
-        if (addQuestion) {
-            if (layout && parentId) {
-                let parentItem = getItemById(layout, parentId);
-                question.isNumbered = parentItem ? ((parentItem as LayoutItem).type !== layoutItemType.repeatingQuestionsGroup) : true;
-            }
-
-            addQuestion(parentId || "", question);
-        }
-        this.resetForm();
-    }
-
-    private async onAddNewQuestion() {
-        this.setState({ isLoading: true });
-
-        try {
-            var res = await await (this.props.saveQuestion(this.state.question) as any);
-            let newState = Object.assign({}, this.state);
-            newState.isLoading = false;
-            newState.errors = {} as any;
-            this.onAddQuestionToLayout({
-                id: res.questionId,
-                questionType: res.questionType,
-                text: res.questionText,
-                width: 12,
-                type: layoutItemType.question,
-                choices: res.codeType ? this.props.codes[res.codeType] : [],
-                isNumbered: true,
-                activation: defaults.activation,
-                validations: defaults.validations,
-                groupAccess: defaults.groupAccess
-            })
-            this.setState(newState, () => this.showQuestionSaved());
-
-        } catch (errors) {
-            this.setState({ errors, isLoading: false })
-        } finally {
-            this.setState({ isLoading: false })
-        }
-    }
-
-    private showQuestionSaved() {
-        const component = this;
-
-        this.setState({
-            saveTimeout: setTimeout(() => {
-                component.setState({ saveMessage: defaults.string })
-            }, 10000),
-            saveMessage: `Question Added !`
-        });
     }
 
     public componentWillUnmount() {
@@ -219,35 +116,21 @@ class QuestionAdd extends React.Component<QuestionAddProps, {}> {
         this.removeTimeout();
     }
 
-    private onSaveQuestionToggle() {
-        const newState = Object.assign({}, this.state);
-        newState.question.saveToBank = !this.state.question.saveToBank;
-        this.setState(newState);
-    }
-
-    private getOptions(options: any[]) {
-        return options.map(option => {
-            return {
-                label: `${option.description} - ${option.code}`, value: option.code
-            }
-        });
-    }
-
     public render() {
-        const { history, questions, requestQuestions, isInManageMode, codes } = this.props
-        const { errors, question, isLoading, saveMessage, answers } = this.state
-        const { questionTextInput, objectMappingValueInput } = defaults.inputs.textInputs
-        const { questionTypeInput, questionCodeTypeInput } = defaults.inputs.dropdowns
-        const { layoutItemType } = LayoutStore
+        const { history, questions, requestQuestions, isInManageMode, codes } = this.props;
+        const { errors, question, isLoading, saveMessage, answers } = this.state;
+        const { questionTextInput, objectMappingValueInput } = defaults.inputs.textInputs;
+        const { questionTypeInput, questionCodeTypeInput } = defaults.inputs.dropdowns;
+        const { layoutItemType } = LayoutStore;
         const canAdd = question.questionText && question.questionType &&
-            ((questionTypesWithCodesArray.indexOf(question.questionType) >= 0) !== isNullOrEmpty(question.codeType))
+            ((questionTypesWithCodesArray.indexOf(question.questionType) >= 0) !== isNullOrEmpty(question.codeType));
 
         if (isLoading) {
-            return <Loading />
+            return <Loading />;
         }
 
         return <div>
-            <div style={{ "border": "1px solid gray", padding: "10px" }}>
+            <div style={{ 'border': '1px solid gray', padding: '10px' }}>
                 <div className="row">
                     <div className="col-md-8">
                         <TextInput
@@ -277,9 +160,9 @@ class QuestionAdd extends React.Component<QuestionAddProps, {}> {
                     <div className="col-md-3">
                         <Secure requireClaim={ClaimType.role} requireClaimValue={[Role.Admin]}>
                             <YesNo
-                                name={"saveToBank"}
-                                label={"Save question to bank?"}
-                                value={question.saveToBank ? "YES" : "NO"}
+                                name={'saveToBank'}
+                                label={'Save question to bank?'}
+                                value={question.saveToBank ? 'YES' : 'NO'}
                                 hideLabel={false}
                                 onChange={this.onSaveQuestionToggle}
                             />
@@ -352,7 +235,7 @@ class QuestionAdd extends React.Component<QuestionAddProps, {}> {
             </div>
             <br />
             <h4> Suggested Questions </h4>
-            <div className="col-md-12" style={{ "border": "1px solid gray", padding: "10px" }}>
+            <div className="col-md-12" style={{ 'border': '1px solid gray', padding: '10px' }}>
                 <QuestionList
                     questions={questions}
                     subText={question.questionText}
@@ -361,13 +244,130 @@ class QuestionAdd extends React.Component<QuestionAddProps, {}> {
                     requestQuestions={requestQuestions}
                     history={history}
                     isLoading={isLoading}
-                    maxHeight={"200px"}
-                    className={"pagedList smaller-font"}
+                    maxHeight={'200px'}
+                    className={'pagedList smaller-font'}
                     fontSize={FontSize.medium}
                     hideNumbersFound={true}
                 />
             </div>
-        </div>
+        </div>;
+    }
+
+    private resetForm() {
+        let newState = Object.assign({}, this.state);
+        newState.question.questionText = defaults.string;
+        newState.question.codeType = defaults.string;
+        newState.question.choices = [] as any;
+        newState.question.questionId = defaults.string;
+        newState.question.questionType = defaults.string;
+        newState.question.uid = defaults.guid;
+        newState.question.saveToBank = defaults.boolean;
+        this.setState(newState, () => this.performSearch());
+    }
+
+    private onAnswerChange(name: string, newValue: any) {
+        let newState = Object.assign({}, this.state);
+        newState.answers[name] = newValue;
+        this.setState(newState);
+    }
+
+    private async onChange(name: string, newValue: any) {
+        const { questionCodeTypeInput } = defaults.inputs.dropdowns;
+        let newState = Object.assign({}, this.state);
+        (newState.question as any)[name] = newValue;
+
+        if (name === questionCodeTypeInput.name) {
+            await this.props.loadDropdown(newValue);
+        }
+        this.setState(newState, () => this.performSearch());
+    }
+
+    private removeTimeout() {
+        if (this.timeout !== defaults.NULL) {
+            clearTimeout(this.timeout);
+            this.timeout = defaults.NULL;
+        }
+    }
+
+    private canAddQuestion(questionId: any) {
+
+        const { layout } = this.props;
+
+        if (layout) {
+            const item = getItemById(layout, questionId);
+            return item === undefined;
+        }
+
+        return undefined;
+    }
+
+    private onAddQuestionToLayout(question: LayoutStore.LayoutItem) {
+
+        const { addQuestion, parentId, layout } = this.props;
+
+        if (addQuestion) {
+            if (layout && parentId) {
+                let parentItem = getItemById(layout, parentId);
+                question.isNumbered = parentItem ? ((parentItem as LayoutItem).type !== layoutItemType.repeatingQuestionsGroup) : true;
+            }
+
+            addQuestion(parentId || '', question);
+        }
+        this.resetForm();
+    }
+
+    private async onAddNewQuestion() {
+        this.setState({ isLoading: true });
+
+        try {
+            let res = await await (this.props.saveQuestion(this.state.question) as any);
+            let newState = Object.assign({}, this.state);
+            newState.isLoading = false;
+            newState.errors = {} as any;
+            this.onAddQuestionToLayout({
+                id: res.questionId,
+                questionType: res.questionType,
+                text: res.questionText,
+                width: 12,
+                type: layoutItemType.question,
+                choices: res.codeType ? this.props.codes[res.codeType] : [],
+                isNumbered: true,
+                activation: defaults.activation,
+                validations: defaults.validations,
+                groupAccess: defaults.groupAccess
+            });
+            this.setState(newState, () => this.showQuestionSaved());
+
+        } catch (errors) {
+            this.setState({ errors, isLoading: false });
+        } finally {
+            this.setState({ isLoading: false });
+        }
+    }
+
+    private showQuestionSaved() {
+        const component = this;
+
+        this.setState({
+            saveTimeout: setTimeout(() => {
+                component.setState({ saveMessage: defaults.string });
+            },                      10000),
+            saveMessage: `Question Added !`
+        });
+    }
+
+    private onSaveQuestionToggle() {
+        const newState = Object.assign({}, this.state);
+        newState.question.saveToBank = !this.state.question.saveToBank;
+        this.setState(newState);
+    }
+
+    private getOptions(options: any[]) {
+        return options.map(option => {
+            return {
+                label: `${option.description} - ${option.code}`, value: option.code
+            };
+        });
     }
 }
 export default connect(
@@ -383,4 +383,4 @@ export default connect(
         };
     },
     Object.assign({}, Codes.actionCreators, SurveyQuestionStore.actionCreators)
-)(QuestionAdd); 
+)(QuestionAdd);

@@ -22,43 +22,12 @@ type TransmissionProps = {
 
 class Transmission extends React.Component<TransmissionProps> {
     state = {
-        loading:true
-    }
+        loading: true
+    };
     constructor(props: TransmissionProps) {
         super(props);
 
         this.onChange = this.onChange.bind(this);
-    }
-
-    private onChange(name: string, newValue: any) {
-        const transmission = Object.assign({}, this.props.transmission);
-
-        (transmission as any)[name] = newValue;
-
-        if (name === "foodOrWaterRelated") {
-            if (newValue !== "YES") {
-                transmission.isVehicleIdentified = '';
-                transmission.vehicle = '';
-            }
-        }
-        else if (name == "isVehicleIdentified") {
-            if (newValue !== "YES") {
-                transmission.vehicle = '';
-            }
-        }
-        else if (name === "healthRelated") {
-            if (newValue !== "YES") {
-                transmission.causeForOutbreak = '';
-                transmission.description = '';
-            }
-        }
-        else if (name == "causeForOutbreak") {
-            if (isNullOrEmpty(newValue)) {
-                transmission.description = '';
-            }
-        }
-
-        this.props.updateTransmission(transmission);
     }
 
     public async componentDidMount() {
@@ -89,7 +58,7 @@ class Transmission extends React.Component<TransmissionProps> {
                 <Dropdown
                     name="transmissionMode"
                     value={transmission.transmissionMode}
-                    label={"Primary Mode of Transmission"}
+                    label={'Primary Mode of Transmission'}
                     hideLabel={false}
                     placeholder={''}
                     options={utils.getOptions(codes.OB_MODE)}
@@ -103,17 +72,17 @@ class Transmission extends React.Component<TransmissionProps> {
             </div>
             <div className="row" >
                 <YesNoUnknown
-                    name={"foodOrWaterRelated"}
+                    name={'foodOrWaterRelated'}
                     value={transmission.foodOrWaterRelated}
-                    label={"Food or Waterborne Outbreak:"}
+                    label={'Food or Waterborne Outbreak:'}
                     cols={3}
                     onChange={this.onChange}
                     error={errors.foodOrWaterRelated}
                 />
                 <YesNoUnknown
-                    name={"isVehicleIdentified"}
+                    name={'isVehicleIdentified'}
                     value={transmission.isVehicleIdentified}
-                    label={"Vehicle Identified:"}
+                    label={'Vehicle Identified:'}
                     cols={3}
                     onChange={this.onChange}
                     isReadOnly={transmission.foodOrWaterRelated !== 'YES'}
@@ -121,9 +90,9 @@ class Transmission extends React.Component<TransmissionProps> {
                 />
 
                 <TextInput
-                    name={"vehicle"}
+                    name={'vehicle'}
                     value={transmission.vehicle}
-                    label={"Vehicle:"}
+                    label={'Vehicle:'}
                     hideLabel={false}
                     placeholder={''}
                     isReadOnly={transmission.isVehicleIdentified !== 'YES'}
@@ -135,17 +104,17 @@ class Transmission extends React.Component<TransmissionProps> {
             </div>
             <div className="row" >
                 <YesNoUnknown
-                    name={"healthRelated"}
+                    name={'healthRelated'}
                     value={transmission.healthRelated}
-                    label={"Health Care-Associated Outbreak:"}
+                    label={'Health Care-Associated Outbreak:'}
                     cols={3}
                     onChange={this.onChange}
                     error={errors.healthRelated}
                 />
                 <Dropdown
-                    name={"causeForOutbreak"}
+                    name={'causeForOutbreak'}
                     value={transmission.causeForOutbreak}
-                    label={"Vehicle Identified:"}
+                    label={'Vehicle Identified:'}
                     hideLabel={false}
                     placeholder={''}
                     options={utils.getOptions(codes.VEHICLE_IDENTIFIED)}
@@ -157,9 +126,9 @@ class Transmission extends React.Component<TransmissionProps> {
                 />
 
                 <TextInput
-                    name={"description"}
+                    name={'description'}
                     value={transmission.description}
-                    label={"Description:"}
+                    label={'Description:'}
                     hideLabel={false}
                     placeholder={''}
                     isReadOnly={(utils.isNullOrEmpty(transmission.causeForOutbreak))}
@@ -169,8 +138,36 @@ class Transmission extends React.Component<TransmissionProps> {
                     maxLength={100}
                 />
             </div>
-        </div>
+        </div>;
 
+    }
+
+    private onChange(name: string, newValue: any) {
+        const transmission = Object.assign({}, this.props.transmission);
+
+        (transmission as any)[name] = newValue;
+
+        if (name === 'foodOrWaterRelated') {
+            if (newValue !== 'YES') {
+                transmission.isVehicleIdentified = '';
+                transmission.vehicle = '';
+            }
+        } else if (name == 'isVehicleIdentified') {
+            if (newValue !== 'YES') {
+                transmission.vehicle = '';
+            }
+        } else if (name === 'healthRelated') {
+            if (newValue !== 'YES') {
+                transmission.causeForOutbreak = '';
+                transmission.description = '';
+            }
+        } else if (name == 'causeForOutbreak') {
+            if (isNullOrEmpty(newValue)) {
+                transmission.description = '';
+            }
+        }
+
+        this.props.updateTransmission(transmission);
     }
 }
 

@@ -17,31 +17,22 @@ type TextAreaInputProps = {
     autoComplete?: string;
     maxLength?: number;
     rows?: number;
-}
+};
 
-class TextAreaInput extends React.Component<TextAreaInputProps>{
+class TextAreaInput extends React.Component<TextAreaInputProps> {
 
     constructor(props: TextAreaInputProps) {
         super(props);
 
         this.onChange = this.onChange.bind(this);
     }
-
-    private onChange(event: ChangeEvent<HTMLTextAreaElement>) {
-        this.props.onChange(this.props.name, event.currentTarget.value);
-    }
-    private moveCaretAtEnd(e: any) {
-        var temp_value = e.target.value;
-        e.target.value = '';
-        e.target.value = temp_value;
-    }
     public render() {
 
         const { name, label, placeholder, cols, autoComplete, value, inputRef, isReadOnly, maxLength, rows } = this.props;
 
         return <textarea
-            value={value || ""}
-            className={`form-control ${isReadOnly ? "disabled" : ""}`}
+            value={value || ''}
+            className={`form-control ${isReadOnly ? 'disabled' : ''}`}
             id={name}
             name={name}
             aria-describedby={label}
@@ -50,10 +41,19 @@ class TextAreaInput extends React.Component<TextAreaInputProps>{
             onFocus={this.moveCaretAtEnd}
             ref={inputRef}
             readOnly={isReadOnly}
-            autoComplete={autoComplete || "on"}
+            autoComplete={autoComplete || 'on'}
             maxLength={maxLength}
             rows={rows}
         />;
+    }
+
+    private onChange(event: ChangeEvent<HTMLTextAreaElement>) {
+        this.props.onChange(this.props.name, event.currentTarget.value);
+    }
+    private moveCaretAtEnd(e: any) {
+        let temp_value = e.target.value;
+        e.target.value = '';
+        e.target.value = temp_value;
     }
 }
 

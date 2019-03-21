@@ -4,7 +4,7 @@ import * as AjaxUtils from '../utils/AjaxUtils';
 import { PagedList } from './SurveySearch';
 import { defaults } from '../utils/Global';
 import { Layout, LayoutItem, Activations } from './Layout';
-import * as LayoutUtils from '../utils/LayoutUtils'
+import * as LayoutUtils from '../utils/LayoutUtils';
 
 export interface SurveyState {
     survey: Survey;
@@ -40,7 +40,7 @@ export interface answers {
 
 export interface Survey {
     [key: string]: any;
-    surveyIdNumber: string
+    surveyIdNumber: string;
     surveyType: string;
     surveyId: string;
     description: string;
@@ -164,14 +164,14 @@ export const actionCreators = {
 
             // if ((surveyId != surveyState.survey.surveyId) ||
             //     (surveyState.layout.layoutId == null || (surveyState.layout.layoutId !== surveyState.survey.layoutId))) {
-            //everything
+            // everything
             return AjaxUtils.get(`api/Survey/surveyandlayout/${surveyId}`)
                 .then(surveyAndLayout => {
                     dispatch({
                         type: 'RECEIVE_SURVEY_AND_LAYOUT',
                         survey: surveyAndLayout,
                         layout: surveyAndLayout.layout
-                    })
+                    });
                 }).catch((errors: any) => {
                     console.log(defaults.loadErrorConsoleMessage, errors);
                     history.replace(defaults.urls.loadFailureUrl);
@@ -283,7 +283,7 @@ export const actionCreators = {
                     dispatch({
                         type: 'RECEIVE_SURVEY_ANSWERS',
                         answers: answers
-                    })
+                    });
                 }).catch((errors: any) => {
                     console.log(defaults.loadErrorConsoleMessage, errors);
                 });
@@ -404,14 +404,14 @@ export const reducer: Reducer<SurveyState> = (state: SurveyState = unloadedState
 
         case 'ADD_ACTIVATION':
 
-            const newLayout1List = Object.assign({}, state.layout, { activationRules: action.rules, EditRule: {} })
+            const newLayout1List = Object.assign({}, state.layout, { activationRules: action.rules, EditRule: {} });
             return Object.assign({}, state, {
                 layout: newLayout1List
             });
 
         case 'EDIT_ACTIVATION':
 
-            const selectedrule = Object.assign({}, state.layout, { EditRule: action.Editrule })
+            const selectedrule = Object.assign({}, state.layout, { EditRule: action.Editrule });
             return Object.assign({}, state, {
                 layout: selectedrule
             });
@@ -453,8 +453,7 @@ function replaceItem(items: LayoutItem[] | undefined, itemToReplace: LayoutItem)
     if (index > -1) {
         const newLayoutList = [...items.splice(index, 1, itemToReplace)];
         return items;
-    }
-    else {
+    } else {
         items.map(item => item.items = replaceItem(item.items, itemToReplace));
         return items;
     }

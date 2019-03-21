@@ -17,7 +17,7 @@ export default class QuestionSearchForm extends React.Component<QuestionSearchFo
     public componentDidMount() {
         this.input.focus();
     }
-    
+
     public render() {
         const { onChange, subText, onSearch } = this.props;
         const { questionSearchInput } = defaults.inputs.textInputs;
@@ -31,12 +31,12 @@ export default class QuestionSearchForm extends React.Component<QuestionSearchFo
                 value={subText}
                 placeholder={questionSearchInput.placeholder}
                 onChange={onChange}
-                inputRef={(input: any) => { this.input = input }}
+                inputRef={(input: any) => { this.input = input; }}
                 isReadOnly={defaults.boolean}
                 autoComplete="off"
             />
             <div className="form-group col-sm-12">
-                <button className="btn btn-primary sr-only"><FaSearch fontSize={15} style={{ paddingRight: "5px" }}/>Search</button>
+                <button className="btn btn-primary sr-only"><FaSearch fontSize={15} style={{ paddingRight: '5px' }}/>Search</button>
             </div>
         </form>;
     }

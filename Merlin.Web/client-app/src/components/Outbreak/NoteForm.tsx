@@ -26,24 +26,6 @@ class NoteForm extends React.Component<NoteFormProps> {
         this.onSubmit = this.onSubmit.bind(this);
     }
 
-    private onChange(name: string, value: any) {
-        const note = Object.assign({}, this.props.note) as any;
-
-        note[name] = value;
-
-        this.props.updateNote(note);
-    }
-
-    private async onSubmit(event: any) {
-        event.preventDefault();
-
-        this.setState({ saving: true });
-
-        const errors = await this.props.saveNote();
-
-        this.setState({ errors, saving: false });
-    }
-
     public render() {
         const { errors, saving } = this.state;
         const { note, cancelNoteEdit, outbreakId } = this.props;
@@ -66,13 +48,31 @@ class NoteForm extends React.Component<NoteFormProps> {
                 </div>
                 <div className="row">
                     <div className="col-md-12 text-right">
-                        <SaveButton disabled={saving} buttonText={saving ? "Saving..." : "Save"} />
-                        {" "}
+                        <SaveButton disabled={saving} buttonText={saving ? 'Saving...' : 'Save'} />
+                        {' '}
                         <CancelButton onClick={cancelNoteEdit} />
                     </div>
                 </div>
             </form>
         </div>;
+    }
+
+    private onChange(name: string, value: any) {
+        const note = Object.assign({}, this.props.note) as any;
+
+        note[name] = value;
+
+        this.props.updateNote(note);
+    }
+
+    private async onSubmit(event: any) {
+        event.preventDefault();
+
+        this.setState({ saving: true });
+
+        const errors = await this.props.saveNote();
+
+        this.setState({ errors, saving: false });
     }
 }
 

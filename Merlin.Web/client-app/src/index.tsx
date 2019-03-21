@@ -1,6 +1,6 @@
 import './css/bootstrap.theme.min.css';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-//import 'react-select/dist/react-select.css';
+// import 'react-select/dist/react-select.css';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'react-toastify/dist/ReactToastify.css';
 import './css/site.css';

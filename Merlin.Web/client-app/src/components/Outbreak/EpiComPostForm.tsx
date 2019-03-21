@@ -32,6 +32,85 @@ class EpiComPostForm extends React.Component<EpiComPostFormProps> {
         this.onTextEditorChange = this.onTextEditorChange.bind(this);
     }
 
+    public async componentDidMount() {
+        const { loadEpiComForumNames, loadEpiComForumTopics, post } = this.props;
+
+        try {
+            this.setState({ loading: true });
+            await loadEpiComForumNames();
+            await loadEpiComForumTopics(post.forumId);
+        } catch (err) {
+            console.log(err);
+        } finally {
+            this.setState({ loading: false });
+        }
+    }
+
+    public render() {
+
+        const { post, epicomForumNameList, epicomForumTopicList, cancelEpiComPostEdit } = this.props;
+        const { errors, submitting } = this.state;
+
+        return <div>
+            <ErrorSummary errors={errors} />
+            <form className="row" onSubmit={this.onSubmit}>
+                <Dropdown
+                    name="forumId"
+                    value={post.forumId}
+                    label="Forum:"
+                    options={uiUtils.getOptions(epicomForumNameList)}
+                    hideLabel={false}
+                    placeholder={''}
+                    isReadOnly={false}
+                    onChange={this.onChange}
+                    cols={12}
+                    error={errors.forumId}
+
+                />
+
+                <Dropdown
+                    name={'topicId'}
+                    value={post.topicId}
+                    options={uiUtils.getOptions(epicomForumTopicList)}
+                    label={'Topic:'}
+                    hideLabel={false}
+                    placeholder={''}
+                    isReadOnly={epicomForumTopicList.length === 0}
+                    onChange={this.onChange}
+                    cols={12}
+                    error={errors.topicId}
+
+                />
+
+                <TextInput
+                    name={'title'}
+                    value={post.title}
+                    label={'Title:'}
+                    hideLabel={false}
+                    placeholder={''}
+                    isReadOnly={false}
+                    onChange={this.onChange}
+                    cols={12}
+                    error={errors.title}
+                />
+                <div className="col-md-12">
+                    <WysiwygEditor
+                        onHtmlChange={this.onTextEditorChange}
+                        encodedHtml={post.message}
+                        editorClassName="wysiwyg-editor form-control"
+                        hideCompleteButton={true}
+                        disableAutoFocus={true}
+                    />
+                </div>
+                <div className="col-md-12 text-right mt-3">
+                    <SubmitButton buttonText={submitting ? 'Posting...' : 'Post'} disabled={submitting} />
+                    {' '}
+                    <CancelButton onClick={cancelEpiComPostEdit} />
+                </div>
+            </form>
+        </div>;
+    }
+
     private onChange(name: string, value: any) {
         const post = Object.assign({}, this.props.post) as any;
 
@@ -39,7 +118,7 @@ class EpiComPostForm extends React.Component<EpiComPostFormProps> {
 
         this.props.updateEpiComPost(post);
 
-        if (name === "forumId") {
+        if (name === 'forumId') {
             this.loadForumTopics(value);
         }
     }
@@ -78,85 +157,6 @@ class EpiComPostForm extends React.Component<EpiComPostFormProps> {
             this.setState({ submitting: false });
         }
     }
-
-    public async componentDidMount() {
-        const { loadEpiComForumNames, loadEpiComForumTopics, post } = this.props;
-
-        try {
-            this.setState({ loading: true });
-            await loadEpiComForumNames();
-            await loadEpiComForumTopics(post.forumId);
-        } catch (err) {
-            console.log(err);
-        } finally {
-            this.setState({ loading: false });
-        }
-    }
-
-    public render() {
-
-        const { post, epicomForumNameList, epicomForumTopicList, cancelEpiComPostEdit } = this.props;
-        const { errors, submitting } = this.state;
-
-        return <div>
-            <ErrorSummary errors={errors} />
-            <form className="row" onSubmit={this.onSubmit}>
-                <Dropdown
-                    name="forumId"
-                    value={post.forumId}
-                    label="Forum:"
-                    options={uiUtils.getOptions(epicomForumNameList)}
-                    hideLabel={false}
-                    placeholder={''}
-                    isReadOnly={false}
-                    onChange={this.onChange}
-                    cols={12}
-                    error={errors.forumId}
-
-                />
-
-                <Dropdown
-                    name={"topicId"}
-                    value={post.topicId}
-                    options={uiUtils.getOptions(epicomForumTopicList)}
-                    label={"Topic:"}
-                    hideLabel={false}
-                    placeholder={''}
-                    isReadOnly={epicomForumTopicList.length === 0}
-                    onChange={this.onChange}
-                    cols={12}
-                    error={errors.topicId}
-
-                />
-
-                <TextInput
-                    name={"title"}
-                    value={post.title}
-                    label={"Title:"}
-                    hideLabel={false}
-                    placeholder={''}
-                    isReadOnly={false}
-                    onChange={this.onChange}
-                    cols={12}
-                    error={errors.title}
-                />
-                <div className="col-md-12">
-                    <WysiwygEditor
-                        onHtmlChange={this.onTextEditorChange}
-                        encodedHtml={post.message}
-                        editorClassName="wysiwyg-editor form-control"
-                        hideCompleteButton={true}
-                        disableAutoFocus={true}
-                    />
-                </div>
-                <div className="col-md-12 text-right mt-3">
-                    <SubmitButton buttonText={submitting ? "Posting..." : "Post"} disabled={submitting} />
-                    {" "}
-                    <CancelButton onClick={cancelEpiComPostEdit} />
-                </div>
-            </form>
-        </div>;
-    }
 }
 
 export default connect(
@@ -164,7 +164,7 @@ export default connect(
         return {
             epicomForumNameList: state.outbreak.epicomForumNameList,
             epicomForumTopicList: state.outbreak.epicomForumTopicList
-        }
+        };
     },
     OutbreakActions
 )(EpiComPostForm);

@@ -13,35 +13,16 @@ type Props = {
     rgAnswers?: answers,
     onAnswerChanged?: (name: string, value: any, index?: number) => void;
     removeRow?: (e: any) => void;
-}
+};
 
 export default class RepeatingQuestionGroupRow extends React.Component<Props> {
+
 
     constructor(props: Props) {
         super(props);
 
         this.onAnswerChanged = this.onAnswerChanged.bind(this);
-    };
-
-    private columnSize() {
-        const { item } = this.props;
-        const length = item.items!.length || 0;
-
-        if (length < 1) {
-            return 11;
-        }
-
-        return Math.floor(11 / (length));
     }
-
-    private onAnswerChanged(name: string, value: any) {
-        const { index, onAnswerChanged } = this.props;
-
-        if (onAnswerChanged) {
-            onAnswerChanged(name, value, index);
-        }
-    }
-
     public render() {
         const { item, index, rgAnswers, removeRow } = this.props;
 
@@ -87,8 +68,27 @@ export default class RepeatingQuestionGroupRow extends React.Component<Props> {
                     </button>
                 }
             </div>
-        </div>
+        </div>;
 
+    }
+
+    private columnSize() {
+        const { item } = this.props;
+        const length = item.items!.length || 0;
+
+        if (length < 1) {
+            return 11;
+        }
+
+        return Math.floor(11 / (length));
+    }
+
+    private onAnswerChanged(name: string, value: any) {
+        const { index, onAnswerChanged } = this.props;
+
+        if (onAnswerChanged) {
+            onAnswerChanged(name, value, index);
+        }
     }
 
 }

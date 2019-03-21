@@ -7,8 +7,7 @@ import SmartGoalsSearch from './SmartGoalsSearch';
 import SmartGoalsResults from './SmartGoalsResults';
 import { toast } from 'react-toastify';
 
-type State =
-    {
+type State = {
         loading: boolean;
     };
 
@@ -27,6 +26,23 @@ class SmartGoalsPage extends React.Component<SmartGoalsPageProps , State> {
         this.onSubmit = this.onSubmit.bind(this);
     }
 
+    public render() {
+
+        const {loading } = this.state;
+
+        if (loading) {
+            return <Loading />;
+        }
+
+        return <div className="container-fluid">
+            <h1>Performance</h1>
+            <SmartGoalsSearch onSubmit={this.onSubmit} />
+            <hr />
+            {loading && <Loading />}
+            {!loading && <SmartGoalsResults />}
+        </div>;
+    }
+
     private async onSubmit(e: any) {
         e.preventDefault();
         try {
@@ -38,31 +54,14 @@ class SmartGoalsPage extends React.Component<SmartGoalsPageProps , State> {
             if (Object.keys(error).length > 0) {
                 Object.keys(error).map(key => error[key].map((error: string) => toast.error(error)));
             }
-        } 
-    }
-
-    public render() {
-
-        const {loading } = this.state;
-      
-        if (loading) {
-            return <Loading />;
         }
-
-        return <div className='container-fluid'>
-            <h1>Performance</h1>
-            <SmartGoalsSearch onSubmit={this.onSubmit} />
-            <hr />
-            {loading && <Loading />}
-            {!loading && <SmartGoalsResults />}
-        </div>
     }
 }
 
 export default connect(
     (state: ApplicationState) => {
         return {
-        }
+        };
     },
     SmartGoalsActions
 )(SmartGoalsPage);

@@ -18,25 +18,17 @@ import SaveButton from '../../common/SaveButton';
 import YesNo from '../../common/YesNo';
 
 type QuestionCreateProps = {
-    codes:Codes
+    codes: Codes
 }
     & typeof CodeStore.actionCreators
     & typeof SurveyQuestionStore.actionCreators
     & RouteComponentProps<{}>;
 
 class QuestionCreate extends React.Component<QuestionCreateProps, {}> {
-    constructor(props: QuestionCreateProps) {
-        super(props);
-        this.onChange = this.onChange.bind(this);
-        this.onDropdownChange = this.onDropdownChange.bind(this);
-        this.onSave = this.onSave.bind(this);
-		this.onAnswerChange = this.onAnswerChange.bind(this);
-		this.onSaveQuestionToggle = this.onSaveQuestionToggle.bind(this);
-    }
 
     state = {
         question: {
-            uid:defaults.string,
+            uid: defaults.string,
             questionId: defaults.guid,
             legacyId: defaults.number.toString(),
             questionType: defaults.string,
@@ -52,7 +44,15 @@ class QuestionCreate extends React.Component<QuestionCreateProps, {}> {
         isLoading: defaults.boolean,
         answers: {} as any
     };
-    questionIsDirty = defaults.boolean; 
+    questionIsDirty = defaults.boolean;
+    constructor(props: QuestionCreateProps) {
+        super(props);
+        this.onChange = this.onChange.bind(this);
+        this.onDropdownChange = this.onDropdownChange.bind(this);
+        this.onSave = this.onSave.bind(this);
+		      this.onAnswerChange = this.onAnswerChange.bind(this);
+		      this.onSaveQuestionToggle = this.onSaveQuestionToggle.bind(this);
+    }
 
     public componentWillReceiveProps(newProps: QuestionCreateProps) {
         if (this.questionIsDirty && !this.state.saveSuccessful) {
@@ -63,79 +63,22 @@ class QuestionCreate extends React.Component<QuestionCreateProps, {}> {
     }
 
     public componentDidMount() {
-        document.title = defaults.titles.CreateQuestion
+        document.title = defaults.titles.CreateQuestion;
     }
-
-    private resetFields() {
-        let newState = Object.assign({}, this.state);
-        newState.question.codeType = defaults.string;
-        newState.question.choices = [] as any;
-        this.setState(newState);
-    }
-
-    private onAnswerChange(name: string, newValue: any) {
-        let newState = Object.assign({}, this.state);
-        newState.answers[name] = newValue;
-        this.setState(newState);
-    }
-
-    private onDropdownChange(name: string, newValue: any) {
-        if (name === defaults.inputs.dropdowns.questionTypeInput.name && (questionTypesWithCodesArray.indexOf(newValue) < 0)) {
-            this.resetFields();
-        }
-        if (name === defaults.inputs.dropdowns.questionCodeTypeInput.name) {
-            this.questionIsDirty = true;
-            this.props.loadDropdown(newValue, this.props.history, 'QUESTION_CHOICES');
-        }
-        this.onChange(name, newValue);
-    }
-
-    private getDescription(array: CodeStore.DropdownCode[], value: string): string {
-        return value !== defaults.string && array ? array.filter(code => code.code == value)[0]["description"] : defaults.string;
-    }
-
-    private onChange(name: string, newValue: any) {
-        let newState = Object.assign({}, this.state);
-        (newState.question as any)[name] = newValue;
-        this.setState(newState);
-    }
-
-    private onSave(event: any) {
-        const layoutId = (this.props.match.params as any).layoutId;
-        event.preventDefault();
-        this.setState({ isLoading: true });
-        (this.props.saveQuestion(this.state.question) as any)
-            .then((res: any) => {
-                let newState = Object.assign({}, this.state);
-                newState.saveSuccessful = true;
-                newState.question = res;
-                newState.isLoading = false;
-                newState.errors = {} as any;
-                this.setState(newState);
-                this.props.history.push(`${defaults.urls.questionManagerUrl}${layoutId ? `/${layoutId}` : ''}`);
-            })
-            .catch((errors: any) => this.setState({ errors, isLoading: false }));
-	}
-
-	private onSaveQuestionToggle() {
-		const newState = Object.assign({}, this.state);
-		newState.question.saveToBank = !this.state.question.saveToBank;
-		this.setState(newState);
-	}
 
     public render() {
-        const { history, loadDropdown, codes } = this.props
-        const { errors, question, isLoading, saveSuccessful, answers } = this.state
-        const { questionTextInput, objectMappingValueInput } = defaults.inputs.textInputs
-        const { layoutItemType } = LayoutStore
+        const { history, loadDropdown, codes } = this.props;
+        const { errors, question, isLoading, saveSuccessful, answers } = this.state;
+        const { questionTextInput, objectMappingValueInput } = defaults.inputs.textInputs;
+        const { layoutItemType } = LayoutStore;
 
         if (isLoading) {
-            return <Loading />
+            return <Loading />;
         }
 
         return <div>
             <h1>Create Question</h1>
-			  
+
 					<div className="row">
 						<div className="col-md-8">
 
@@ -181,7 +124,7 @@ class QuestionCreate extends React.Component<QuestionCreateProps, {}> {
 								onChange={this.onSaveQuestionToggle}
 							/>*/}
 						</div>
-						<div className="col-md-4" style={{ textAlign: "center" }}>
+						<div className="col-md-4" style={{ textAlign: 'center' }}>
 							{(Object.keys(errors).length > 0) &&
 								<ErrorSummary
 									errors={errors}
@@ -189,13 +132,13 @@ class QuestionCreate extends React.Component<QuestionCreateProps, {}> {
 							}
 							{saveSuccessful &&
 								<Alert alertType="success">
-								{"Question saved!"}
+								{'Question saved!'}
 								</Alert>
 							}
 						</div>
 					</div>
 		<hr/>
-			   
+
             <div className="col-md-6" style={{ 'padding': 0 }}>
                 <h2>Preview</h2>
                 <Question
@@ -209,7 +152,7 @@ class QuestionCreate extends React.Component<QuestionCreateProps, {}> {
                             choices: question.choices || [],
                             activation: defaults.activation,
                             validations: defaults.validations,
-                            groupAccess:[]
+                            groupAccess: []
                         }
                     }
                     answers={answers}
@@ -225,14 +168,71 @@ class QuestionCreate extends React.Component<QuestionCreateProps, {}> {
 				<SaveButton onClick={this.onSave} />
 			</h1>
 
-        </div>
+        </div>;
     }
+
+    private resetFields() {
+        let newState = Object.assign({}, this.state);
+        newState.question.codeType = defaults.string;
+        newState.question.choices = [] as any;
+        this.setState(newState);
+    }
+
+    private onAnswerChange(name: string, newValue: any) {
+        let newState = Object.assign({}, this.state);
+        newState.answers[name] = newValue;
+        this.setState(newState);
+    }
+
+    private onDropdownChange(name: string, newValue: any) {
+        if (name === defaults.inputs.dropdowns.questionTypeInput.name && (questionTypesWithCodesArray.indexOf(newValue) < 0)) {
+            this.resetFields();
+        }
+        if (name === defaults.inputs.dropdowns.questionCodeTypeInput.name) {
+            this.questionIsDirty = true;
+            this.props.loadDropdown(newValue, this.props.history, 'QUESTION_CHOICES');
+        }
+        this.onChange(name, newValue);
+    }
+
+    private getDescription(array: CodeStore.DropdownCode[], value: string): string {
+        return value !== defaults.string && array ? array.filter(code => code.code == value)[0].description : defaults.string;
+    }
+
+    private onChange(name: string, newValue: any) {
+        let newState = Object.assign({}, this.state);
+        (newState.question as any)[name] = newValue;
+        this.setState(newState);
+    }
+
+    private onSave(event: any) {
+        const layoutId = (this.props.match.params as any).layoutId;
+        event.preventDefault();
+        this.setState({ isLoading: true });
+        (this.props.saveQuestion(this.state.question) as any)
+            .then((res: any) => {
+                let newState = Object.assign({}, this.state);
+                newState.saveSuccessful = true;
+                newState.question = res;
+                newState.isLoading = false;
+                newState.errors = {} as any;
+                this.setState(newState);
+                this.props.history.push(`${defaults.urls.questionManagerUrl}${layoutId ? `/${layoutId}` : ''}`);
+            })
+            .catch((errors: any) => this.setState({ errors, isLoading: false }));
+	}
+
+	private onSaveQuestionToggle() {
+		const newState = Object.assign({}, this.state);
+		newState.question.saveToBank = !this.state.question.saveToBank;
+		this.setState(newState);
+	}
 }
 export default connect(
     (state: ApplicationState) => {
         return {
             codes: state.codes.codes
-        }
+        };
     },
     Object.assign(SurveyQuestionStore.actionCreators, CodeStore.actionCreators)
 )(QuestionCreate);

@@ -11,11 +11,11 @@ type AdvancedSearchProps = {
 }
     & typeof actionCreators;
 
-class AdvancedSearch extends React.Component<AdvancedSearchProps>{
+class AdvancedSearch extends React.Component<AdvancedSearchProps> {
 
     state = {
         loading: false
-    }
+    };
 
     public async componentDidMount() {
         const { loadColumnInfo } = this.props;
@@ -41,8 +41,8 @@ class AdvancedSearch extends React.Component<AdvancedSearchProps>{
         }
 
         return <div>
-            {advancedCriteria.map(criteria => <AdvancedSearchCriteria key={criteria.id} criteria={criteria} />)}            
-        </div>
+            {advancedCriteria.map(criteria => <AdvancedSearchCriteria key={criteria.id} criteria={criteria} />)}
+        </div>;
     }
 }
 

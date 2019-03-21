@@ -9,10 +9,10 @@ import { DropdownCode } from '../../utils/Global';
 
 type TemplatesDropdownProps = {
     id: number;
-    templates:DropdownCode[]
+    templates: DropdownCode[]
 } & typeof ElrSearchActions;
 
-class TemplateDropdown extends React.Component<TemplatesDropdownProps>{
+class TemplateDropdown extends React.Component<TemplatesDropdownProps> {
 
     state = {
         error: {},
@@ -29,32 +29,10 @@ class TemplateDropdown extends React.Component<TemplatesDropdownProps>{
         } catch (err) {
             console.log(err);
         }
-    }   
-
-    private onChange(name: string, newValue: any) {
-        let tname = ''
-
-        if (parseInt(newValue) > 0) {
-            tname = getOptions(this.props.templates)
-                .filter(option => option.value === newValue)[0].label;
-        }
-
-        else if (parseInt(newValue) === -1) { tname = 'CREATE NEW TEMPLATE' }
-
-        this.props.clearSearch();
-        this.props.selectTemplate(tname, parseInt(newValue));
-    }
-
-    private getOptionList() {
-        var optionsList = [{ label: 'CREATE NEW TEMPLATE', value: '-1' },
-            { className: 'dropdown-divider', disabled: true }
-        ]
-
-        return optionsList.concat(getOptions(this.props.templates))
     }
 
     public render() {
-        const { id} = this.props
+        const { id} = this.props;
 
         return <Dropdown
             cols={4}
@@ -62,11 +40,31 @@ class TemplateDropdown extends React.Component<TemplatesDropdownProps>{
             name="name"
             value={id}
             options={this.getOptionList()}
-            placeholder={"Choose a Template"}
+            placeholder={'Choose a Template'}
             onChange={this.onChange}
             isMulti={false}
             isReadOnly={false}
-        />
+        />;
+    }
+
+    private onChange(name: string, newValue: any) {
+        let tname = '';
+
+        if (parseInt(newValue) > 0) {
+            tname = getOptions(this.props.templates)
+                .filter(option => option.value === newValue)[0].label;
+        } else if (parseInt(newValue) === -1) { tname = 'CREATE NEW TEMPLATE'; }
+
+        this.props.clearSearch();
+        this.props.selectTemplate(tname, parseInt(newValue));
+    }
+
+    private getOptionList() {
+        let optionsList = [{ label: 'CREATE NEW TEMPLATE', value: '-1' },
+            { className: 'dropdown-divider', disabled: true }
+        ];
+
+        return optionsList.concat(getOptions(this.props.templates));
     }
 
 }
@@ -75,7 +73,7 @@ export default connect(
     (state: ApplicationState) => {
         return {
             id: state.elrSearch.templateID,
-            templates:state.elrSearch.templates
+            templates: state.elrSearch.templates
         };
     },
     ElrSearchActions

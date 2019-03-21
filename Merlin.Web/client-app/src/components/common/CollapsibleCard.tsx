@@ -11,20 +11,16 @@ type CollapsibleCardProps = {
     style?: any;
     className?: string;
     contextClassName?: string;
-}
+};
 
 export default class CollapsibleCard extends React.Component<CollapsibleCardProps, {}> {
     state = {
         collapsed: false
-    }
+    };
     constructor(props: CollapsibleCardProps) {
         super(props);
         this.state.collapsed = props.initiallyCollapsed;
         this.onChange = this.onChange.bind(this);
-    }
-    private onChange(event: any) {
-        event.preventDefault();
-        this.setState({ collapsed: !this.state.collapsed });
     }
 
     public render() {
@@ -58,4 +54,8 @@ export default class CollapsibleCard extends React.Component<CollapsibleCardProp
             }
         </div>;
     }
-};
+    private onChange(event: any) {
+        event.preventDefault();
+        this.setState({ collapsed: !this.state.collapsed });
+    }
+}

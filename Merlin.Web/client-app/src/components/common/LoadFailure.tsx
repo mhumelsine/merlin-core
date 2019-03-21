@@ -15,7 +15,7 @@ export default class LoadFailure extends React.Component<LoadFailureProps, {}> {
             <h1>An error occurred</h1>
             <Alert alertType="danger">
                 {<h6>{defaults.loadErrorDisplayMessage}</h6>}
-            </Alert> 
+            </Alert>
             <BackButton goBack={history.goBack} />
         </div>;
     }

@@ -9,9 +9,9 @@ type Props = {
     date: string
     userId: string
     county: string
-}
+};
 
-export default class StatusHistoryItem extends React.Component<Props>{
+export default class StatusHistoryItem extends React.Component<Props> {
     public render() {
         const { status, reviewStatus, reason, date, userId, county } = this.props;
         return (

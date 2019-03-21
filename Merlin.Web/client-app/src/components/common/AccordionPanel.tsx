@@ -2,7 +2,7 @@
 import { FaPlus, FaMinus } from 'react-icons/fa';
 import { defaults } from '../../utils/Global';
 import NextButton from './NextButton';
-import { isNullOrEmpty } from "../../utils/UIUtils";
+import { isNullOrEmpty } from '../../utils/UIUtils';
 
 interface AccordionPanelProps {
     heading: any;
@@ -33,7 +33,7 @@ export default class AccordionPanel extends React.Component<AccordionPanelProps>
                     </button>
                 </h2>
             </div>
-            <div className={`collapse ${isActive(heading) ? "show" : ""}`} aria-labelledby={heading}>
+            <div className={`collapse ${isActive(heading) ? 'show' : ''}`} aria-labelledby={heading}>
                 <div className="card-body">
                     {children}
                     {!isLastChild && <NextButton name={next || ''} goNext={onClickNext} />}

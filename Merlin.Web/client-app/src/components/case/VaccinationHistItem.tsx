@@ -9,20 +9,10 @@ type VaccinationHistItemProps = {
     vaccineHist: VaccineHistory
     onDelete: (vaccineID: number) => void;
     onEdit: (vaccineHistoryItem: VaccineHistory) => void
-}
+};
 
 
 export default class VaccinationHistItem extends React.Component<VaccinationHistItemProps> {
-
-
-    private actions() {
-        const { onDelete, onEdit } = this.props
-        return <div> <DeleteButton onClick={() => onDelete(this.props.vaccineHist.vaccineID)}/>
-                     {" "}            
-                    <EditButton onClick={() => onEdit(this.props.vaccineHist)}/>
-               </div>
-
-    }
 
     public render() {
 
@@ -36,6 +26,16 @@ export default class VaccinationHistItem extends React.Component<VaccinationHist
                     <td data-title="Dose Number"> {doseNumber}</td>
                     <td data-title="Action"> {this.actions()}</td>
               </tr>;
+
+    }
+
+
+    private actions() {
+        const { onDelete, onEdit } = this.props;
+        return <div> <DeleteButton onClick={() => onDelete(this.props.vaccineHist.vaccineID)}/>
+                     {' '}
+                    <EditButton onClick={() => onEdit(this.props.vaccineHist)}/>
+               </div>;
 
     }
 }

@@ -25,30 +25,10 @@ type BackgroundProps = {
 class Background extends React.Component<BackgroundProps> {
     state = {
         loading: true
-    }
+    };
     constructor(props: BackgroundProps) {
         super(props);
-        this.onChange = this.onChange.bind(this)
-    }
-    private onChange(name: string, newValue: any) {
-        let background = Object.assign({}, this.props.background) as any;
-
-        if ((name === "syndrome")
-            && ((isNullOrEmpty(newValue))
-                || ((newValue === "OTHER") && (background.syndrome !== "OTHER"))
-                || ((!isNullOrEmpty(background.otherSyndrome) && newValue !== "OTHER")))) {
-            background.otherSyndrome = '';
-        }
-
-        if ((name === "diseaseHazard")
-            && ((isNullOrEmpty(newValue))
-                || ((newValue === "99999") && (background.diseaseHazard !== "99999"))
-                || ((!isNullOrEmpty(background.otherDiseaseHazard) && newValue !== "99999")))) {
-            background.otherDiseaseHazard = '';
-        }
-
-        background[name] = newValue;
-        this.props.updateBackground(background);
+        this.onChange = this.onChange.bind(this);
     }
 
     public async componentDidMount() {
@@ -74,7 +54,7 @@ class Background extends React.Component<BackgroundProps> {
 
         if (loading) {
             return <Loading />;
-        }      
+        }
 
         return <div>
             <div className="row" >
@@ -88,10 +68,10 @@ class Background extends React.Component<BackgroundProps> {
 
             <div className="row" >
                 <TextInput
-                    name={"eventName"}
+                    name={'eventName'}
                     isRequired={true}
                     value={background.eventName}
-                    label={"Outbreak/Event Name:"}
+                    label={'Outbreak/Event Name:'}
                     hideLabel={false}
                     placeholder={''}
                     isReadOnly={false}
@@ -102,24 +82,24 @@ class Background extends React.Component<BackgroundProps> {
                 />
 
                 <CustomDatePicker
-                    name={"notifiedDate"}
+                    name={'notifiedDate'}
                     isRequired={true}
                     value={background.notifiedDate}
-                    label={"FDOH Notified Date:"}
+                    label={'FDOH Notified Date:'}
                     hideLabel={false}
                     placeholder={'mm/dd/yyyy'}
                     isReadOnly={false}
                     onChange={this.onChange}
                     cols={6}
                     error={errors.notifiedDate}
-                    //ignoreError={true}
+                    // ignoreError={true}
                 />
             </div>
             <div className="row" >
                 <Dropdown
                     name="firstNotified"
                     value={background.firstNotified}
-                    label={"How FDOH First Notified:"}
+                    label={'How FDOH First Notified:'}
                     hideLabel={false}
                     placeholder={''}
                     options={utils.getOptions(codes.REPORTER)}
@@ -130,9 +110,9 @@ class Background extends React.Component<BackgroundProps> {
                     error={errors.firstNotified}
                 />
                 <TextInput
-                    name={"reporterName"}
+                    name={'reporterName'}
                     value={background.reporterName}
-                    label={"Reporter Name:"}
+                    label={'Reporter Name:'}
                     hideLabel={false}
                     placeholder={''}
                     isReadOnly={false}
@@ -153,29 +133,29 @@ class Background extends React.Component<BackgroundProps> {
             </div>
             <div className="row" >
                 <CustomDatePicker
-                    name={"investigationStarted"}
+                    name={'investigationStarted'}
                     value={background.investigationStarted}
-                    label={"Date investigation Started:"}
+                    label={'Date investigation Started:'}
                     hideLabel={false}
                     placeholder={'mm/dd/yyyy'}
                     isReadOnly={false}
                     onChange={this.onChange}
                     cols={6}
                     error={errors.investigationStarted}
-                    //ignoreError={true}
+                    // ignoreError={true}
                 />
 
                 <CustomDatePicker
-                    name={"investigationClosed"}
+                    name={'investigationClosed'}
                     value={background.investigationClosed}
-                    label={"Date investigation Closed:"}
+                    label={'Date investigation Closed:'}
                     hideLabel={false}
                     placeholder={'mm/dd/yyyy'}
                     isReadOnly={false}
                     onChange={this.onChange}
                     cols={6}
                     error={errors.investigationClosed}
-                    //ignoreError={true}
+                    // ignoreError={true}
                 />
 
             </div>
@@ -186,10 +166,10 @@ class Background extends React.Component<BackgroundProps> {
 
             <div className="row" >
                 <Dropdown
-                    name={"syndrome"}
+                    name={'syndrome'}
                     isRequired={true}
                     value={background.syndrome}
-                    label={"Syndrome:"}
+                    label={'Syndrome:'}
                     hideLabel={false}
                     placeholder={''}
                     options={utils.getOptions(codes.OB_SYNDROMES)}
@@ -200,12 +180,12 @@ class Background extends React.Component<BackgroundProps> {
                     error={errors.syndrome}
                 />
                 <TextInput
-                    name={"otherSyndrome"}
+                    name={'otherSyndrome'}
                     value={background.otherSyndrome}
-                    label={"Other Syndrome:"}
+                    label={'Other Syndrome:'}
                     hideLabel={false}
                     placeholder={''}
-                    isReadOnly={background.syndrome !== "OTHER"}
+                    isReadOnly={background.syndrome !== 'OTHER'}
                     onChange={this.onChange}
                     cols={6}
                     error={errors.otherSyndrome}
@@ -215,9 +195,9 @@ class Background extends React.Component<BackgroundProps> {
 
             <div className="row" >
                 <Dropdown
-                    name={"diseaseHazard"}
+                    name={'diseaseHazard'}
                     value={background.diseaseHazard}
-                    label={"Disease/Hazard:"}
+                    label={'Disease/Hazard:'}
                     hideLabel={false}
                     placeholder={''}
                     options={utils.getOptions(codes.DISEASES)}
@@ -228,12 +208,12 @@ class Background extends React.Component<BackgroundProps> {
                     error={errors.diseaseHazard}
                 />
                 <TextInput
-                    name={"otherDiseaseHazard"}
+                    name={'otherDiseaseHazard'}
                     value={background.otherDiseaseHazard}
-                    label={"Other Disease/Hazard:"}
+                    label={'Other Disease/Hazard:'}
                     hideLabel={false}
                     placeholder={''}
-                    isReadOnly={background.diseaseHazard !== "99999"}
+                    isReadOnly={background.diseaseHazard !== '99999'}
                     onChange={this.onChange}
                     cols={6}
                     error={errors.otherDiseaseHazard}
@@ -245,10 +225,10 @@ class Background extends React.Component<BackgroundProps> {
 
             <div className="row" >
                 <NumberInput
-                    name={"estimatedNumber"}
+                    name={'estimatedNumber'}
                     isRequired={true}
                     value={background.estimatedNumber}
-                    label={"Estimated Number Ill at Initial Report:"}
+                    label={'Estimated Number Ill at Initial Report:'}
                     onChange={this.onChange}
                     cols={4}
                     error={errors.estimatedNumber}
@@ -256,27 +236,47 @@ class Background extends React.Component<BackgroundProps> {
                     max={int32.max}
                 />
                 <YesNoUnknown
-                    name={"isOutbreak"}
+                    name={'isOutbreak'}
                     isRequired={true}
                     value={background.isOutbreak}
-                    label={"Outbreak:"}
+                    label={'Outbreak:'}
                     cols={3}
                     onChange={this.onChange}
                     isReadOnly={false}
                     error={errors.isOutbreak}
                 />
                 <YesNoUnknown
-                    name={"isInvestigated"}
+                    name={'isInvestigated'}
                     isRequired={true}
                     value={background.isInvestigated}
-                    label={"Investigated:"}
+                    label={'Investigated:'}
                     cols={3}
                     onChange={this.onChange}
                     isReadOnly={false}
                     error={errors.isInvestigated}
                 />
             </div>
-        </div>
+        </div>;
+    }
+    private onChange(name: string, newValue: any) {
+        let background = Object.assign({}, this.props.background) as any;
+
+        if ((name === 'syndrome')
+            && ((isNullOrEmpty(newValue))
+                || ((newValue === 'OTHER') && (background.syndrome !== 'OTHER'))
+                || ((!isNullOrEmpty(background.otherSyndrome) && newValue !== 'OTHER')))) {
+            background.otherSyndrome = '';
+        }
+
+        if ((name === 'diseaseHazard')
+            && ((isNullOrEmpty(newValue))
+                || ((newValue === '99999') && (background.diseaseHazard !== '99999'))
+                || ((!isNullOrEmpty(background.otherDiseaseHazard) && newValue !== '99999')))) {
+            background.otherDiseaseHazard = '';
+        }
+
+        background[name] = newValue;
+        this.props.updateBackground(background);
     }
 }
 export default connect(

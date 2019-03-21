@@ -5,7 +5,7 @@ import Alert from '../common/Alert';
 import { FaExclamationTriangle } from 'react-icons/fa/index';
 
 interface NoteListProps {
-    noteList: Note[]
+    noteList: Note[];
 }
 
 export default class NoteList extends React.Component<NoteListProps> {
@@ -33,8 +33,7 @@ export default class NoteList extends React.Component<NoteListProps> {
                     </tbody>
                 </table>
             </div>;
-        }
-        else {
+        } else {
             return <Alert alertType="warning"><FaExclamationTriangle /> No notes to show</Alert>;
         }
     }

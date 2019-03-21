@@ -3,7 +3,7 @@ import { AppThunkAction } from './';
 import * as AjaxUtils from '../utils/AjaxUtils';
 import { defaults } from '../utils/Global';
 import { PagedList } from './SurveySearch';
-import * as LayoutUtils from '../utils/LayoutUtils'
+import * as LayoutUtils from '../utils/LayoutUtils';
 
 export enum layoutItemType {
     section = 'section',
@@ -14,37 +14,37 @@ export enum layoutItemType {
     layout = 'layout',
     lineBreak = 'lineBreak',
 	repeatingQuestionsGroup = 'repeatingQuestionsGroup',
-	genericQuery = "genericQuery"
+	genericQuery = 'genericQuery'
 }
 
-export enum ControlType { 
-    LabResults = "Lab Results",
-    Symptoms = "Symptoms",
-    HealthCareVisits = "Health Care Visits",
-    TravelHistory = "Travel History",
-    VaccinationHistory = "Vaccination History",
-    LabSummary = "Lab Summary",
-    Epilinks = "Epi-Link Relationships",
-    Treatments = "Treatments",
-    OutbreakLabList = "Outbreak Lab List"
-};
+export enum ControlType {
+    LabResults = 'Lab Results',
+    Symptoms = 'Symptoms',
+    HealthCareVisits = 'Health Care Visits',
+    TravelHistory = 'Travel History',
+    VaccinationHistory = 'Vaccination History',
+    LabSummary = 'Lab Summary',
+    Epilinks = 'Epi-Link Relationships',
+    Treatments = 'Treatments',
+    OutbreakLabList = 'Outbreak Lab List'
+}
 
 export enum LayoutItemState {
-    Active = "ACTIVE",
-    Disabled = "DISABLED",
-    Hidden = "HIDDEN"
+    Active = 'ACTIVE',
+    Disabled = 'DISABLED',
+    Hidden = 'HIDDEN'
 }
 
 
 export enum LayoutQuestionAnswer {
-    IsAnswered = "IS ANSWERED",
-    IsNotAnswered = "IS NOT ANSWERED",
-    HasSpecificAnswer = "HAS SPECIFIC ANSWER"
+    IsAnswered = 'IS ANSWERED',
+    IsNotAnswered = 'IS NOT ANSWERED',
+    HasSpecificAnswer = 'HAS SPECIFIC ANSWER'
 }
 
 export enum LayoutQuestionMessageType {
-    Default = "DEFAULT",
-    Custom = "CUSTOM"
+    Default = 'DEFAULT',
+    Custom = 'CUSTOM'
 }
 
 export enum LayoutQuestionType {
@@ -62,14 +62,14 @@ export enum LayoutQuestionType {
 }
 
 export enum LayoutQuestionOperator {
-    Equals = "=",
-    GreaterThan = ">",
-    LessThan = "<",
-    GreaterThanOrEqualTo = ">=",
-    LessThanOrEqualTo = "<=",
-    NotEqual = "<>",
-    In = "IN",
-    NotIn = "NOT IN"
+    Equals = '=',
+    GreaterThan = '>',
+    LessThan = '<',
+    GreaterThanOrEqualTo = '>=',
+    LessThanOrEqualTo = '<=',
+    NotEqual = '<>',
+    In = 'IN',
+    NotIn = 'NOT IN'
 }
 
 export const messageType = {
@@ -78,11 +78,11 @@ export const messageType = {
     warning: 'warning',
     light: 'light',
     success: 'success'
-}
+};
 
 export enum ValidationType {
     HasValue = 'HAS ANY VALUE',
-    HasSpecificValue = "HAS SPECIFIC VALUE",
+    HasSpecificValue = 'HAS SPECIFIC VALUE',
     IsNotFutureDate = 'IS NOT FUTURE DATE',
     IsValidDate = 'IS VALID DATE',
     IsLessThan = 'NUMBER IS LESS THAN',
@@ -90,32 +90,32 @@ export enum ValidationType {
     IsLessThanOrEqualTo = 'NUMBER IS LESS THAN OR EQUAL TO',
     IsGreaterThanOrEqualTo = 'NUMBER IS GREATER THAN OR EQUAL TO',
     IsEqualTo = 'NUMBER IS EQUAL TO',
-    IsNotEqualTo = 'NUMBER IS NOT EQUAL TO',    
+    IsNotEqualTo = 'NUMBER IS NOT EQUAL TO',
     MatchesPattern = 'TEXT MATCHES PATTERN',
     InValid = 'INVALID QUESTION TYPE',
     MaxLength = 'TEXT IS SHORTER THAN'
 }
 
 export enum ValidationTypeMessage {
-    HasValue = 'REQUIRED',    
+    HasValue = 'REQUIRED',
     InValid = 'INVALID QUESTION TYPE',
     IsNotFutureDate = 'NOT A FUTURE DATE',
     IsValidDate = 'IS VALID DATE',
-    HasSpecificValue = "VALUE EQUALS: ",
+    HasSpecificValue = 'VALUE EQUALS: ',
     IsLessThan = 'NUMBER IS LESS THAN: ',
     IsGreaterThan = 'NUMBER IS GREATER THAN: ',
     IsLessThanOrEqualTo = 'NUMBER IS LESS THAN OR EQUAL TO: ',
     IsGreaterThanOrEqualTo = 'NUMBER IS GREATER THAN OR EQUAL TO: ',
     IsEqualTo = 'NUMBER IS EQUAL TO: ',
     IsNotEqualTo = 'NUMBER IS NOT EQUAL TO: ',
-    MatchesPattern = 'TEXT MATCHES PATTERN: ',    
+    MatchesPattern = 'TEXT MATCHES PATTERN: ',
     MaxLength = 'TEXT IS SHORTER THAN: '
 }
 
 export interface Activation {
     targetItemId: string;
     rules: string[];
-    //outcome: "hide" | "disable" | "show";
+    // outcome: "hide" | "disable" | "show";
     outcome: string;
 }
 
@@ -176,10 +176,10 @@ export interface Layout {
     // activations: Activation[];
     // validations: Validation[];
     // EditRule?: Activation
-    tags: string[]
-    surveys: any[]
-    savedOn: string
-    hasBeenEdited: boolean
+    tags: string[];
+    surveys: any[];
+    savedOn: string;
+    hasBeenEdited: boolean;
 }
 
 export interface LayoutItem {
@@ -189,7 +189,7 @@ export interface LayoutItem {
     number?: string;
     isNumbered?: boolean;
     title?: string;
-    text?: any; //any needed to support highlighting
+    text?: any; // any needed to support highlighting
     messageType?: string;
     activation: LayoutItemActivation;
     validations: LayoutItemValidation[];
@@ -210,14 +210,14 @@ interface RequestPackagedLayoutAction {
 }
 
 interface GetAllQuestionAction {
-    type: 'GET_ALL_QUESTION'
+    type: 'GET_ALL_QUESTION';
     layout: Layout;
 }
 
 interface UpdateActivationAction {
-    type: 'UPDATE_ACTIVATION'
-    activation: LayoutItemActivation
-    itemId: string
+    type: 'UPDATE_ACTIVATION';
+    activation: LayoutItemActivation;
+    itemId: string;
 }
 interface ReceivePackagedLayoutAction {
     type: 'RECEIVE_PACKAGED_LAYOUT';
@@ -239,28 +239,28 @@ interface LayoutSavedAction {
 }
 
 interface LoadLayoutTagsAction {
-    type: 'LOAD_LAYOUT_TAGS',
-    tags: string[]
+    type: 'LOAD_LAYOUT_TAGS';
+    tags: string[];
 }
 
 interface LoadedLayoutListFromTagsAction {
-    type: 'LOAD_LAYOUTLIST_FROM_TAGS',
-    layoutList: PagedList<any>
+    type: 'LOAD_LAYOUTLIST_FROM_TAGS';
+    layoutList: PagedList<any>;
 }
 
 interface SetSelectedTagsAction {
-    type: 'SET_SELECTED_TAGS',
-    tags: string[]
+    type: 'SET_SELECTED_TAGS';
+    tags: string[];
 }
 
 interface LoadedLayoutListFromTagsAction {
-    type: 'LOAD_LAYOUTLIST_FROM_TAGS',
-    layoutList: PagedList<any>
+    type: 'LOAD_LAYOUTLIST_FROM_TAGS';
+    layoutList: PagedList<any>;
 }
 
 interface ReceivedLayoutAction {
-    type: 'RECEIVED_LAYOUT',
-    layout: Layout
+    type: 'RECEIVED_LAYOUT';
+    layout: Layout;
 }
 
 interface SaveLayoutItemAction {
@@ -284,7 +284,7 @@ interface UpdateLayoutItemWidthAction {
 
 interface MoveItemAction {
     type: 'MOVE_ITEM';
-    direction: "UP" | "DOWN"
+    direction: 'UP' | 'DOWN';
     parentId: string;
     itemId: string;
 }
@@ -302,7 +302,7 @@ interface ToggleQuestionTextAction {
 }
 
 interface RenumberLayoutAction {
-    type: "RENUMBER_LAYOUT"
+    type: 'RENUMBER_LAYOUT';
 }
 
 interface RequestAffectedLayoutsAction {
@@ -316,20 +316,20 @@ interface ReceiveAffectedLayoutsAction {
 }
 
 interface ImportLayoutAction {
-    type: 'IMPORT_LAYOUT',
-    layout: Layout
+    type: 'IMPORT_LAYOUT';
+    layout: Layout;
 }
 
 interface RemoveLayoutAction {
-	type: 'REMOVE_LAYOUT',
-	layout: Layout
+	type: 'REMOVE_LAYOUT';
+	layout: Layout;
 }
 
 interface UpdateItemAccess {
-    type: 'UPDATE_ITEM_ACCESS',
-    itemId: string,
-    parentId: string,
-    groupAccess: string []
+    type: 'UPDATE_ITEM_ACCESS';
+    itemId: string;
+    parentId: string;
+    groupAccess: string [];
 }
 
 type KnownAction = RequestPackagedLayoutAction
@@ -350,9 +350,9 @@ type KnownAction = RequestPackagedLayoutAction
     | ReceiveAffectedLayoutsAction
     | RequestAffectedLayoutsAction
     | ImportLayoutAction
-    //| UpdateLayoutName
-    //| RemoveLayoutTag
-    //| AddLayoutTag
+    // | UpdateLayoutName
+    // | RemoveLayoutTag
+    // | AddLayoutTag
     | GetAllQuestionAction
 	| UpdateActivationAction
     | RemoveLayoutAction
@@ -414,11 +414,11 @@ export const actionCreators = {
 			} catch (err) {
 				throw err;
 			}
-		},        
+		},
     updateActivationState: (itemId: string, activation: LayoutItemActivation): AppThunkAction<KnownAction> =>
         async (dispatch, getState) => {
             dispatch({
-                type: "UPDATE_ACTIVATION",
+                type: 'UPDATE_ACTIVATION',
                 itemId,
                 activation
             });
@@ -428,11 +428,10 @@ export const actionCreators = {
             try {
                 const tags = await AjaxUtils.get('api/layout/tags');
                 dispatch({
-                    type: "LOAD_LAYOUT_TAGS",
+                    type: 'LOAD_LAYOUT_TAGS',
                     tags
                 });
-            }
-            catch (err) {
+            } catch (err) {
                 console.log(err);
             }
         },
@@ -521,16 +520,16 @@ export const actionCreators = {
         async (dispatch, getState) => {
             try {
 
-                //get selected layout
+                // get selected layout
                 const layout = await AjaxUtils.get(`api/layout/${selectedlayoutId}`);
 
-                //copy selected layout to new layout
+                // copy selected layout to new layout
                 dispatch({
                     type: 'IMPORT_LAYOUT',
                     layout
                 });
 
-                //save new layout along with copied items
+                // save new layout along with copied items
                 const newlayout = getState().layout.layout;
 
                 return await AjaxUtils.put('api/layout', newlayout)
@@ -545,12 +544,12 @@ export const actionCreators = {
     saveLayoutItem: (parentId: string, layoutItem: LayoutItem): AppThunkAction<KnownAction> =>
         (dispatch, getState) => {
 
-            //see if needs ID generated
+            // see if needs ID generated
             if (!layoutItem.id) {
                 layoutItem.id = Date.now().toString();
             }
-            if (layoutItem.type == "repeatingQuestionsGroup") {
-                layoutItem.id = "RG-" + layoutItem.id.replace("RG-","");
+            if (layoutItem.type == 'repeatingQuestionsGroup') {
+                layoutItem.id = 'RG-' + layoutItem.id.replace('RG-', '');
             }
             dispatch({
                 type: 'SAVE_LAYOUT_ITEM',
@@ -558,7 +557,7 @@ export const actionCreators = {
                 parentId
             });
 
-            dispatch({ type: "RENUMBER_LAYOUT" });
+            dispatch({ type: 'RENUMBER_LAYOUT' });
         },
     toggleQuestionNumbering: (itemId: string, isNumbered: boolean): AppThunkAction<KnownAction> =>
         (dispatch, getState) => {
@@ -568,7 +567,7 @@ export const actionCreators = {
                 isNumbered
             });
 
-            dispatch({ type: "RENUMBER_LAYOUT" });
+            dispatch({ type: 'RENUMBER_LAYOUT' });
         },
     toggleQuestionTextHidden: (itemId: string, isTextHidden: boolean): AppThunkAction<KnownAction> =>
         (dispatch, getState) => {
@@ -587,7 +586,7 @@ export const actionCreators = {
                 parentId
             });
 
-            dispatch({ type: "RENUMBER_LAYOUT" });
+            dispatch({ type: 'RENUMBER_LAYOUT' });
         },
     updateLayoutItemWidth: (parentId: string, itemId: string, width: number): AppThunkAction<KnownAction> =>
         (dispatch, getState) => {
@@ -599,15 +598,15 @@ export const actionCreators = {
                 width
             });
         },
-    moveItem: (parentId: string, itemId: string, direction: "UP" | "DOWN"): AppThunkAction<KnownAction> =>
+    moveItem: (parentId: string, itemId: string, direction: 'UP' | 'DOWN'): AppThunkAction<KnownAction> =>
         (dispatch, getState) => {
             dispatch({
-                type: "MOVE_ITEM",
+                type: 'MOVE_ITEM',
                 parentId,
                 itemId,
                 direction
             });
-            dispatch({ type: "RENUMBER_LAYOUT" });
+            dispatch({ type: 'RENUMBER_LAYOUT' });
         },
 
     requestAffectedLayouts: (questionId: string, page: number, history: any): AppThunkAction<KnownAction> =>
@@ -660,7 +659,7 @@ export const actionCreators = {
                 layout
             });
 
-            dispatch({ type: "RENUMBER_LAYOUT" });
+            dispatch({ type: 'RENUMBER_LAYOUT' });
         },
     updateItemAccess: (itemId: string, parentId: string, groupAccess: string[]): AppThunkAction<KnownAction> =>
         (dispatch, getState) => {
@@ -755,7 +754,7 @@ export const reducer: Reducer<LayoutState> = (state: LayoutState = unloadedState
                 isLoading: false
             });
 
-        //layout editor
+        // layout editor
         case 'SAVE_LAYOUT_ITEM':
             return (function () {
                 const newState = Object.assign({}, state, {
@@ -772,10 +771,10 @@ export const reducer: Reducer<LayoutState> = (state: LayoutState = unloadedState
                 const itemIndex = parent.items
                     .findIndex(item => item.id === action.layoutItem.id);
 
-                //update
+                // update
                 if (itemIndex > -1) {
                     parent.items[itemIndex] = action.layoutItem;
-                } else { //insert
+                } else { // insert
                     parent.items.push(action.layoutItem);
                     newState.lastAddedContext = {
                         parentId: action.parentId,
@@ -854,7 +853,7 @@ export const reducer: Reducer<LayoutState> = (state: LayoutState = unloadedState
 
             return newState;
 
-        case "RENUMBER_LAYOUT":
+        case 'RENUMBER_LAYOUT':
             return (function () {
                 const newState = Object.assign({}, state, {
                     layout: Object.assign({}, state.layout)
@@ -930,7 +929,7 @@ export const reducer: Reducer<LayoutState> = (state: LayoutState = unloadedState
                 return newState;
             })();
 
-        case "IMPORT_LAYOUT":
+        case 'IMPORT_LAYOUT':
             return (function () {
                 const newState = Object.assign({}, state, {
                     layout: Object.assign({}, state.layout)
@@ -944,14 +943,14 @@ export const reducer: Reducer<LayoutState> = (state: LayoutState = unloadedState
 
                 return newState;
             })();
-		case "REMOVE_LAYOUT":
+		case 'REMOVE_LAYOUT':
 			return (function () {
 				const newState = Object.assign({}, state, {
 					layout: Object.assign({}, unloadedState.layout)
 				});
 				return newState;
 			})();
-        case "UPDATE_ITEM_ACCESS":
+        case 'UPDATE_ITEM_ACCESS':
             return (function () {
                 const newState = Object.assign({}, state, {
                     layout: Object.assign({}, state.layout)

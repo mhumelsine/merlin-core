@@ -32,21 +32,6 @@ class LabList extends React.Component<LabListProps> {
         this.loadData(this.props.caseId);
     }
 
-    private async loadData(caseId: number) {
-        const { loadLabsForCase } = this.props;
-
-        try {
-            this.setState({ isLoading: true });
-            await loadLabsForCase(caseId ? caseId : -1);
-        } finally {
-            this.setState(
-                {
-                    isLoading: false,
-                    caseId: caseId
-                });
-        }
-    }
-
     public render() {
         const { isLoading } = this.state;
         const { caseId, labs } = this.props;
@@ -85,6 +70,21 @@ class LabList extends React.Component<LabListProps> {
             </div>
         </div>;
     }
+
+    private async loadData(caseId: number) {
+        const { loadLabsForCase } = this.props;
+
+        try {
+            this.setState({ isLoading: true });
+            await loadLabsForCase(caseId ? caseId : -1);
+        } finally {
+            this.setState(
+                {
+                    isLoading: false,
+                    caseId: caseId
+                });
+        }
+    }
 }
 
 export default connect(
@@ -92,7 +92,7 @@ export default connect(
         return {
             labs: state.case.labs,
             caseId: state.case.caseDetails.caseId
-        }
+        };
     },
     CaseStore.actionCreators
 )(LabList);

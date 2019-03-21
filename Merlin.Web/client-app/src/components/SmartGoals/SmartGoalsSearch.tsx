@@ -33,7 +33,7 @@ class SmartGoalsSearch extends React.Component<Props, State> {
         try {
             this.setState({ loading: true });
 
-            if (this.props.criteria.user === "") {
+            if (this.props.criteria.user === '') {
                 await this.props.loadPerformanceSearch(this.props.claims[ClaimType.nameidentifier]);
                 await this.props.loadPerformanceResults();
             }
@@ -46,17 +46,17 @@ class SmartGoalsSearch extends React.Component<Props, State> {
     }
 
     public onChange(name: string, value: any) {
-        const criteria = { ...this.props.criteria }
+        const criteria = { ...this.props.criteria };
         criteria[name] = value;
         this.props.updatePerformanceSearch(criteria);
     }
 
     public render() {
         const { loading} = this.state;
-        const { onSubmit, criteria, userNameInfo } = this.props
+        const { onSubmit, criteria, userNameInfo } = this.props;
 
         const options = userNameInfo.map(info => {
-            return { label: info.value, value: info.id }
+            return { label: info.value, value: info.id };
         });
 
         if (loading) {
@@ -66,8 +66,8 @@ class SmartGoalsSearch extends React.Component<Props, State> {
         return <form onSubmit={onSubmit}>
             <div className="row">
                 <CustomDatePicker
-                    name='startDate'
-                    label='StartDate'
+                    name="startDate"
+                    label="StartDate"
                     hideLabel={false}
                     value={criteria.startDate}
                     cols={2}
@@ -75,8 +75,8 @@ class SmartGoalsSearch extends React.Component<Props, State> {
                     isReadOnly={false}
                 />
                 <CustomDatePicker
-                    name='endDate'
-                    label='End Date'
+                    name="endDate"
+                    label="End Date"
                     hideLabel={false}
                     value={criteria.endDate}
                     cols={2}
@@ -89,12 +89,12 @@ class SmartGoalsSearch extends React.Component<Props, State> {
                     name="user"
                     value={criteria.user}
                     options={options}
-                    placeholder={""}
+                    placeholder={''}
                     onChange={this.onChange}
                     isMulti={false}
                     isReadOnly={false}
                 />
-                <SearchButton isSubmit={true} iconFontSize={18} className={"btn-primary m-4"} buttonText="Filter" />               
+                <SearchButton isSubmit={true} iconFontSize={18} className={'btn-primary m-4'} buttonText="Filter" />
             </div>
 
         </form>;
@@ -105,8 +105,8 @@ export default connect(
         return {
             claims: state.session.claims,
             criteria: state.smartGoals.criteria,
-            userNameInfo:state.smartGoals.userNameInfo
-        }
+            userNameInfo: state.smartGoals.userNameInfo
+        };
     },
     SmartGoalsActions
 )(SmartGoalsSearch);

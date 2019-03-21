@@ -3,7 +3,7 @@ import { HealthCareVisit } from '../../store/Case';
 import { MdArrowForward } from 'react-icons/md';
 
 interface HealthCareVisitProps {
-    visit: HealthCareVisit
+    visit: HealthCareVisit;
 }
 
 export default class HealthCareVisitItem extends React.Component<HealthCareVisitProps> {
@@ -17,8 +17,8 @@ export default class HealthCareVisitItem extends React.Component<HealthCareVisit
                 <h5 className="mb-1">{visit.hospitalName}</h5>
                 <div>
                     <span className="badge badge-pill badge-info">{visit.visitType}</span>
-                    {" "}
-                    <span className="badge badge-pill badge-info">{visit.visitStartedOn || "?"} - {visit.visitEndedOn || "?"}</span>
+                    {' '}
+                    <span className="badge badge-pill badge-info">{visit.visitStartedOn || '?'} - {visit.visitEndedOn || '?'}</span>
                 </div>
                 <MdArrowForward fontSize={30} />
             </div>

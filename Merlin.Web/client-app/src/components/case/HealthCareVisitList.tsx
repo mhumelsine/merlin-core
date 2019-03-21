@@ -27,25 +27,11 @@ class HealthCareVisitList extends React.Component<HealthCareVisitProps> {
         this.loadData(this.props.caseId);
     }
 
-    public componentWillReceiveProps(nextProps: HealthCareVisitProps){ 
-        if(nextProps.caseId !== this.state.caseId){
+    public componentWillReceiveProps(nextProps: HealthCareVisitProps) {
+        if (nextProps.caseId !== this.state.caseId) {
             this.loadData(nextProps.caseId);
         }
      }
-
-    private async loadData(caseId: number){
-        const { loadHealthCareVisits } = this.props;
-        try {
-            this.setState({ isLoading: true });
-            await loadHealthCareVisits(caseId ? caseId : 0);
-        }
-        finally {
-            this.setState({ 
-                isLoading: false, 
-                caseId: caseId
-            });
-        }
-    }
     public render() {
         const { isLoading, caseId } = this.state;
         const { visits } = this.props;
@@ -64,7 +50,7 @@ class HealthCareVisitList extends React.Component<HealthCareVisitProps> {
             {visits.map(visit => <HealthCareVisitItem key={visit.id} visit={visit} />)}
         </div>;
 
-        //return <div className="table-responsive">
+        // return <div className="table-responsive">
         //    <table className="table">
         //        <thead>
         //            <tr>
@@ -78,7 +64,21 @@ class HealthCareVisitList extends React.Component<HealthCareVisitProps> {
         //            {visits.map(visit => <HealthCareVisitItem key={visit.id} visit={visit} />)}
         //        </tbody>
         //    </table>
-        //</div>;
+        // </div>;
+    }
+
+    private async loadData(caseId: number) {
+        const { loadHealthCareVisits } = this.props;
+        try {
+            this.setState({ isLoading: true });
+            await loadHealthCareVisits(caseId ? caseId : 0);
+        }
+        finally {
+            this.setState({
+                isLoading: false,
+                caseId: caseId
+            });
+        }
     }
 }
 

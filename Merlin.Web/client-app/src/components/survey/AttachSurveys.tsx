@@ -48,61 +48,11 @@ class AttachSurveys extends React.Component<AttachSurveysProps> {
     }
 
     public componentDidMount() {
-        document.title = defaults.titles.AttachSurveys
-    }
-
-    private onMultiSelectChange(name: string, value: any) {
-        const newState = Object.assign({}, this.state) as any;
-
-        newState[name] = value || [];
-
-        this.setState(newState);
-    }
-
-    private onChange(name: string, value: any) {
-        const newState = Object.assign({}, this.state) as any;
-
-        newState[name] = value || "";
-
-        this.setState(newState);
+        document.title = defaults.titles.AttachSurveys;
     }
 
     public componentWillReceiveProps(newProps: any) {
         if (!newProps.loadFailed) {
-            this.setState({ isLoading: false });
-        }
-    }
-
-    private async onSave(event: any) {
-        event.preventDefault();
-
-        const { layout, requestLayout } = this.props;
-        const { name, icd9Code, outbreakId, effectiveDate, surveyType } = this.state;
-
-        try {
-            this.setState({ isLoading: true });
-            await this.props.saveAttachSurveys({
-                name,
-                icd9Code,
-                outbreakId,
-                effectiveDate,
-                surveyType,
-                layoutId: layout.layoutId
-            });
-
-            this.setState({
-                name: '',
-                icd9Code: [],
-                outbreakId: [],
-                effectiveDate: defaults.effectiveDate,
-                surveyType: ''
-            });
-
-            await requestLayout(layout.layoutId);
-
-        } catch (e) {
-            this.setState({ errors: e });
-        } finally {
             this.setState({ isLoading: false });
         }
     }
@@ -112,10 +62,10 @@ class AttachSurveys extends React.Component<AttachSurveysProps> {
         const { effectiveDateInput } = defaults.inputs.datePickers;
         const { history, layout } = this.props;
         const { isLoading, icd9Code, effectiveDate, name, surveyType, outbreakId, errors } = this.state;
-        const { diseaseCodeInput } = defaults.inputs.dropdowns
+        const { diseaseCodeInput } = defaults.inputs.dropdowns;
 
         if (isLoading) {
-            return <Loading />
+            return <Loading />;
         }
 
         return <div>
@@ -167,14 +117,64 @@ class AttachSurveys extends React.Component<AttachSurveysProps> {
                 </div>
             </div>
 
-        </div>
+        </div>;
+    }
+
+    private onMultiSelectChange(name: string, value: any) {
+        const newState = Object.assign({}, this.state) as any;
+
+        newState[name] = value || [];
+
+        this.setState(newState);
+    }
+
+    private onChange(name: string, value: any) {
+        const newState = Object.assign({}, this.state) as any;
+
+        newState[name] = value || '';
+
+        this.setState(newState);
+    }
+
+    private async onSave(event: any) {
+        event.preventDefault();
+
+        const { layout, requestLayout } = this.props;
+        const { name, icd9Code, outbreakId, effectiveDate, surveyType } = this.state;
+
+        try {
+            this.setState({ isLoading: true });
+            await this.props.saveAttachSurveys({
+                name,
+                icd9Code,
+                outbreakId,
+                effectiveDate,
+                surveyType,
+                layoutId: layout.layoutId
+            });
+
+            this.setState({
+                name: '',
+                icd9Code: [],
+                outbreakId: [],
+                effectiveDate: defaults.effectiveDate,
+                surveyType: ''
+            });
+
+            await requestLayout(layout.layoutId);
+
+        } catch (e) {
+            this.setState({ errors: e });
+        } finally {
+            this.setState({ isLoading: false });
+        }
     }
 }
 export default connect(
     (state: ApplicationState) => {
         return {
             layout: state.layout.layout
-        }
+        };
     },
     Object.assign(CodeStore.actionCreators, SurveyStore.actionCreators, actionCreators)
 )(AttachSurveys);

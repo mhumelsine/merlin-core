@@ -29,6 +29,35 @@ export default class DragContainer extends React.Component<DragContainerProps> {
         this.onMouseMove = this.onMouseMove.bind(this);
     }
 
+    public render() {
+
+        const { children, itemClassAccessor, itemWidthAccessor } = this.props;
+
+        if (!children) {
+            return null;
+        }
+
+        return <div
+            className="row drag-container"
+            ref={div => this.me = div === null ? undefined : div}
+            onMouseMove={this.onMouseMove}
+            onMouseUp={this.onDragEnd}
+            onMouseLeave={this.onDragEnd}
+        >
+            {(this.props.children as any).map((child: any) => <DragItem
+                dragStart={this.onDragStart}
+                id={child.key}
+                key={child.key}
+                isDragging={this.isDragging(child.key)}
+                width={itemWidthAccessor(child.key)}
+                className={itemClassAccessor(child.key)}
+            >
+                {child}
+            </DragItem>
+            )}
+        </div>;
+    }
+
     private onDragStart(itemDragging: HTMLDivElement | undefined) {
         this.setState({
             isDragging: true
@@ -53,7 +82,7 @@ export default class DragContainer extends React.Component<DragContainerProps> {
     private getDragItemLeftPosition(): number {
 
         if (this.itemDragging !== undefined) {
-            return this.itemDragging.getBoundingClientRect().left;            
+            return this.itemDragging.getBoundingClientRect().left;
         }
 
         return defaults.number;
@@ -87,7 +116,7 @@ export default class DragContainer extends React.Component<DragContainerProps> {
 
             if (this.itemDragging !== undefined) {
                 this.props.onResize(this.props.id, this.itemDragging.id, colWidth);
-            }            
+            }
         }
     }
 
@@ -96,34 +125,5 @@ export default class DragContainer extends React.Component<DragContainerProps> {
             return id === this.itemDragging.id;
         }
         return false;
-    }
-
-    public render() {
-
-        const { children, itemClassAccessor, itemWidthAccessor } = this.props;
-
-        if (!children) {
-            return null;
-        }
-
-        return <div
-            className="row drag-container"
-            ref={div => this.me = div === null ? undefined : div}
-            onMouseMove={this.onMouseMove}
-            onMouseUp={this.onDragEnd}
-            onMouseLeave={this.onDragEnd}
-        >
-            {(this.props.children as any).map((child: any) => <DragItem
-                dragStart={this.onDragStart}
-                id={child.key}
-                key={child.key}
-                isDragging={this.isDragging(child.key)}
-                width={itemWidthAccessor(child.key)}
-                className={itemClassAccessor(child.key)}
-            >
-                {child}
-            </DragItem>
-            )}
-        </div>;
     }
 }

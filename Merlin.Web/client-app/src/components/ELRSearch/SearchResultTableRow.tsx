@@ -31,52 +31,18 @@ type State = {
 
 class SearchResultsTableRow extends React.Component<Props, State> {
 
+
     state = {
         loading: false,
         error: '',
         processingShown: false
-    }
+    };
 
     constructor(props: Props) {
         super(props);
         this.onSelectClick = this.onSelectClick.bind(this);
         this.toggleProcessing = this.toggleProcessing.bind(this);
     }
-
-    private toggleProcessing(e: any) {
-        this.setState({ processingShown: !this.state.processingShown });
-    }
-
-    private async onSelectClick(e: any) {
-        e.preventDefault();
-
-        const { selectObservation, unSelectObservation, selectedObservationKeys } = this.props;
-
-        const observationKey = parseInt(e.currentTarget.name);
-        const county = e.currentTarget.value;
-
-        if (selectedObservationKeys.indexOf(observationKey) > -1) {
-            unSelectObservation(observationKey, county)
-        } else {
-
-            try {
-                this.setState({ loading: true });
-
-                const hasFilter = await AjaxUtils.get(`api/elrsearch/${observationKey}/has-filter`);
-
-                if (hasFilter) {
-                    selectObservation(observationKey, county);
-                } else {
-                    this.setState({ error: 'No filter found' });
-                }
-
-            } catch (err) {
-                console.log(err);
-            } finally {
-                this.setState({ loading: false });
-            }
-        }
-    };
 
     public shouldComponentUpdate(nextProps: Props, nextState: State) {
         const { selectedObservationKeys, item } = this.props;
@@ -93,14 +59,14 @@ class SearchResultsTableRow extends React.Component<Props, State> {
 
         const isSelected = selectedObservationKeys.indexOf(item.observationKey) > -1;
 
-        return <tbody className={`${processingShown ? "shadow rounded" : ""}`}>
+        return <tbody className={`${processingShown ? 'shadow rounded' : ''}`}>
             <tr className={`${isSelected ? 'table-success' : ''}`}>
                 <td className="no-wrap d-flex-justify-between">
                     <span>
                         {loading && <InlineLoader color="primary" size="sm" />}
                         {!loading && !error &&
                             <button
-                                className={`btn ${isSelected ? "btn-success" : "btn-secondary"} btn-round`}
+                                className={`btn ${isSelected ? 'btn-success' : 'btn-secondary'} btn-round`}
                                 type="button" name={item.observationKey} value={item.patientCountyCode}
                                 onClick={this.onSelectClick}
                             >
@@ -121,7 +87,7 @@ class SearchResultsTableRow extends React.Component<Props, State> {
             {processingShown &&
                 <tr className={`${processingShown ? 'table-light' : ''}`}>
                     <td colSpan={properties.length + 1} className="border-0 pb-4 pr-4 pl-4 pt-2">
-                        <div style={{ width: "90vw" }}>
+                        <div style={{ width: '90vw' }}>
                             <CardGroup>
                                 <CardGroupCard heading="Processing History">
                                     <ProcessingHistory observationKey={item.observationKey} />
@@ -137,7 +103,7 @@ class SearchResultsTableRow extends React.Component<Props, State> {
                                 </CardGroupCard>
                                 <CardGroupCard heading="Assignment History">
                                     <AssignmentHistory familyId={item.iD_MERLIN_FAMILY} />
-                                </CardGroupCard>                               
+                                </CardGroupCard>
 
                             </CardGroup>
                         </div>
@@ -146,14 +112,48 @@ class SearchResultsTableRow extends React.Component<Props, State> {
             }
         </tbody>;
     }
-}
+
+    private toggleProcessing(e: any) {
+        this.setState({ processingShown: !this.state.processingShown });
+    }
+
+    private async onSelectClick(e: any) {
+        e.preventDefault();
+
+        const { selectObservation, unSelectObservation, selectedObservationKeys } = this.props;
+
+        const observationKey = parseInt(e.currentTarget.name);
+        const county = e.currentTarget.value;
+
+        if (selectedObservationKeys.indexOf(observationKey) > -1) {
+            unSelectObservation(observationKey, county);
+        } else {
+
+            try {
+                this.setState({ loading: true });
+
+                const hasFilter = await AjaxUtils.get(`api/elrsearch/${observationKey}/has-filter`);
+
+                if (hasFilter) {
+                    selectObservation(observationKey, county);
+                } else {
+                    this.setState({ error: 'No filter found' });
+                }
+
+            } catch (err) {
+                console.log(err);
+            } finally {
+                this.setState({ loading: false });
+            }
+        }
+    }}
 
 export default connect(
     (state: ApplicationState) => {
         return {
             selectedObservationKeys: state.elrSearch.selectedObservationKeys,
             properties: state.elrSearch.columnProperties
-        }
+        };
     },
     actionCreators
 )(SearchResultsTableRow);

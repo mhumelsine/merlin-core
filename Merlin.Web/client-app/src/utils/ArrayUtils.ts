@@ -1,10 +1,10 @@
-﻿import { isNullOrEmpty } from "./UIUtils";
+﻿import { isNullOrEmpty } from './UIUtils';
 import * as Codes from '../store/Code';
 
-//this is navie and only check the same order.  This is for use in the Redux store to check for updates
-//in this context, items should always be in the same order
+// this is navie and only check the same order.  This is for use in the Redux store to check for updates
+// in this context, items should always be in the same order
 export function containSameItems(array1: Array<any>, array2: Array<any>): boolean {
-    //easiest case
+    // easiest case
     if (array1.length !== array2.length) {
         return false;
     }
@@ -19,14 +19,14 @@ export function containSameItems(array1: Array<any>, array2: Array<any>): boolea
 }
 
 export function getFirstIndexIfObject(element: any) {
-    return (typeof(element) === "object" && !isNullOrEmpty(element)) ? element[0] : element;
+    return (typeof(element) === 'object' && !isNullOrEmpty(element)) ? element[0] : element;
 }
 
-export function queryStringEncode(key: string, array: Array<any>, selector: (item: any) => any) {    
+export function queryStringEncode(key: string, array: Array<any>, selector: (item: any) => any) {
 
     if (array) {
 
-        let result: string = "";
+        let result: string = '';
 
         array.map(item => {
             if (item) {
@@ -34,21 +34,21 @@ export function queryStringEncode(key: string, array: Array<any>, selector: (ite
             }
         });
 
-        //need to remove the leading '&'
+        // need to remove the leading '&'
         return result.substr(1);
     }
 
-    return "";
+    return '';
 }
 
 export function getDescriptionByCode(code: string, codes: Codes.DropdownCode[]) {
 
     if (isNullOrEmpty(codes)) {
-        return "";
+        return '';
     }
 
-    var codeObject = ((codes as Codes.DropdownCode[]).find(o => o.code === code) as any);
-    var description = !isNullOrEmpty(codeObject) ? codeObject.description : '';
+    let codeObject = ((codes as Codes.DropdownCode[]).find(o => o.code === code) as any);
+    let description = !isNullOrEmpty(codeObject) ? codeObject.description : '';
 
     return description;
 }
@@ -56,11 +56,11 @@ export function getDescriptionByCode(code: string, codes: Codes.DropdownCode[]) 
 export function getCodeByDescription(description: string, codes: Codes.DropdownCode[]) {
 
     if (isNullOrEmpty(codes)) {
-        return "";
+        return '';
     }
 
-    var codeObject = ((codes as Codes.DropdownCode[]).find(o => o.description === description) as any);
-    var code = !isNullOrEmpty(codeObject) ? codeObject.code : '';
+    let codeObject = ((codes as Codes.DropdownCode[]).find(o => o.description === description) as any);
+    let code = !isNullOrEmpty(codeObject) ? codeObject.code : '';
 
     return code;
 }

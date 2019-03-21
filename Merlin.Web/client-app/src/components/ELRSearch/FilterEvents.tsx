@@ -11,7 +11,7 @@ type State = {
     loading: boolean,
     events: any[],
     details: any[],
-    outcomes:any[]
+    outcomes: any[]
 };
 
 export default class FilterEvents extends React.Component<Props, State> {
@@ -20,8 +20,8 @@ export default class FilterEvents extends React.Component<Props, State> {
         loading: false,
         events: [],
         details: [],
-        outcomes:[]
-    }
+        outcomes: []
+    };
 
     public async componentWillMount() {
         const { eventId } = this.props;
@@ -56,7 +56,7 @@ export default class FilterEvents extends React.Component<Props, State> {
             return <InlineLoader size="md" color="primary" center={true} />;
         }
 
-        return <div className="p-2">    
+        return <div className="p-2">
             <h4 className="bg-dark text-white mb-0 p-1 pl-2 rounded-top">Event</h4>
             <GenericTable items={events} />
             <div className="row mt-2">

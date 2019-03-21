@@ -23,23 +23,7 @@ class LaboratoryResults extends React.Component<LaboratoryResultsProps> {
     constructor(props: LaboratoryResultsProps) {
         super(props);
 
-        this.onChange = this.onChange.bind(this)
-    }
-
-
-    private onChange(name: string, value: any) {
-        const laboratoryResults = Object.assign({}, this.props.laboratoryResults) as any;
-
-        if ((name === "isHumanSpecimens")
-            && ((isNullOrEmpty(value))
-            || ((value === "YES") && (laboratoryResults.isHumanSpecimens !== "YES"))
-            || ((!isNullOrEmpty(laboratoryResults.noOfCases) && value !== "YES")))) {
-            laboratoryResults.noOfCases = 0;
-        }
-
-        laboratoryResults[name] = value;
-
-        this.props.updateLaboratoryResults(laboratoryResults);
+        this.onChange = this.onChange.bind(this);
     }
 
     public async componentDidMount() {
@@ -66,9 +50,9 @@ class LaboratoryResults extends React.Component<LaboratoryResultsProps> {
             <div className="row" >
                 <div className="col-md-6">
                     <YesNoUnknown
-                        name={"isHumanSpecimens"}
+                        name={'isHumanSpecimens'}
                         value={laboratoryResults.isHumanSpecimens}
-                        label={"Laboratory Confirmed Human Specimens:"}
+                        label={'Laboratory Confirmed Human Specimens:'}
                         isRequired={true}
                         onChange={this.onChange}
                         isReadOnly={false}
@@ -78,10 +62,10 @@ class LaboratoryResults extends React.Component<LaboratoryResultsProps> {
                 <div className="col-md-6">
                     <NumberInput
                         name="noOfCases"
-                        value={laboratoryResults.noOfCases||''}
+                        value={laboratoryResults.noOfCases || ''}
                         label="Number of Cases Laboratory Confirmed"
                         onChange={this.onChange}
-                        isReadOnly={laboratoryResults.isHumanSpecimens !== "YES"}
+                        isReadOnly={laboratoryResults.isHumanSpecimens !== 'YES'}
                         error={errors.noOfCases}
                         min={int32.min}
                         max={int32.max}
@@ -91,9 +75,9 @@ class LaboratoryResults extends React.Component<LaboratoryResultsProps> {
                <div className="row" >
                 <div className="col-md-6">
                     <YesNoUnknown
-                        name={"isLabTestingConducted"}
+                        name={'isLabTestingConducted'}
                         value={laboratoryResults.isLabTestingConducted}
-                        label={"Laboratory Testing Conducted:"}
+                        label={'Laboratory Testing Conducted:'}
                         onChange={this.onChange}
                         isReadOnly={false}
                         error={errors.isLabTestingConducted}
@@ -102,9 +86,9 @@ class LaboratoryResults extends React.Component<LaboratoryResultsProps> {
                 </div>
                 <div className="col-md-6">
                     <TextAreaInput
-                        name={"labFindings"}
+                        name={'labFindings'}
                         value={laboratoryResults.labFindings}
-                        label={"Laboratory Findings:"}
+                        label={'Laboratory Findings:'}
                         hideLabel={false}
                         placeholder={''}
                         onChange={this.onChange}
@@ -114,8 +98,24 @@ class LaboratoryResults extends React.Component<LaboratoryResultsProps> {
                     />
                 </div>
             </div>
-        </div>
+        </div>;
 
+    }
+
+
+    private onChange(name: string, value: any) {
+        const laboratoryResults = Object.assign({}, this.props.laboratoryResults) as any;
+
+        if ((name === 'isHumanSpecimens')
+            && ((isNullOrEmpty(value))
+            || ((value === 'YES') && (laboratoryResults.isHumanSpecimens !== 'YES'))
+            || ((!isNullOrEmpty(laboratoryResults.noOfCases) && value !== 'YES')))) {
+            laboratoryResults.noOfCases = 0;
+        }
+
+        laboratoryResults[name] = value;
+
+        this.props.updateLaboratoryResults(laboratoryResults);
     }
 }
 export default connect(

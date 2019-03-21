@@ -1,5 +1,5 @@
 ﻿import * as React from 'react';
-import { RouteComponentProps, Link } from "react-router-dom";
+import { RouteComponentProps, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { ApplicationState } from '../../store/index';
 import * as SurveyStore from '../../store/SurveySearch';
@@ -14,7 +14,7 @@ type SurveySearchProps =
  	SurveyStore.SurveySearchState
 	& CodeStore.CodeState
 	& typeof CodeStore.actionCreators
-	& typeof SurveyStore.actionCreators 
+	& typeof SurveyStore.actionCreators
     & RouteComponentProps<{}>;
 
 class SurveySearch extends React.Component<SurveySearchProps, {}> {
@@ -44,7 +44,7 @@ class SurveySearch extends React.Component<SurveySearchProps, {}> {
     public performSearch() {
         const { surveyTypes, name, icd9 } = this.state;
 
-        //cancel previous timeout
+        // cancel previous timeout
         this.removeTimeout();
 
         this.timeout = window.setTimeout(
@@ -58,7 +58,7 @@ class SurveySearch extends React.Component<SurveySearchProps, {}> {
 		try {
 			loadDropdown(CodeStore.CodeType.surveyType, this.props.history);
 			loadDropdown(CodeStore.CodeType.icd9, this.props.history);
-			 requestSurveys(this.state.surveyTypes, this.state.name, this.state.icd9, this.props.surveys.paging.page, this.props.history);
+			requestSurveys(this.state.surveyTypes, this.state.name, this.state.icd9, this.props.surveys.paging.page, this.props.history);
 		} catch (err) {
 			console.log(err);
 		}
@@ -70,6 +70,29 @@ class SurveySearch extends React.Component<SurveySearchProps, {}> {
 
     public componentWillUnmount() {
         this.removeTimeout();
+    }
+
+    public render() {
+        const { codes, isLoading } = this.props;
+        const { surveyTypes, name, icd9 } = this.state;
+
+        if (isLoading) {
+            return <Loading />;
+        }
+		      return <div>
+			<h1>Survey Search</h1>
+            <SurveySearchForm
+                surveyTypeCodes={codes.DYN_SURVEY_TYPE}
+                icd9Codes={codes.ICD9}
+                onChange={this.onDropdownChange}
+                name={name}
+                surveyTypes={surveyTypes}
+                icd9={icd9}
+                onSearch={this.handleSearch}
+            />
+			{ <SurveyList/>
+			}
+        </div>;
     }
 
     private removeTimeout() {
@@ -84,29 +107,6 @@ class SurveySearch extends React.Component<SurveySearchProps, {}> {
         let newState = Object.assign({}, this.state);
         (newState as any)[name] = newValue;
         this.setState(newState, () => this.performSearch());
-    }
-
-    public render() {
-        const { codes, isLoading } = this.props
-        const { surveyTypes, name, icd9 } = this.state
-
-        if (isLoading) {
-            return <Loading />;
-        }
-		return <div>
-			<h1>Survey Search</h1>
-            <SurveySearchForm
-                surveyTypeCodes={codes.DYN_SURVEY_TYPE}
-                icd9Codes={codes.ICD9}
-                onChange={this.onDropdownChange}
-                name={name}
-                surveyTypes={surveyTypes}
-                icd9={icd9}
-                onSearch={this.handleSearch}
-            />
-			{ <SurveyList/>
-			}
-        </div>;
     }
 }
 export default connect(

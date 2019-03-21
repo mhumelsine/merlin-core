@@ -7,21 +7,21 @@ import { DropdownCode } from './Code';
 import Conclusions from '../components/Outbreak/Conclusions';
 
 export enum OutbreakControlsTitle {
-    Background = "Background",
-    GeographicLocation = "Geographic Location",
-    SettingInformation = "Setting Information",
-    Transmission = "Transmission",
-    Methods = "Methods",
-    Epicom = "Epicom",
-    Layout = "Survey",
-    Results = "Results",
-    ClinicalResults = "Clinical Results",
-    LaboratoryResults = "Laboratory Results",
-    Conclusions = "Conclusions/Lessons Learned",
-    Documents = "Documents",
-    Notes = "Notes",
-    AuditFields = "Audit Fields",
-    CaseReview = "Case Review",
+    Background = 'Background',
+    GeographicLocation = 'Geographic Location',
+    SettingInformation = 'Setting Information',
+    Transmission = 'Transmission',
+    Methods = 'Methods',
+    Epicom = 'Epicom',
+    Layout = 'Survey',
+    Results = 'Results',
+    ClinicalResults = 'Clinical Results',
+    LaboratoryResults = 'Laboratory Results',
+    Conclusions = 'Conclusions/Lessons Learned',
+    Documents = 'Documents',
+    Notes = 'Notes',
+    AuditFields = 'Audit Fields',
+    CaseReview = 'Case Review',
 }
 
 export enum resultTypes {
@@ -33,9 +33,9 @@ export enum resultTypes {
 }
 
 export enum OutbreakCommonListItems {
-    noteType = "notes",
-    documentsType = "documents",
-    settingInfoType = "settingInformation"
+    noteType = 'notes',
+    documentsType = 'documents',
+    settingInfoType = 'settingInformation'
 }
 
 export enum OutbreakCommonItems {
@@ -46,7 +46,7 @@ export enum OutbreakCommonItems {
     conclusionsType = 'conclusions',
     caseReviewType = 'caseReview',
     laboratoryResultsType = 'laboratoryResults',
-    survey = "survey",
+    survey = 'survey',
     epicomType = 'epicom',
     resultsType = 'results',
     auditFieldsType = 'auditFields',
@@ -57,7 +57,7 @@ type OutbreakAllSectionsType = OutbreakCommonListItems | OutbreakCommonItems;
 export const OutbreakAllSections = {
     ...OutbreakCommonListItems,
     ...OutbreakCommonItems
-}
+};
 
 export interface OutbreakState {
     outbreakId: string;
@@ -79,7 +79,7 @@ export interface OutbreakState {
     epiComPostBeingEdited: EpiComPost | undefined;
     epiComPost: EpiComPost;
     epicomForumNameList: DropdownCode[];
-    epicomForumTopicList: DropdownCode[]
+    epicomForumTopicList: DropdownCode[];
     results: Results;
     layoutUid: string;
     surveyUid: string;
@@ -153,55 +153,55 @@ export interface AuditInfo {
 }
 
 export interface GeographicLocation {
-    county: string,
-    otherCountiesAffected: string,
-    otherCountiesList: string[],
-    otherStatesAffected: string,
-    otherStatesList: string[],
-    otherCountriesList: string[]
+    county: string;
+    otherCountiesAffected: string;
+    otherCountiesList: string[];
+    otherStatesAffected: string;
+    otherStatesList: string[];
+    otherCountriesList: string[];
 }
 
 export interface Transmission {
-    transmissionMode: string,
-    foodOrWaterRelated: string,
-    isVehicleIdentified: string,
-    vehicle: string,
-    healthRelated: string,
-    causeForOutbreak: string,
-    description: string
+    transmissionMode: string;
+    foodOrWaterRelated: string;
+    isVehicleIdentified: string;
+    vehicle: string;
+    healthRelated: string;
+    causeForOutbreak: string;
+    description: string;
 }
 
 export interface Methods {
-    caseDefinition: string,
-    studyDesigns: string[],
-    investigationMethods: string[],
-    isLabTestingConducted: string,
-    staffConsulted: string,
-    regulatoryAgencies: string[],
-    investigator: string,
+    caseDefinition: string;
+    studyDesigns: string[];
+    investigationMethods: string[];
+    isLabTestingConducted: string;
+    staffConsulted: string;
+    regulatoryAgencies: string[];
+    investigator: string;
 }
 
 export interface ClinicalResults {
-    symptom: string[],
-    otherSymptom: string,
-    firstExposureDate: string,
-    lastExposureDate: string,
-    firstOnsetDate: string,
-    lastOnsetDate: string,
-    duration: string,
-    timeUnit: string,
-    outbreakEventDate: string
+    symptom: string[];
+    otherSymptom: string;
+    firstExposureDate: string;
+    lastExposureDate: string;
+    firstOnsetDate: string;
+    lastOnsetDate: string;
+    duration: string;
+    timeUnit: string;
+    outbreakEventDate: string;
 }
 
 export interface Conclusions {
-    decisions: string,
-    recommendations: string,
-    controlMeasures: string,
-    isRecProvided: string,
-    methodofRec: string,
-    recImplemented: string,
-    improvementAreas: string,
-    isReportCompleted: string,
+    decisions: string;
+    recommendations: string;
+    controlMeasures: string;
+    isRecProvided: string;
+    methodofRec: string;
+    recImplemented: string;
+    improvementAreas: string;
+    isReportCompleted: string;
 }
 
 export interface LaboratoryResults {
@@ -213,25 +213,25 @@ export interface LaboratoryResults {
 }
 
 export interface CaseReview {
-    reviewStatus: string,
-    comments: string,
-    reviewedBy: string,
-    reviewedOn: string,
-    isSubmitted: boolean
+    reviewStatus: string;
+    comments: string;
+    reviewedBy: string;
+    reviewedOn: string;
+    isSubmitted: boolean;
 }
 
 export interface EpiComPost {
-    outbreakId:string,
-    postId: string,
-    pendingPostId: string,
-    forumId: string,
-    topicId: string,
-    title: string,
-    date: string,
-    message: string,
-    epicomUserId: string,
-    forumDescription: string,
-    topicDescription: string
+    outbreakId: string;
+    postId: string;
+    pendingPostId: string;
+    forumId: string;
+    topicId: string;
+    title: string;
+    date: string;
+    message: string;
+    epicomUserId: string;
+    forumDescription: string;
+    topicDescription: string;
 }
 
 export interface Results {
@@ -249,271 +249,271 @@ export interface Results {
 }
 
 export interface TotalCasesDtls {
-    totalCases: number,
-    totalExposed: number,
+    totalCases: number;
+    totalExposed: number;
 }
 
 export interface GenderDetails {
-    maleCases: number,
-    femaleCases: number,
-    unknownGenderCases: number,
+    maleCases: number;
+    femaleCases: number;
+    unknownGenderCases: number;
 }
 
 export interface StaffDtls {
-    staffCases: number,
-    staffExposed: number,
-    nonstaffCases: number,
-    nonstaffExposed: number,
-    unknownCases: number,
-    unknownExposed: number,
+    staffCases: number;
+    staffExposed: number;
+    nonstaffCases: number;
+    nonstaffExposed: number;
+    unknownCases: number;
+    unknownExposed: number;
 }
 
 export interface AgeDtls {
-    ageLessthan1: number,
-    age1to4: number,
-    age5to9: number,
-    age10to19: number,
-    age20to49: number,
-    age50to74: number,
-    ageGreater74: number,
-    ageUnknown: number
+    ageLessthan1: number;
+    age1to4: number;
+    age5to9: number;
+    age10to19: number;
+    age20to49: number;
+    age50to74: number;
+    ageGreater74: number;
+    ageUnknown: number;
 }
 
 export interface CaseOutComeDtls {
-    infoAvailable: number,
-    soughtCases: number,
-    erCases: number,
-    inpatientCases: number,
-    diedCases: number,
-    soughtCasesWithInfo: number,
-    erCasesWithInfo: number,
-    inpatientCasesWithInfo: number,
-    diedCasesWithInfo: number,
+    infoAvailable: number;
+    soughtCases: number;
+    erCases: number;
+    inpatientCases: number;
+    diedCases: number;
+    soughtCasesWithInfo: number;
+    erCasesWithInfo: number;
+    inpatientCasesWithInfo: number;
+    diedCasesWithInfo: number;
 }
 
 // Actions
 
 interface SetOutbreakId {
-    type: "SET_OUTBREAK_ID";
+    type: 'SET_OUTBREAK_ID';
     outbreakId: string;
 }
 
 interface ReceiveBackground {
-    type: "RECEIVE_BACKGROUND";
+    type: 'RECEIVE_BACKGROUND';
     background: Background;
 }
 
 interface ReceiveGeographicLocation {
-    type: "RECEIVE_GEOGRAPHIC_LOCATION";
+    type: 'RECEIVE_GEOGRAPHIC_LOCATION';
     geographicLocation: GeographicLocation;
 }
 
 interface ReceiveSettingInfo {
-    type: "RECEIVE_SETTING_INFO";
+    type: 'RECEIVE_SETTING_INFO';
     settingInfo: SettingInfo;
 }
 
 interface CreateSetting {
-    type: "CREATE_SETTING";
+    type: 'CREATE_SETTING';
     outbreakId: string;
 }
 
 interface UpdateSetting {
-    type: "UPDATE_SETTING";
+    type: 'UPDATE_SETTING';
     setting: SettingInfo;
 }
 
 interface SaveSettingSuccess {
-    type: "SAVE_SETTING_SUCCESS";
+    type: 'SAVE_SETTING_SUCCESS';
     settings: SettingInfo[];
 }
 
 interface CancelSettingEdit {
-    type: "CANCEL_SETTING_EDIT";
+    type: 'CANCEL_SETTING_EDIT';
 }
 
 interface SelectSettingEdit {
-    type: "SELECT_SETTING_EDIT";
+    type: 'SELECT_SETTING_EDIT';
     settingToEdit: SettingInfo;
 }
 interface DeleteSettingSuccess {
-    type: "DELETE_SETTING_SUCCESS";
+    type: 'DELETE_SETTING_SUCCESS';
     deletedSettingId: string;
 }
 interface ReceiveTransmission {
-    type: "RECEIVE_TRANSMISSION",
-    transmission: Transmission
+    type: 'RECEIVE_TRANSMISSION';
+    transmission: Transmission;
 }
 interface UpdateTransmission {
-    type: "UPDATE_TRANSMISSION",
-    transmission: Transmission
+    type: 'UPDATE_TRANSMISSION';
+    transmission: Transmission;
 }
 interface ReceiveMethod {
-    type: "RECEIVE_METHOD",
-    methods: Methods
+    type: 'RECEIVE_METHOD';
+    methods: Methods;
 }
 interface UpdateMethod {
-    type: "UPDATE_METHOD",
-    methods: Methods
+    type: 'UPDATE_METHOD';
+    methods: Methods;
 }
 interface ReceiveResults {
-    type: "RECEIVE_RESULTS",
-    results: Results
+    type: 'RECEIVE_RESULTS';
+    results: Results;
 }
 interface UpdateResults {
-    type: "UPDATE_RESULTS",
-    results: Results
+    type: 'UPDATE_RESULTS';
+    results: Results;
 }
 interface ReceiveClinicalResults {
-    type: "RECEIVE_CLINICAL_RESULTS",
-    results: Results
+    type: 'RECEIVE_CLINICAL_RESULTS';
+    results: Results;
 }
 interface UpdateClinicalResults {
-    type: "UPDATE_CLINICAL_RESULTS",
-    results: ClinicalResults
+    type: 'UPDATE_CLINICAL_RESULTS';
+    results: ClinicalResults;
 }
 interface ReceiveLaboratoryResults {
-    type: "RECEIVE_LABORATORY_RESULTS",
-    results: LaboratoryResults
+    type: 'RECEIVE_LABORATORY_RESULTS';
+    results: LaboratoryResults;
 }
 interface UpdateLaboratoryResults {
-    type: "UPDATE_LABORATORY_RESULTS",
-    results: LaboratoryResults
+    type: 'UPDATE_LABORATORY_RESULTS';
+    results: LaboratoryResults;
 }
 interface ReceiveConclusions {
-    type: "RECEIVE_CONCLUSIONS",
-    conclusions: Conclusions
+    type: 'RECEIVE_CONCLUSIONS';
+    conclusions: Conclusions;
 }
 interface UpdateConclusions {
-    type: "UPDATE_CONCLUSIONS",
-    conclusions: Conclusions
+    type: 'UPDATE_CONCLUSIONS';
+    conclusions: Conclusions;
 }
 
 /* using doc instead of document to eliminate as possible conflist with the document object in the DOM */
 interface ReceiveDocumentList {
-    type: "RECEIVE_DOCUMENT_LIST";
+    type: 'RECEIVE_DOCUMENT_LIST';
     documentList: Document[];
 }
 
 interface CreateDocument {
-    type: "CREATE_DOCUMENT";
+    type: 'CREATE_DOCUMENT';
     outbreakId: string;
 }
 
 interface UpdateDocument {
-    type: "UPDATE_DOCUMENT";
+    type: 'UPDATE_DOCUMENT';
     documentBeingEdited: Document;
 }
 
 interface UploadDocumentSuccess {
-    type: "UPLOAD_DOCUMENT_SUCCESS";
+    type: 'UPLOAD_DOCUMENT_SUCCESS';
     savedDocument: Document;
 }
 
 interface CancelDocumentEdit {
-    type: "CANCEL_DOCUMENT_EDIT";
+    type: 'CANCEL_DOCUMENT_EDIT';
 }
 
 interface SelectDocumentEdit {
-    type: "SELECT_DOCUMENT_EDIT";
+    type: 'SELECT_DOCUMENT_EDIT';
     documentToEdit: Document;
 }
 interface DeleteDocumentSuccess {
-    type: "DELETE_DOCUMENT_SUCCESS";
+    type: 'DELETE_DOCUMENT_SUCCESS';
     deletedDocumentId: string;
 }
 interface ReceiveNotesList {
-    type: "RECEIVE_NOTES_LIST";
+    type: 'RECEIVE_NOTES_LIST';
     noteList: Note[];
 }
 
 interface CreateNote {
-    type: "CREATE_NOTE";
+    type: 'CREATE_NOTE';
     outbreakId: string;
 }
 
 interface UpdateNote {
-    type: "UPDATE_NOTE";
+    type: 'UPDATE_NOTE';
     note: Note;
 }
 
 interface SaveNoteSuccess {
-    type: "SAVE_NOTE_SUCCESS";
+    type: 'SAVE_NOTE_SUCCESS';
     savedNote: Note;
 }
 
 interface CancelNoteEdit {
-    type: "CANCEL_NOTE_EDIT";
+    type: 'CANCEL_NOTE_EDIT';
 }
 
 interface SelectNoteEdit {
-    type: "SELECT_NOTE_EDIT";
+    type: 'SELECT_NOTE_EDIT';
     noteToEdit: Note;
 }
 interface DeleteNoteSuccess {
-    type: "DELETE_NOTE_SUCCESS";
+    type: 'DELETE_NOTE_SUCCESS';
     deletedNoteId: string;
 }
 interface ReceiveAuditInfo {
-    type: "RECEIVED_AUDIT_INFO";
+    type: 'RECEIVED_AUDIT_INFO';
     auditInfo: AuditInfo;
 }
 interface ReceiveCaseReview {
-    type: "RECEIVED_CASE_REVIEW";
+    type: 'RECEIVED_CASE_REVIEW';
     caseReview: CaseReview;
 }
 interface UpdateCaseReview {
-    type: "UPDATE_CASE_REVIEW";
+    type: 'UPDATE_CASE_REVIEW';
     caseReview: CaseReview;
 }
 interface ReceiveSurveyInfo {
-    type: "RECEIVED_SURVEY_INFO";
+    type: 'RECEIVED_SURVEY_INFO';
     layoutUid: string;
     surveyUid: string;
 }
 interface ReceiveEpiComForumNames {
-    type: "RECEIVED_EPICOM_FORUM_NAMES";
-    epicomForumNameList: DropdownCode[]
+    type: 'RECEIVED_EPICOM_FORUM_NAMES';
+    epicomForumNameList: DropdownCode[];
 }
 interface ReceiveEpiComForumTopics {
-    type: "RECEIVED_EPICOM_FORUM_TOPICS";
-    epicomForumTopicList: DropdownCode[]
+    type: 'RECEIVED_EPICOM_FORUM_TOPICS';
+    epicomForumTopicList: DropdownCode[];
 }
 interface ReceivedEpiComPost {
-    type: "RECEIVED_EPICOM_POST",
+    type: 'RECEIVED_EPICOM_POST';
     post: EpiComPost;
 }
 interface CreateEpiComPost {
-    type: "CREATE_EPICOM_POST";
+    type: 'CREATE_EPICOM_POST';
     epiComPostBeingEdited: EpiComPost;
 }
 interface UpdateEpiComPost {
-    type: "UPDATE_EPICOM_POST";
+    type: 'UPDATE_EPICOM_POST';
     epiComPostBeingEdited: EpiComPost;
 }
 
 interface SaveEpiComPostSuccess {
-    type: "SAVE_EPICOM_POST_SUCCESS";
+    type: 'SAVE_EPICOM_POST_SUCCESS';
     epiComPost: EpiComPost;
 }
 
 interface CancelEpiComPostEdit {
-    type: "CANCEL_EPICOM_POST_EDIT";
+    type: 'CANCEL_EPICOM_POST_EDIT';
 }
 
 interface UpdateEpiComPostID {
-    type: "UPDATE_EPICOM_POST_ID";
+    type: 'UPDATE_EPICOM_POST_ID';
     postId: number;
 }
 
 interface UpdateSurveyAnswers {
-    type: "UPDATE_SURVEY_ANSWERS",
-    answers: any
+    type: 'UPDATE_SURVEY_ANSWERS';
+    answers: any;
 }
 
 interface ReceiveOutbreakLabList {
-    type: "RECEIVE_OUTBREAK_LAB_LIST",
-    outbreakLabList: any[]
+    type: 'RECEIVE_OUTBREAK_LAB_LIST';
+    outbreakLabList: any[];
 }
 
 type KnownAction =
@@ -572,7 +572,7 @@ export const actionCreators = {
     setOutbreak: (outbreakId: string): AppThunkAction<KnownAction> =>
         (dispatch, getState) => {
             dispatch({
-                type: "SET_OUTBREAK_ID",
+                type: 'SET_OUTBREAK_ID',
                 outbreakId
             });
         },
@@ -584,7 +584,7 @@ export const actionCreators = {
                 const background = await AjaxUtils.get(`api/Outbreak/${outbreakId}/background`);
 
                 dispatch({
-                    type: "RECEIVE_BACKGROUND",
+                    type: 'RECEIVE_BACKGROUND',
                     background
                 });
 
@@ -595,7 +595,7 @@ export const actionCreators = {
     updateBackground: (background: Background): AppThunkAction<KnownAction> =>
         (dispatch, getState) => {
             dispatch({
-                type: "RECEIVE_BACKGROUND",
+                type: 'RECEIVE_BACKGROUND',
                 background
             });
         },
@@ -607,7 +607,7 @@ export const actionCreators = {
                 const geographicLocation = await AjaxUtils.get(`api/Outbreak/${outbreakId}/GeographicLocation`);
 
                 dispatch({
-                    type: "RECEIVE_GEOGRAPHIC_LOCATION",
+                    type: 'RECEIVE_GEOGRAPHIC_LOCATION',
                     geographicLocation
                 });
 
@@ -618,7 +618,7 @@ export const actionCreators = {
     updateGeographicLocation: (geographicLocation: GeographicLocation): AppThunkAction<KnownAction> =>
         (dispatch, getState) => {
             dispatch({
-                type: "RECEIVE_GEOGRAPHIC_LOCATION",
+                type: 'RECEIVE_GEOGRAPHIC_LOCATION',
                 geographicLocation
             });
         },
@@ -630,7 +630,7 @@ export const actionCreators = {
                 const settingInfo = await AjaxUtils.get(`api/Outbreak/${outbreakId}/SettingInformation`);
 
                 dispatch({
-                    type: "RECEIVE_SETTING_INFO",
+                    type: 'RECEIVE_SETTING_INFO',
                     settingInfo
                 });
 
@@ -644,14 +644,14 @@ export const actionCreators = {
             const outbreakId = getState().outbreak.outbreakId;
 
             dispatch({
-                type: "CREATE_SETTING",
+                type: 'CREATE_SETTING',
                 outbreakId
             });
         },
     updateSetting: (setting: SettingInfo): AppThunkAction<KnownAction> =>
         (dispatch, getState) => {
             dispatch({
-                type: "UPDATE_SETTING",
+                type: 'UPDATE_SETTING',
                 setting
             });
         },
@@ -674,19 +674,19 @@ export const actionCreators = {
                 }
 
                 if (setting === undefined) {
-                    throw "Setting came back null from server";
+                    throw 'Setting came back null from server';
                 }
 
-                //if saved setting is primary, make sure all others are not
-                //this happens on the server-side
+                // if saved setting is primary, make sure all others are not
+                // this happens on the server-side
                 if (setting.isPrimary) {
                     newSettings = newSettings.map(s => Object.assign({}, s, { isPrimary: false }));
                 }
 
                 dispatch({
-                    type: "SAVE_SETTING_SUCCESS",
+                    type: 'SAVE_SETTING_SUCCESS',
                     settings: [...newSettings.filter(s => s.id !== setting!.id), setting]
-                        .sort((settingA, settingB) => parseInt(settingA.id) - parseInt(settingB.id)) //this will keep the list ordered
+                        .sort((settingA, settingB) => parseInt(settingA.id) - parseInt(settingB.id)) // this will keep the list ordered
                 });
 
                 return {};
@@ -699,7 +699,7 @@ export const actionCreators = {
     cancelSettingEdit: (): AppThunkAction<KnownAction> =>
         (dispatch, getState) => {
             dispatch({
-                type: "CANCEL_SETTING_EDIT"
+                type: 'CANCEL_SETTING_EDIT'
             });
         },
     selectSettingEdit: (id: string): AppThunkAction<KnownAction> =>
@@ -711,7 +711,7 @@ export const actionCreators = {
 
             if (selectedSettings.length === 1) {
                 dispatch({
-                    type: "SELECT_SETTING_EDIT",
+                    type: 'SELECT_SETTING_EDIT',
                     settingToEdit: selectedSettings[0]
                 });
             } else {
@@ -725,7 +725,7 @@ export const actionCreators = {
                 await AjaxUtils.remove(`api/outbreak/setting/${id}`, undefined);
 
                 dispatch({
-                    type: "DELETE_SETTING_SUCCESS",
+                    type: 'DELETE_SETTING_SUCCESS',
                     deletedSettingId: id
                 });
 
@@ -744,7 +744,7 @@ export const actionCreators = {
                 const transmission = await AjaxUtils.get(`api/outbreak/${outbreakId}/transmission`);
 
                 dispatch({
-                    type: "RECEIVE_TRANSMISSION",
+                    type: 'RECEIVE_TRANSMISSION',
                     transmission
                 });
 
@@ -758,7 +758,7 @@ export const actionCreators = {
     updateTransmission: (transmission: Transmission): AppThunkAction<KnownAction> =>
         (dispatch, getState) => {
             dispatch({
-                type: "UPDATE_TRANSMISSION",
+                type: 'UPDATE_TRANSMISSION',
                 transmission
             });
         },
@@ -771,7 +771,7 @@ export const actionCreators = {
 
                 if (methods) {
                     dispatch({
-                        type: "RECEIVE_METHOD",
+                        type: 'RECEIVE_METHOD',
                         methods
                     });
                 }
@@ -786,7 +786,7 @@ export const actionCreators = {
     updateMethods: (methods: Methods): AppThunkAction<KnownAction> =>
         (dispatch, getState) => {
             dispatch({
-                type: "UPDATE_METHOD",
+                type: 'UPDATE_METHOD',
                 methods
             });
         },
@@ -798,7 +798,7 @@ export const actionCreators = {
                 const results = await AjaxUtils.get(`api/outbreak/${outbreakId}/results`);
 
                 dispatch({
-                    type: "RECEIVE_RESULTS",
+                    type: 'RECEIVE_RESULTS',
                     results
                 });
 
@@ -812,7 +812,7 @@ export const actionCreators = {
     updateResults: (results: Results): AppThunkAction<KnownAction> =>
         (dispatch, getState) => {
             dispatch({
-                type: "UPDATE_RESULTS",
+                type: 'UPDATE_RESULTS',
                 results
             });
         },
@@ -825,7 +825,7 @@ export const actionCreators = {
 
                 if (results) {
                     dispatch({
-                        type: "RECEIVE_CLINICAL_RESULTS",
+                        type: 'RECEIVE_CLINICAL_RESULTS',
                         results
                     });
                 }
@@ -840,7 +840,7 @@ export const actionCreators = {
     updateClinicalResults: (results: ClinicalResults): AppThunkAction<KnownAction> =>
         (dispatch, getState) => {
             dispatch({
-                type: "UPDATE_CLINICAL_RESULTS",
+                type: 'UPDATE_CLINICAL_RESULTS',
                 results
             });
         },
@@ -852,7 +852,7 @@ export const actionCreators = {
                 const results = await AjaxUtils.get(`api/outbreak/${outbreakId}/laboratory-results`);
 
                 dispatch({
-                    type: "RECEIVE_LABORATORY_RESULTS",
+                    type: 'RECEIVE_LABORATORY_RESULTS',
                     results
                 });
 
@@ -866,7 +866,7 @@ export const actionCreators = {
     updateLaboratoryResults: (results: LaboratoryResults): AppThunkAction<KnownAction> =>
         (dispatch, getState) => {
             dispatch({
-                type: "UPDATE_LABORATORY_RESULTS",
+                type: 'UPDATE_LABORATORY_RESULTS',
                 results
             });
         },
@@ -879,7 +879,7 @@ export const actionCreators = {
 
                 if (conclusions) {
                     dispatch({
-                        type: "RECEIVE_CONCLUSIONS",
+                        type: 'RECEIVE_CONCLUSIONS',
                         conclusions
                     });
                 }
@@ -894,7 +894,7 @@ export const actionCreators = {
     updateConclusions: (conclusions: Conclusions): AppThunkAction<KnownAction> =>
         (dispatch, getState) => {
             dispatch({
-                type: "UPDATE_CONCLUSIONS",
+                type: 'UPDATE_CONCLUSIONS',
                 conclusions
             });
         },
@@ -906,7 +906,7 @@ export const actionCreators = {
                 const documentList = await AjaxUtils.get(`api/Outbreak/${outbreakId}/documents`);
 
                 dispatch({
-                    type: "RECEIVE_DOCUMENT_LIST",
+                    type: 'RECEIVE_DOCUMENT_LIST',
                     documentList
                 });
 
@@ -920,14 +920,14 @@ export const actionCreators = {
             const outbreakId = getState().outbreak.outbreakId;
 
             dispatch({
-                type: "CREATE_DOCUMENT",
+                type: 'CREATE_DOCUMENT',
                 outbreakId
             });
         },
     updateDocument: (documentBeingEdited: Document): AppThunkAction<KnownAction> =>
         (dispatch, getState) => {
             dispatch({
-                type: "UPDATE_DOCUMENT",
+                type: 'UPDATE_DOCUMENT',
                 documentBeingEdited
             });
         },
@@ -947,7 +947,7 @@ export const actionCreators = {
                 document.id = savedDocument.id;
 
                 dispatch({
-                    type: "UPLOAD_DOCUMENT_SUCCESS",
+                    type: 'UPLOAD_DOCUMENT_SUCCESS',
                     savedDocument
                 });
 
@@ -961,7 +961,7 @@ export const actionCreators = {
     cancelDocumentEdit: (): AppThunkAction<KnownAction> =>
         (dispatch, getState) => {
             dispatch({
-                type: "CANCEL_DOCUMENT_EDIT"
+                type: 'CANCEL_DOCUMENT_EDIT'
             });
         },
     deleteDocument: (id: string): AppThunkAction<KnownAction> =>
@@ -971,7 +971,7 @@ export const actionCreators = {
                 await AjaxUtils.remove(`api/outbreak/document/${id}`, undefined);
 
                 dispatch({
-                    type: "DELETE_DOCUMENT_SUCCESS",
+                    type: 'DELETE_DOCUMENT_SUCCESS',
                     deletedDocumentId: id
                 });
 
@@ -991,7 +991,7 @@ export const actionCreators = {
                 const noteList = await AjaxUtils.get(`api/Outbreak/${outbreakId}/notes`);
 
                 dispatch({
-                    type: "RECEIVE_NOTES_LIST",
+                    type: 'RECEIVE_NOTES_LIST',
                     noteList
                 });
 
@@ -1005,14 +1005,14 @@ export const actionCreators = {
             const outbreakId = getState().outbreak.outbreakId;
 
             dispatch({
-                type: "CREATE_NOTE",
+                type: 'CREATE_NOTE',
                 outbreakId
             });
         },
     updateNote: (note: Note): AppThunkAction<KnownAction> =>
         (dispatch, getState) => {
             dispatch({
-                type: "UPDATE_NOTE",
+                type: 'UPDATE_NOTE',
                 note
             });
         },
@@ -1030,7 +1030,7 @@ export const actionCreators = {
                 }
 
                 dispatch({
-                    type: "SAVE_NOTE_SUCCESS",
+                    type: 'SAVE_NOTE_SUCCESS',
                     savedNote: note
                 });
 
@@ -1044,7 +1044,7 @@ export const actionCreators = {
     cancelNoteEdit: (): AppThunkAction<KnownAction> =>
         (dispatch, getState) => {
             dispatch({
-                type: "CANCEL_NOTE_EDIT"
+                type: 'CANCEL_NOTE_EDIT'
             });
         },
     selectNoteEdit: (eventId: string): AppThunkAction<KnownAction> =>
@@ -1056,7 +1056,7 @@ export const actionCreators = {
 
             if (selectedNotes.length === 1) {
                 dispatch({
-                    type: "SELECT_NOTE_EDIT",
+                    type: 'SELECT_NOTE_EDIT',
                     noteToEdit: selectedNotes[0]
                 });
             } else {
@@ -1070,7 +1070,7 @@ export const actionCreators = {
                 await AjaxUtils.remove(`api/outbreak/note/${id}`, undefined);
 
                 dispatch({
-                    type: "DELETE_NOTE_SUCCESS",
+                    type: 'DELETE_NOTE_SUCCESS',
                     deletedNoteId: id
                 });
 
@@ -1090,7 +1090,7 @@ export const actionCreators = {
                 const auditInfo = await AjaxUtils.get(`api/outbreak/${outbreakId}/audit`);
 
                 dispatch({
-                    type: "RECEIVED_AUDIT_INFO",
+                    type: 'RECEIVED_AUDIT_INFO',
                     auditInfo
                 });
 
@@ -1111,7 +1111,7 @@ export const actionCreators = {
 
                 if (caseReview) {
                     dispatch({
-                        type: "RECEIVED_CASE_REVIEW",
+                        type: 'RECEIVED_CASE_REVIEW',
                         caseReview
                     });
                 }
@@ -1126,7 +1126,7 @@ export const actionCreators = {
     updateCaseReview: (caseReview: CaseReview): AppThunkAction<KnownAction> =>
         (dispatch, getState) => {
             dispatch({
-                type: "UPDATE_CASE_REVIEW",
+                type: 'UPDATE_CASE_REVIEW',
                 caseReview
             });
         },
@@ -1137,7 +1137,7 @@ export const actionCreators = {
                 const info = await AjaxUtils.get(`api/outbreak/${outbreakId}/layout`);
 
                 dispatch({
-                    type: "RECEIVED_SURVEY_INFO",
+                    type: 'RECEIVED_SURVEY_INFO',
                     layoutUid: info.layoutUid,
                     surveyUid: info.surveyUid
                 });
@@ -1153,10 +1153,10 @@ export const actionCreators = {
         async (dispatch, getState) => {
 
             try {
-                const epicomForumNameList = await AjaxUtils.get("api/outbreak/forum-names");
+                const epicomForumNameList = await AjaxUtils.get('api/outbreak/forum-names');
 
                 dispatch({
-                    type: "RECEIVED_EPICOM_FORUM_NAMES",
+                    type: 'RECEIVED_EPICOM_FORUM_NAMES',
                     epicomForumNameList
                 });
 
@@ -1172,7 +1172,7 @@ export const actionCreators = {
 
             if (!forumId) {
                 dispatch({
-                    type: "RECEIVED_EPICOM_FORUM_TOPICS",
+                    type: 'RECEIVED_EPICOM_FORUM_TOPICS',
                     epicomForumTopicList: unloadedState.epicomForumTopicList
                 });
 
@@ -1183,7 +1183,7 @@ export const actionCreators = {
                 const epicomForumTopicList = await AjaxUtils.get(`api/outbreak/forum-topics/${forumId}`);
 
                 dispatch({
-                    type: "RECEIVED_EPICOM_FORUM_TOPICS",
+                    type: 'RECEIVED_EPICOM_FORUM_TOPICS',
                     epicomForumTopicList
                 });
 
@@ -1203,7 +1203,7 @@ export const actionCreators = {
                 const post = await AjaxUtils.get(`api/outbreak/${outbreakId}/epicom`);
 
                 dispatch({
-                    type: "RECEIVED_EPICOM_POST",
+                    type: 'RECEIVED_EPICOM_POST',
                     post
                 });
 
@@ -1225,7 +1225,7 @@ export const actionCreators = {
                 const post = await AjaxUtils.get(`api/outbreak/epicom/${epiComPost.postId}`);
 
                 dispatch({
-                    type: "RECEIVED_EPICOM_POST",
+                    type: 'RECEIVED_EPICOM_POST',
                     post
                 });
 
@@ -1246,14 +1246,14 @@ export const actionCreators = {
                 const post = await AjaxUtils.get(`api/outbreak/${outbreakId}/epicom-post-body`);
 
                 dispatch({
-                    type: "CREATE_EPICOM_POST",
+                    type: 'CREATE_EPICOM_POST',
                     epiComPostBeingEdited: {
                         outbreakId,
                         pendingPostId: '0',
                         date: '',
                         epicomUserId: '',
                         forumDescription: '',
-                        topicDescription:'',
+                        topicDescription: '',
                         message: post.message,
                         postId: post.postId || '0',
                         forumId: post.forumId || '0',
@@ -1273,7 +1273,7 @@ export const actionCreators = {
         (dispatch, getState) => {
 
             dispatch({
-                type: "UPDATE_EPICOM_POST",
+                type: 'UPDATE_EPICOM_POST',
                 epiComPostBeingEdited
             });
         },
@@ -1281,7 +1281,7 @@ export const actionCreators = {
         (dispatch, getState) => {
 
             dispatch({
-                type: "UPDATE_EPICOM_POST_ID",
+                type: 'UPDATE_EPICOM_POST_ID',
                 postId
             });
         },
@@ -1299,11 +1299,11 @@ export const actionCreators = {
                 epiComPost = await AjaxUtils.post('api/outbreak/epicom', epiComPost);
 
                 if (epiComPost === undefined) {
-                    throw "EpiCom Post returned null from server";
+                    throw 'EpiCom Post returned null from server';
                 }
 
                 dispatch({
-                    type: "SAVE_EPICOM_POST_SUCCESS",
+                    type: 'SAVE_EPICOM_POST_SUCCESS',
                     epiComPost
                 });
 
@@ -1317,7 +1317,7 @@ export const actionCreators = {
     cancelEpiComPostEdit: (): AppThunkAction<KnownAction> =>
         (dispatch, getState) => {
             dispatch({
-                type: "CANCEL_EPICOM_POST_EDIT"
+                type: 'CANCEL_EPICOM_POST_EDIT'
             });
         },
 
@@ -1333,7 +1333,7 @@ export const actionCreators = {
 
             try {
 
-                //TODO:  This needs to be refactored once the shape of state is corrected; there should not be sub-objects
+                // TODO:  This needs to be refactored once the shape of state is corrected; there should not be sub-objects
 
                 const outbreak = {
                     outbreakId: o.outbreakId,
@@ -1418,12 +1418,12 @@ export const actionCreators = {
                     surveyUid: o.surveyUid
                 };
 
-                await AjaxUtils.put(`api/outbreak${isSubmit ? "/submit" : ""}`, outbreak);
+                await AjaxUtils.put(`api/outbreak${isSubmit ? '/submit' : ''}`, outbreak);
 
 
-                //dispatch({
+                // dispatch({
                 //    type: ""
-                //});
+                // });
 
                 return {};
 
@@ -1435,7 +1435,7 @@ export const actionCreators = {
     updateSurveyAnswers: (answers: any): AppThunkAction<KnownAction> =>
         async (dispatch, getState) => {
             dispatch({
-                type: "UPDATE_SURVEY_ANSWERS",
+                type: 'UPDATE_SURVEY_ANSWERS',
                 answers
             });
         },
@@ -1455,7 +1455,7 @@ export const actionCreators = {
                 const answers = await AjaxUtils.get(`api/survey/${surveyUid}/answers/outbreak/${outbreakId}`);
 
                 dispatch({
-                    type: "UPDATE_SURVEY_ANSWERS",
+                    type: 'UPDATE_SURVEY_ANSWERS',
                     answers
                 });
             }
@@ -1468,13 +1468,13 @@ export const actionCreators = {
             const outbreakLabList = await AjaxUtils.get(`api/outbreak/${outbreakId}/labs`);
 
             dispatch({
-                type: "RECEIVE_OUTBREAK_LAB_LIST",
+                type: 'RECEIVE_OUTBREAK_LAB_LIST',
                 outbreakLabList
             });
 
         },
 
-}
+};
 
 const unloadedState: OutbreakState = {
     outbreakId: '',
@@ -1508,7 +1508,7 @@ const unloadedState: OutbreakState = {
     methods: {} as Methods,
     clinicalResults: {
         symptom: [],
-        outbreakEventDate:'',
+        outbreakEventDate: '',
         otherSymptom: defaults.string,
         firstExposureDate: defaults.string,
         lastExposureDate: defaults.string,
@@ -1565,15 +1565,15 @@ const unloadedState: OutbreakState = {
 export const reducer: Reducer<OutbreakState> = (state: OutbreakState = unloadedState, incomingAction: Action) => {
     const action = incomingAction as KnownAction;
     switch (action.type) {
-        case "SET_OUTBREAK_ID":
+        case 'SET_OUTBREAK_ID':
             return Object.assign({}, state, { outbreakId: action.outbreakId });
-        case "RECEIVE_BACKGROUND":
+        case 'RECEIVE_BACKGROUND':
             return Object.assign({}, state, { background: action.background });
-        case "RECEIVE_GEOGRAPHIC_LOCATION":
+        case 'RECEIVE_GEOGRAPHIC_LOCATION':
             return Object.assign({}, state, { geographicLocation: action.geographicLocation });
-        case "RECEIVE_SETTING_INFO":
+        case 'RECEIVE_SETTING_INFO':
             return Object.assign({}, state, { settingInfo: action.settingInfo });
-        case "CREATE_SETTING":
+        case 'CREATE_SETTING':
             return Object.assign({}, state, {
                 settingBeingEdited: {
                     id: '',
@@ -1596,46 +1596,46 @@ export const reducer: Reducer<OutbreakState> = (state: OutbreakState = unloadedS
                     }
                 }
             });
-        case "UPDATE_SETTING":
+        case 'UPDATE_SETTING':
             return Object.assign({}, state, { settingBeingEdited: action.setting });
-        case "SAVE_SETTING_SUCCESS":
+        case 'SAVE_SETTING_SUCCESS':
             return Object.assign({}, state, {
                 settingBeingEdited: undefined,
                 settingInfo: action.settings
             });
-        case "CANCEL_SETTING_EDIT":
+        case 'CANCEL_SETTING_EDIT':
             return Object.assign({}, state, { settingBeingEdited: undefined });
-        case "SELECT_SETTING_EDIT":
+        case 'SELECT_SETTING_EDIT':
             return Object.assign({}, state, { settingBeingEdited: action.settingToEdit });
-        case "DELETE_SETTING_SUCCESS":
+        case 'DELETE_SETTING_SUCCESS':
             return Object.assign({}, state, { settingInfo: [...state.settingInfo.filter(setting => setting.id != action.deletedSettingId)] });
-        case "RECEIVE_TRANSMISSION":
+        case 'RECEIVE_TRANSMISSION':
             return Object.assign({}, state, { transmission: action.transmission });
-        case "UPDATE_TRANSMISSION":
+        case 'UPDATE_TRANSMISSION':
             return Object.assign({}, state, { transmission: action.transmission });
-        case "RECEIVE_METHOD":
+        case 'RECEIVE_METHOD':
             return Object.assign({}, state, { methods: action.methods });
-        case "UPDATE_METHOD":
+        case 'UPDATE_METHOD':
             return Object.assign({}, state, { methods: action.methods });
-        case "RECEIVE_RESULTS":
+        case 'RECEIVE_RESULTS':
             return Object.assign({}, state, { results: action.results });
-        case "UPDATE_RESULTS":
+        case 'UPDATE_RESULTS':
             return Object.assign({}, state, { results: action.results });
-        case "RECEIVE_CLINICAL_RESULTS":
+        case 'RECEIVE_CLINICAL_RESULTS':
             return Object.assign({}, state, { clinicalResults: action.results });
-        case "UPDATE_CLINICAL_RESULTS":
+        case 'UPDATE_CLINICAL_RESULTS':
             return Object.assign({}, state, { clinicalResults: action.results });
-        case "RECEIVE_LABORATORY_RESULTS":
+        case 'RECEIVE_LABORATORY_RESULTS':
             return Object.assign({}, state, { laboratoryResults: action.results });
-        case "UPDATE_LABORATORY_RESULTS":
+        case 'UPDATE_LABORATORY_RESULTS':
             return Object.assign({}, state, { laboratoryResults: action.results });
-        case "RECEIVE_CONCLUSIONS":
+        case 'RECEIVE_CONCLUSIONS':
             return Object.assign({}, state, { conclusions: action.conclusions });
-        case "UPDATE_CONCLUSIONS":
+        case 'UPDATE_CONCLUSIONS':
             return Object.assign({}, state, { conclusions: action.conclusions });
-        case "RECEIVE_DOCUMENT_LIST":
+        case 'RECEIVE_DOCUMENT_LIST':
             return Object.assign({}, state, { documentList: action.documentList });
-        case "CREATE_DOCUMENT":
+        case 'CREATE_DOCUMENT':
             return Object.assign({}, state, {
                 documentBeingEdited: {
                     id: '',
@@ -1645,25 +1645,25 @@ export const reducer: Reducer<OutbreakState> = (state: OutbreakState = unloadedS
                     documentDate: ''
                 }
             });
-        case "UPDATE_DOCUMENT":
+        case 'UPDATE_DOCUMENT':
             return Object.assign({}, state, { documentBeingEdited: action.documentBeingEdited });
-        case "UPLOAD_DOCUMENT_SUCCESS":
+        case 'UPLOAD_DOCUMENT_SUCCESS':
             return Object.assign({}, state, {
                 documentBeingEdited: undefined,
-                documentList: [...state.documentList.filter((doc:Document) => doc.id !== action.savedDocument.id), action.savedDocument]
-                    .sort((a:Document, b:Document) => parseInt(a.id) - parseInt(b.id)) //this will keep the list ordered
+                documentList: [...state.documentList.filter((doc: Document) => doc.id !== action.savedDocument.id), action.savedDocument]
+                    .sort((a: Document, b: Document) => parseInt(a.id) - parseInt(b.id)) // this will keep the list ordered
             });
-        case "CANCEL_DOCUMENT_EDIT":
+        case 'CANCEL_DOCUMENT_EDIT':
             return Object.assign({}, state, { documentBeingEdited: undefined });
-        case "SELECT_DOCUMENT_EDIT":
+        case 'SELECT_DOCUMENT_EDIT':
             return Object.assign({}, state, { documentBeingEdited: action.documentToEdit });
-        case "DELETE_DOCUMENT_SUCCESS":
+        case 'DELETE_DOCUMENT_SUCCESS':
             return Object.assign({}, state, {
                 documentList: [...state.documentList.filter((doc: Document) => doc.id != action.deletedDocumentId)]
             });
-        case "RECEIVE_NOTES_LIST":
+        case 'RECEIVE_NOTES_LIST':
             return Object.assign({}, state, { noteList: action.noteList });
-        case "CREATE_NOTE":
+        case 'CREATE_NOTE':
             return Object.assign({}, state, {
                 noteBeingEdited: {
                     note: '',
@@ -1671,49 +1671,49 @@ export const reducer: Reducer<OutbreakState> = (state: OutbreakState = unloadedS
                     outbreakId: state.outbreakId
                 }
             });
-        case "UPDATE_NOTE":
+        case 'UPDATE_NOTE':
             return Object.assign({}, state, { noteBeingEdited: action.note });
-        case "SAVE_NOTE_SUCCESS":
+        case 'SAVE_NOTE_SUCCESS':
             return Object.assign({}, state, {
                 noteBeingEdited: undefined,
-                noteList: [...state.noteList.filter((note:Note) => note.eventId !== action.savedNote.eventId), action.savedNote]
-                    .sort((a, b) => a.eventId - b.eventId) //this will keep the list ordered
+                noteList: [...state.noteList.filter((note: Note) => note.eventId !== action.savedNote.eventId), action.savedNote]
+                    .sort((a, b) => a.eventId - b.eventId) // this will keep the list ordered
             });
-        case "CANCEL_NOTE_EDIT":
+        case 'CANCEL_NOTE_EDIT':
             return Object.assign({}, state, { noteBeingEdited: undefined });
-        case "SELECT_NOTE_EDIT":
+        case 'SELECT_NOTE_EDIT':
             return Object.assign({}, state, { noteBeingEdited: action.noteToEdit });
-        case "DELETE_NOTE_SUCCESS":
+        case 'DELETE_NOTE_SUCCESS':
             return Object.assign({}, state, { noteList: [...state.noteList.filter((note: Note) => note.eventId != action.deletedNoteId)] });
-        case "RECEIVED_AUDIT_INFO":
+        case 'RECEIVED_AUDIT_INFO':
             return Object.assign({}, state, { auditInfo: action.auditInfo });
-        case "RECEIVED_CASE_REVIEW":
+        case 'RECEIVED_CASE_REVIEW':
             return Object.assign({}, state, { caseReview: action.caseReview });
-        case "UPDATE_CASE_REVIEW":
+        case 'UPDATE_CASE_REVIEW':
             return Object.assign({}, state, { caseReview: action.caseReview });
-        case "RECEIVED_SURVEY_INFO":
+        case 'RECEIVED_SURVEY_INFO':
             return Object.assign({}, state, { layoutUid: action.layoutUid, surveyUid: action.surveyUid });
-        case "RECEIVED_EPICOM_FORUM_NAMES":
+        case 'RECEIVED_EPICOM_FORUM_NAMES':
             return Object.assign({}, state, { epicomForumNameList: action.epicomForumNameList });
-        case "RECEIVED_EPICOM_FORUM_TOPICS":
+        case 'RECEIVED_EPICOM_FORUM_TOPICS':
             return Object.assign({}, state, { epicomForumTopicList: action.epicomForumTopicList });
-        case "CREATE_EPICOM_POST":
+        case 'CREATE_EPICOM_POST':
             return Object.assign({}, state, { epiComPostBeingEdited: action.epiComPostBeingEdited });
-        case "UPDATE_EPICOM_POST":
+        case 'UPDATE_EPICOM_POST':
             return Object.assign({}, state, { epiComPostBeingEdited: action.epiComPostBeingEdited });
-        case "CANCEL_EPICOM_POST_EDIT":
+        case 'CANCEL_EPICOM_POST_EDIT':
             return Object.assign({}, state, { epiComPostBeingEdited: undefined });
-        case "SAVE_EPICOM_POST_SUCCESS":
+        case 'SAVE_EPICOM_POST_SUCCESS':
             return Object.assign({}, state, { epiComPostBeingEdited: undefined, epiComPost: action.epiComPost });
-        case "RECEIVED_EPICOM_POST":
+        case 'RECEIVED_EPICOM_POST':
             return Object.assign({}, state, { epiComPost: action.post });
-        case "UPDATE_EPICOM_POST_ID":
+        case 'UPDATE_EPICOM_POST_ID':
             return Object.assign({}, state, {
                 epiComPost: Object.assign({}, state.epiComPost, { postId: action.postId })
             });
-        case "UPDATE_SURVEY_ANSWERS":
+        case 'UPDATE_SURVEY_ANSWERS':
             return Object.assign({}, state, { surveyAnswers: action.answers });
-        case "RECEIVE_OUTBREAK_LAB_LIST":
+        case 'RECEIVE_OUTBREAK_LAB_LIST':
             return Object.assign({}, state, { outbreakLabList: action.outbreakLabList });
         default:
             // The following line guarantees that every action in the KnownAction union has been covered by a case above
@@ -1721,4 +1721,4 @@ export const reducer: Reducer<OutbreakState> = (state: OutbreakState = unloadedS
     }
 
     return state || unloadedState;
-}
+};

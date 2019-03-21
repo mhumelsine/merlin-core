@@ -2,18 +2,18 @@
 import { AppThunkAction } from './';
 import * as AjaxUtils from '../utils/AjaxUtils';
 import { defaults } from '../utils/Global';
-import { DropdownCode, CodeType } from './Code'; 
+import { DropdownCode, CodeType } from './Code';
 import TravelHistory from '../components/case/TravelHistory';
 import { TravelType } from '../components/case/TravelHistoryItem';
 
 
 export interface CaseState {
-    symptoms: CaseSymptom[]; //should not need paging here since the list of labs on a case are finite and small
+    symptoms: CaseSymptom[]; // should not need paging here since the list of labs on a case are finite and small
     caseId: number;
     epiLinks: EpiLink[];
     labSummary: LabResult[];
-    labs: Lab[]; //should not need paging here since the list of labs on a case are finite and small
-    healthCareVisits: HealthCareVisit[]; //should not need paging here since the list of labs on a case are finite and small
+    labs: Lab[]; // should not need paging here since the list of labs on a case are finite and small
+    healthCareVisits: HealthCareVisit[]; // should not need paging here since the list of labs on a case are finite and small
     travelHistory: TravelHistoryCase;
     vaccineHistory: VaccineHistory[];
     caseDetails: CaseDetails;
@@ -51,7 +51,7 @@ export interface CaseSymptom {
 export interface EpiLink {
     profileId: string;
     relationshipType: string;
-    firstName: string
+    firstName: string;
     lastName: string;
     caseId: string;
     dxStatus: string;
@@ -127,9 +127,9 @@ export interface TreatmentItem {
 
 export interface ExposureLocationCase {
     locationExposedSelected: string[];
-    locationsExposed: DropdownCode[]; 
-    imported: DropdownCode[];  
-    origin: string[]; 
+    locationsExposed: DropdownCode[];
+    imported: DropdownCode[];
+    origin: string[];
 }
 
 export interface Address {
@@ -143,150 +143,150 @@ export interface Address {
     [index: string]: any;
 }
 
-//actions
+// actions
 interface RequestSymptomsForCase {
-    type: "REQUEST_SYMPTOMS_FOR_CASE",
+    type: 'REQUEST_SYMPTOMS_FOR_CASE';
     caseId: number;
 }
 
 interface ReceiveSymptomsForCase {
-    type: "RECEIVE_SYMPTOMS_FOR_CASE",
+    type: 'RECEIVE_SYMPTOMS_FOR_CASE';
     symptoms: CaseSymptom[];
 }
 
 interface RequestTravelHistoryForCase {
-    type: "REQUEST_TRAVEL_HISTORY_FOR_CASE",
+    type: 'REQUEST_TRAVEL_HISTORY_FOR_CASE';
     caseId: number;
 }
 
 interface ReceiveTravelHistorysForCase {
-    type: "RECEIVE_TRAVEL_HISTORY_FOR_CASE",
+    type: 'RECEIVE_TRAVEL_HISTORY_FOR_CASE';
     travelHistory: TravelHistoryCase;
 }
 
 interface RequestExposureLocation {
-    type: "REQUEST_EXPOSURE_LOCATION",
+    type: 'REQUEST_EXPOSURE_LOCATION';
     caseId: number;
 }
 
 interface ReceiveExposureLocation {
-    type: "RECEIVE_EXPOSURE_LOCATION",
+    type: 'RECEIVE_EXPOSURE_LOCATION';
     exposureLocation: ExposureLocationCase;
 }
 
 interface RequestEpiLinksForCase {
-    type: "REQUEST_EPILINKS_FOR_CASE",
+    type: 'REQUEST_EPILINKS_FOR_CASE';
     caseId: number;
 }
 
 interface ReceiveEpiLinksForCase {
-    type: "RECEIVE_EPILINKS_FOR_CASE",
+    type: 'RECEIVE_EPILINKS_FOR_CASE';
     epiLinks: EpiLink[];
 }
 
 interface RequestLabsForCase {
-    type: "REQUEST_LABS_FOR_CASE",
+    type: 'REQUEST_LABS_FOR_CASE';
     caseId: number;
 }
 
 interface ReceiveLabsForCase {
-    type: "RECEIVE_LABS_FOR_CASE",
+    type: 'RECEIVE_LABS_FOR_CASE';
     labs: Lab[];
 }
 
 interface RequestLabSummaryForCase {
-    type: "REQUEST_LABSUMMARY_FOR_CASE",
-    caseId: number,
+    type: 'REQUEST_LABSUMMARY_FOR_CASE';
+    caseId: number;
     diseaseId: string;
 }
 
 interface ReceiveLabSummaryForCase {
-    type: "RECEIVE_LABSUMMARY_FOR_CASE",
+    type: 'RECEIVE_LABSUMMARY_FOR_CASE';
     LabSummary: LabResult[];
 }
 
 interface RequestHealthCareVisitsForCase {
-    type: 'REQUEST_HEALTHCARE_VISITS_FOR_CASE',
+    type: 'REQUEST_HEALTHCARE_VISITS_FOR_CASE';
     caseId: number;
 }
 
 interface ReceiveHealthCareVisitsForCase {
-    type: 'RECEIVE_HEALTHCARE_VISITS_FOR_CASE',
+    type: 'RECEIVE_HEALTHCARE_VISITS_FOR_CASE';
     healthCareVisits: HealthCareVisit[];
 }
 
 interface ReceiveAddressByZip {
-    type: "RECEIVE_ADDRESS_BY_ZIP",
+    type: 'RECEIVE_ADDRESS_BY_ZIP';
     address: Address;
 }
 
 interface RemoveTravelHistoryAction {
-    type: "REMOVE_TRAVEL_HISTORY";
+    type: 'REMOVE_TRAVEL_HISTORY';
     travelId: number;
 }
 
 interface AddTravelHistoryAction {
-    type: "ADD_TRAVEL_HISTORY";
+    type: 'ADD_TRAVEL_HISTORY';
     travelHistoryItem: TravelHistoryItem;
 }
 
 interface EditTravelHistoryAction {
-    type: "EDIT_TRAVEL_HISTORY";
+    type: 'EDIT_TRAVEL_HISTORY';
     travelHistoryItem: TravelHistoryItem;
 }
 
 interface RequestVaccineHistoryForCase {
-    type: 'REQUEST_VACCINE_HISTORY_FOR_CASE',
+    type: 'REQUEST_VACCINE_HISTORY_FOR_CASE';
     caseId: number;
 }
 
 interface ReceiveVaccineHistoryForCase {
-    type: 'RECEIVE_VACCINE_HISTORY_FOR_CASE',
+    type: 'RECEIVE_VACCINE_HISTORY_FOR_CASE';
     vaccineHistory: VaccineHistory[];
 }
 
 interface RequestDetailsForCase {
-    type: 'REQUEST_DETAILS_FOR_CASE',
+    type: 'REQUEST_DETAILS_FOR_CASE';
     caseId: number;
 }
 
 interface ReceiveDetailsForCase {
-    type: 'RECEIVE_DETAILS_FOR_CASE',
+    type: 'RECEIVE_DETAILS_FOR_CASE';
     caseDetails: CaseDetails;
 }
 
 interface ReceiveVaccinesForCase {
-    type: 'RECEIVE_VACCINES_FOR_CASE',
-    vaccines:DropdownCode[]
+    type: 'RECEIVE_VACCINES_FOR_CASE';
+    vaccines: DropdownCode[];
 }
 
 interface SaveVaccineHistory {
-    type: 'SAVE_VACCINEHIST_FOR_CASE',
-    vaccineHistory: VaccineHistory
+    type: 'SAVE_VACCINEHIST_FOR_CASE';
+    vaccineHistory: VaccineHistory;
 }
 
 interface DeleteVaccineHistoryItem {
-    type: 'DELETE_VACCINEHIST_FOR_CASE',
+    type: 'DELETE_VACCINEHIST_FOR_CASE';
     vaccineID: number;
 }
 
 interface EditVaccineHistoryItem {
-    type: 'EDIT_VACCINEHIST_FOR_CASE',
-    vaccineHistory: VaccineHistory
+    type: 'EDIT_VACCINEHIST_FOR_CASE';
+    vaccineHistory: VaccineHistory;
 }
 
 interface AddTreatmentAction {
-    type: "ADD_TREATMENT";
+    type: 'ADD_TREATMENT';
     treatmentItem: TreatmentItem;
 }
 
 interface RemoveTreatmentAction {
-    type: "REMOVE_TREATMENT";
+    type: 'REMOVE_TREATMENT';
     treatmentId: number;
 }
 
 interface EditTreatmentAction {
-    type: "EDIT_TREATMENT";
+    type: 'EDIT_TREATMENT';
     treatmentItem: TreatmentItem;
 }
 
@@ -327,7 +327,7 @@ export const actionCreators = {
 
             if (caseId !== currentState.caseId) {
                 dispatch({
-                    type: "REQUEST_TRAVEL_HISTORY_FOR_CASE",
+                    type: 'REQUEST_TRAVEL_HISTORY_FOR_CASE',
                     caseId
                 });
 
@@ -344,7 +344,7 @@ export const actionCreators = {
                     });
 
                     dispatch({
-                        type: "RECEIVE_TRAVEL_HISTORY_FOR_CASE",
+                        type: 'RECEIVE_TRAVEL_HISTORY_FOR_CASE',
                         travelHistory
                     });
 
@@ -359,7 +359,7 @@ export const actionCreators = {
 
             if (caseId !== currentState.caseId || currentState.labSummary.length === 0) {
                 dispatch({
-                    type: "REQUEST_LABSUMMARY_FOR_CASE",
+                    type: 'REQUEST_LABSUMMARY_FOR_CASE',
                     caseId,
                     diseaseId
                 });
@@ -368,7 +368,7 @@ export const actionCreators = {
                     const LabSummary = await AjaxUtils.get(`api/Case/${caseId}/labsummary`);
 
                     dispatch({
-                        type: "RECEIVE_LABSUMMARY_FOR_CASE",
+                        type: 'RECEIVE_LABSUMMARY_FOR_CASE',
                         LabSummary
                     });
 
@@ -385,19 +385,18 @@ export const actionCreators = {
             if (caseId !== currentState.caseId || currentState.symptoms.length === 0) {
 
                 dispatch({
-                    type: "REQUEST_SYMPTOMS_FOR_CASE",
+                    type: 'REQUEST_SYMPTOMS_FOR_CASE',
                     caseId
                 });
 
                 try {
-                    var symptoms = await AjaxUtils.get(`api/Case/${caseId}/symptoms`);
+                    let symptoms = await AjaxUtils.get(`api/Case/${caseId}/symptoms`);
 
                     dispatch({
                         type: 'RECEIVE_SYMPTOMS_FOR_CASE',
                         symptoms
                     });
-                }
-                catch (err) {
+                } catch (err) {
                     console.log(err);
                 }
             }
@@ -406,17 +405,17 @@ export const actionCreators = {
         async (dispatch, getState) => {
 
             const currentState = getState().case;
-			
-                dispatch({
-                    type: "REQUEST_LABS_FOR_CASE",
+
+            dispatch({
+                    type: 'REQUEST_LABS_FOR_CASE',
                     caseId
                 });
 
-                try {
+            try {
                     const labs = await AjaxUtils.get(`api/Case/${caseId}/labs`);
 
                     dispatch({
-                        type: "RECEIVE_LABS_FOR_CASE",
+                        type: 'RECEIVE_LABS_FOR_CASE',
                         labs
                     });
 
@@ -431,7 +430,7 @@ export const actionCreators = {
 
             if (caseId !== currentState.caseId || currentState.healthCareVisits.length === 0) {
                 dispatch({
-                    type: "REQUEST_HEALTHCARE_VISITS_FOR_CASE",
+                    type: 'REQUEST_HEALTHCARE_VISITS_FOR_CASE',
                     caseId
                 });
 
@@ -439,7 +438,7 @@ export const actionCreators = {
                     const healthCareVisits = await AjaxUtils.get(`api/Case/${caseId}/healthcarevisits`);
 
                     dispatch({
-                        type: "RECEIVE_HEALTHCARE_VISITS_FOR_CASE",
+                        type: 'RECEIVE_HEALTHCARE_VISITS_FOR_CASE',
                         healthCareVisits
                     });
 
@@ -456,19 +455,18 @@ export const actionCreators = {
             if (caseId !== currentState.caseId || currentState.symptoms.length === 0) {
 
                 dispatch({
-                    type: "REQUEST_EPILINKS_FOR_CASE",
+                    type: 'REQUEST_EPILINKS_FOR_CASE',
                     caseId
                 });
 
                 try {
-                    var epiLinks = await AjaxUtils.get(`api/Case/${caseId}/epilinks`);
+                    let epiLinks = await AjaxUtils.get(`api/Case/${caseId}/epilinks`);
 
                     dispatch({
                         type: 'RECEIVE_EPILINKS_FOR_CASE',
                         epiLinks
                     });
-                }
-                catch (err) {
+                } catch (err) {
                     console.log(err);
                 }
             }
@@ -493,7 +491,7 @@ export const actionCreators = {
                 const address = await AjaxUtils.get(`api/Address/${zipCode}`);
 
                 dispatch({
-                    type: "RECEIVE_ADDRESS_BY_ZIP",
+                    type: 'RECEIVE_ADDRESS_BY_ZIP',
                     address
                 });
 
@@ -505,21 +503,21 @@ export const actionCreators = {
     addTravelHistory: (travelHistoryItem: TravelHistoryItem): AppThunkAction<KnownAction> =>
         async (dispatch, getState) => {
             dispatch({
-                type: "ADD_TRAVEL_HISTORY",
+                type: 'ADD_TRAVEL_HISTORY',
                 travelHistoryItem
             });
         },
     removeTravelHistory: (travelId: number): AppThunkAction<KnownAction> =>
         async (dispatch, getState) => {
             dispatch({
-                type: "REMOVE_TRAVEL_HISTORY",
+                type: 'REMOVE_TRAVEL_HISTORY',
                 travelId
             });
         },
     editTravelHistory: (travelHistoryItem: TravelHistoryItem): AppThunkAction<KnownAction> =>
         async (dispatch, getState) => {
             dispatch({
-                type: "EDIT_TRAVEL_HISTORY",
+                type: 'EDIT_TRAVEL_HISTORY',
                 travelHistoryItem
             });
         },
@@ -530,7 +528,7 @@ export const actionCreators = {
 
             if (caseId !== currentState.caseId || currentState.vaccineHistory.length === 0) {
                 dispatch({
-                    type: "REQUEST_VACCINE_HISTORY_FOR_CASE",
+                    type: 'REQUEST_VACCINE_HISTORY_FOR_CASE',
                     caseId
                 });
 
@@ -538,7 +536,7 @@ export const actionCreators = {
                     const vaccineHistory = await AjaxUtils.get(`api/Case/${caseId}/vaccinehistory`);
 
                     dispatch({
-                        type: "RECEIVE_VACCINE_HISTORY_FOR_CASE",
+                        type: 'RECEIVE_VACCINE_HISTORY_FOR_CASE',
                         vaccineHistory
                     });
 
@@ -555,51 +553,48 @@ export const actionCreators = {
             if (caseId !== currentState.caseId) {
 
                 dispatch({
-                    type: "REQUEST_DETAILS_FOR_CASE",
+                    type: 'REQUEST_DETAILS_FOR_CASE',
                     caseId
                 });
 
                 try {
-                    var caseDetails = await AjaxUtils.get(`api/Case/${caseId}/details`) as CaseDetails;
+                    let caseDetails = await AjaxUtils.get(`api/Case/${caseId}/details`) as CaseDetails;
 
                     dispatch({
                         type: 'RECEIVE_DETAILS_FOR_CASE',
                         caseDetails
                     });
-                }
-                catch (err) {
+                } catch (err) {
                     console.log(err);
                 }
             }
-        }, 
+        },
     loadVaccines: (icd9Code: string): AppThunkAction<KnownAction> =>
         async (dispatch, getState) => {
             try {
-                var vaccines = await AjaxUtils.get(`api/Case/${CodeType.vaccineType}/${icd9Code}`);
+                let vaccines = await AjaxUtils.get(`api/Case/${CodeType.vaccineType}/${icd9Code}`);
 
                 dispatch({
                     type: 'RECEIVE_VACCINES_FOR_CASE',
                     vaccines
                 });
-            }
-            catch (err) {
+            } catch (err) {
                 console.log(err);
             }
     },
     SaveVaccineHistoryItem: (vaccineHistory: VaccineHistory): AppThunkAction<KnownAction> =>
         async (dispatch, getState) => {
             const currentState = getState().case;
-            const vaccineHist = currentState.vaccineHistory.find(hist => { return (hist.vaccineID === vaccineHistory.vaccineID); })
+            const vaccineHist = currentState.vaccineHistory.find(hist => { return (hist.vaccineID === vaccineHistory.vaccineID); });
 
             if (vaccineHist !== undefined) {
                 dispatch({
-                    type: "EDIT_VACCINEHIST_FOR_CASE",
+                    type: 'EDIT_VACCINEHIST_FOR_CASE',
                     vaccineHistory
                 });
-            }
-            else {
+            } else {
                 dispatch({
-                    type: "SAVE_VACCINEHIST_FOR_CASE",
+                    type: 'SAVE_VACCINEHIST_FOR_CASE',
                     vaccineHistory
                 });
             }
@@ -608,29 +603,29 @@ export const actionCreators = {
         async (dispatch, getState) => {
 
             dispatch({
-                type: "DELETE_VACCINEHIST_FOR_CASE",
+                type: 'DELETE_VACCINEHIST_FOR_CASE',
                 vaccineID
             });
 
-        }, 
+        },
     addTreatment: (treatmentItem: TreatmentItem): AppThunkAction<KnownAction> =>
         async (dispatch, getState) => {
             dispatch({
-                type: "ADD_TREATMENT",
+                type: 'ADD_TREATMENT',
                 treatmentItem
             });
         },
     removeTreatment: (treatmentId: number): AppThunkAction<KnownAction> =>
         async (dispatch, getState) => {
             dispatch({
-                type: "REMOVE_TREATMENT",
+                type: 'REMOVE_TREATMENT',
                 treatmentId
             });
         },
     editTreatment: (treatmentItem: TreatmentItem): AppThunkAction<KnownAction> =>
         async (dispatch, getState) => {
             dispatch({
-                type: "EDIT_TREATMENT",
+                type: 'EDIT_TREATMENT',
                 treatmentItem
             });
         }
@@ -646,26 +641,26 @@ const unloadedState: CaseState = {
     travelHistory: {} as TravelHistoryCase,
     vaccineHistory: [] as VaccineHistory[],
     caseDetails: {} as CaseDetails,
-    vaccines :[], 
+    vaccines : [],
     treatments: [] as TreatmentItem[]
 };
 
-//reducer
+// reducer
 export const reducer: Reducer<CaseState> = (state: CaseState = unloadedState, incomingAction: Action) => {
     const action = incomingAction as KnownAction;
     switch (action.type) {
         case 'REQUEST_LABS_FOR_CASE':
-        case "REQUEST_SYMPTOMS_FOR_CASE":
-        case "REQUEST_HEALTHCARE_VISITS_FOR_CASE":
-        case "REQUEST_EPILINKS_FOR_CASE":
-        case "REQUEST_EXPOSURE_LOCATION":
-        case "REQUEST_VACCINE_HISTORY_FOR_CASE":
-        case "REQUEST_DETAILS_FOR_CASE":
-        case "REQUEST_TRAVEL_HISTORY_FOR_CASE":
+        case 'REQUEST_SYMPTOMS_FOR_CASE':
+        case 'REQUEST_HEALTHCARE_VISITS_FOR_CASE':
+        case 'REQUEST_EPILINKS_FOR_CASE':
+        case 'REQUEST_EXPOSURE_LOCATION':
+        case 'REQUEST_VACCINE_HISTORY_FOR_CASE':
+        case 'REQUEST_DETAILS_FOR_CASE':
+        case 'REQUEST_TRAVEL_HISTORY_FOR_CASE':
             return Object.assign({}, state, { caseId: action.caseId });
-        case "REQUEST_LABSUMMARY_FOR_CASE":
+        case 'REQUEST_LABSUMMARY_FOR_CASE':
             return Object.assign({}, state, { caseId: action.caseId, diseaseId: action.diseaseId });
-        case "RECEIVE_SYMPTOMS_FOR_CASE":
+        case 'RECEIVE_SYMPTOMS_FOR_CASE':
             return Object.assign({}, state, {
                 symptoms: action.symptoms
             });
@@ -673,55 +668,55 @@ export const reducer: Reducer<CaseState> = (state: CaseState = unloadedState, in
             return Object.assign({}, state, {
                 labs: action.labs
             });
-        case "RECEIVE_EPILINKS_FOR_CASE":
+        case 'RECEIVE_EPILINKS_FOR_CASE':
             return Object.assign({}, state, {
                 epiLinks: action.epiLinks
             });
-        case "RECEIVE_HEALTHCARE_VISITS_FOR_CASE":
+        case 'RECEIVE_HEALTHCARE_VISITS_FOR_CASE':
             return Object.assign({}, state, {
                 healthCareVisits: action.healthCareVisits
             });
-        case "RECEIVE_LABSUMMARY_FOR_CASE":
+        case 'RECEIVE_LABSUMMARY_FOR_CASE':
             return Object.assign({}, state, {
                 labSummary: action.LabSummary
             });
-        case "RECEIVE_EXPOSURE_LOCATION":
+        case 'RECEIVE_EXPOSURE_LOCATION':
             const newState = Object.assign({}, state.travelHistory, {
                 exposureLocation: action.exposureLocation
             });
             return Object.assign({}, state, {
                 travelHistory: newState
             });
-        case "RECEIVE_TRAVEL_HISTORY_FOR_CASE":
+        case 'RECEIVE_TRAVEL_HISTORY_FOR_CASE':
             return Object.assign({}, state, {
                 travelHistory: action.travelHistory
             });
-        case "RECEIVE_HEALTHCARE_VISITS_FOR_CASE":
+        case 'RECEIVE_HEALTHCARE_VISITS_FOR_CASE':
             return Object.assign({}, state, {
                 healthCareVisits: action.healthCareVisits
             });
-        case "RECEIVE_ADDRESS_BY_ZIP":
+        case 'RECEIVE_ADDRESS_BY_ZIP':
             const newTravelHistory = Object.assign({}, state.travelHistory, {
                   addressFound: action.address
             });
             return Object.assign({}, state, {
                 travelHistory: newTravelHistory
             });
-        case "RECEIVE_VACCINE_HISTORY_FOR_CASE":
+        case 'RECEIVE_VACCINE_HISTORY_FOR_CASE':
             return Object.assign({}, state, {
                 vaccineHistory: action.vaccineHistory
             });
-        case "RECEIVE_DETAILS_FOR_CASE":
+        case 'RECEIVE_DETAILS_FOR_CASE':
             return Object.assign({}, state, {
                 caseDetails: action.caseDetails
 
             });
-        case "RECEIVE_VACCINES_FOR_CASE":
+        case 'RECEIVE_VACCINES_FOR_CASE':
 
             return Object.assign({}, state, {
                 vaccines: action.vaccines
             });
-        case "ADD_TRAVEL_HISTORY":
+        case 'ADD_TRAVEL_HISTORY':
             return (function () {
 
                 const newItem = Object.assign({}, action.travelHistoryItem);
@@ -738,7 +733,7 @@ export const reducer: Reducer<CaseState> = (state: CaseState = unloadedState, in
 
                 return newState;
             })();
-        case "REMOVE_TRAVEL_HISTORY":
+        case 'REMOVE_TRAVEL_HISTORY':
             return (function () {
 
                 const newState = Object.assign({}, state, {
@@ -750,11 +745,11 @@ export const reducer: Reducer<CaseState> = (state: CaseState = unloadedState, in
                     return item.travelId == action.travelId;
                 });
 
-                travelHistory.travelHistoryItems.splice(indexToRemove, 1)
+                travelHistory.travelHistoryItems.splice(indexToRemove, 1);
 
                 return newState;
             })();
-        case "EDIT_TRAVEL_HISTORY":
+        case 'EDIT_TRAVEL_HISTORY':
             return (function () {
 
                 const newState = Object.assign({}, state, {
@@ -770,11 +765,11 @@ export const reducer: Reducer<CaseState> = (state: CaseState = unloadedState, in
 
                 return newState;
             })();
-        case "ADD_TREATMENT":
+        case 'ADD_TREATMENT':
             return (function () {
 
                  const newItem = Object.assign({}, action.treatmentItem);
-                 const treatments = [...state.treatments]; 
+                 const treatments = [...state.treatments];
 
                  if (!newItem.treatmentId) {
                      newItem.treatmentId = Date.now();
@@ -782,41 +777,41 @@ export const reducer: Reducer<CaseState> = (state: CaseState = unloadedState, in
 
                  treatments.push(newItem);
 
-                return Object.assign({}, state, {
+                 return Object.assign({}, state, {
                     treatments: treatments
                 });
             })();
-        case "REMOVE_TREATMENT":
-            return (function () { 
-                const treatments = [...state.treatments]; 
+        case 'REMOVE_TREATMENT':
+            return (function () {
+                const treatments = [...state.treatments];
                 const indexToRemove =   treatments.findIndex(item => {
-                    return item.treatmentId == action.treatmentId
+                    return item.treatmentId == action.treatmentId;
                 });
-                
-                treatments.splice(indexToRemove,1); 
+
+                treatments.splice(indexToRemove, 1);
 
                 return Object.assign({}, state, {
                    treatments: treatments
                });
             })();
-        case "EDIT_TREATMENT":
+        case 'EDIT_TREATMENT':
             return (function () {
-               const treatments = [...state.treatments]; 
+               const treatments = [...state.treatments];
                const indexToEdit =   treatments.findIndex(item => {
-                return item.treatmentId == action.treatmentItem.treatmentId
+                return item.treatmentId == action.treatmentItem.treatmentId;
                 });
-              
-                treatments[indexToEdit] = action.treatmentItem; 
-              
-                return Object.assign({}, state, {
+
+               treatments[indexToEdit] = action.treatmentItem;
+
+               return Object.assign({}, state, {
                 treatments: treatments
             });
 
             })();
-        case "SAVE_VACCINEHIST_FOR_CASE":
+        case 'SAVE_VACCINEHIST_FOR_CASE':
             return (function () {
                 const newItem = Object.assign({}, action.vaccineHistory);
-                const newState1 = Object.assign({}, state)
+                const newState1 = Object.assign({}, state);
 
                 const vaccineHistory = [...newState1.vaccineHistory];
 
@@ -828,14 +823,14 @@ export const reducer: Reducer<CaseState> = (state: CaseState = unloadedState, in
                 });
                 return newState;
             })();
-        case "EDIT_VACCINEHIST_FOR_CASE":
+        case 'EDIT_VACCINEHIST_FOR_CASE':
             return (function () {
                 const newItem = Object.assign({}, action.vaccineHistory);
-                const newState1 = Object.assign({}, state)
+                const newState1 = Object.assign({}, state);
 
                 const vaccineHistory = [...newState1.vaccineHistory];
 
-                const vaccineHistoryNew = vaccineHistory.filter(item => { return (item.vaccineID !== newItem.vaccineID) })
+                const vaccineHistoryNew = vaccineHistory.filter(item => { return (item.vaccineID !== newItem.vaccineID); });
                 vaccineHistoryNew.push(newItem);
 
                 const newState = Object.assign({}, state, {
@@ -843,12 +838,12 @@ export const reducer: Reducer<CaseState> = (state: CaseState = unloadedState, in
                 });
                 return newState;
             })();
-        case "DELETE_VACCINEHIST_FOR_CASE":
+        case 'DELETE_VACCINEHIST_FOR_CASE':
             return (function () {
 
-                const newState1 = Object.assign({}, state)
+                const newState1 = Object.assign({}, state);
                 const vaccineHistory = [...newState1.vaccineHistory];
-                const vaccineHistoryNew = vaccineHistory.filter(item => { return (item.vaccineID !== action.vaccineID) })
+                const vaccineHistoryNew = vaccineHistory.filter(item => { return (item.vaccineID !== action.vaccineID); });
 
                 const newState = Object.assign({}, state, {
                     vaccineHistory: [...vaccineHistoryNew]
@@ -862,4 +857,4 @@ export const reducer: Reducer<CaseState> = (state: CaseState = unloadedState, in
     }
 
     return state || unloadedState;
-}
+};

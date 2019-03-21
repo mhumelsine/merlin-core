@@ -21,7 +21,7 @@ type SearchFormProps = {
     onSubmit: (e: any) => void;
 } & typeof ElrSearchActions;
 
-class SearchForm extends React.Component<SearchFormProps>{
+class SearchForm extends React.Component<SearchFormProps> {
 
     state = {
         error: {}
@@ -51,24 +51,24 @@ class SearchForm extends React.Component<SearchFormProps>{
         return <form onSubmit={onSubmit}>
             <div className="row">
                 <TextInput
-                    name='patientLastName'
-                    label='Last Name'
+                    name="patientLastName"
+                    label="Last Name"
                     value={basicSearch.patientLastName}
                     hideLabel={false}
                     cols={3}
                     onChange={this.onChange}
                 />
                 <TextInput
-                    name='patientFirstName'
-                    label='First Name'
+                    name="patientFirstName"
+                    label="First Name"
                     value={basicSearch.patientFirstName}
                     hideLabel={false}
                     cols={3}
                     onChange={this.onChange}
                 />
                 <CustomDatePicker
-                    name='patientDOB'
-                    label='Date of Birth'
+                    name="patientDOB"
+                    label="Date of Birth"
                     hideLabel={false}
                     value={basicSearch.patientDOB}
                     cols={2}
@@ -91,13 +91,13 @@ class SearchForm extends React.Component<SearchFormProps>{
             </div>
             <div className="row">
                 <TextInput
-                    name='specimenID'
-                    label='Accession #'
+                    name="specimenID"
+                    label="Accession #"
                     value={basicSearch.specimenID}
                     hideLabel={false}
                     cols={6}
                     onChange={this.onChange}
-                /> 
+                />
                 <Secure requireClaim={ClaimType.role} requireClaimValue={[Role.Admin]}>
                     <TemplateDropdown />
                 </Secure>
@@ -108,15 +108,15 @@ class SearchForm extends React.Component<SearchFormProps>{
             <div className="row">
                 <div className="col-md-12 text-right">
                     <div className="d-flex justify-content-between">
-                        <button className="btn btn-sm btn-link text-capitalize" type='button' onClick={addCriteria}>
+                        <button className="btn btn-sm btn-link text-capitalize" type="button" onClick={addCriteria}>
                             <FaPlus fontSize={8} /> Add Search Criteria
                         </button>
                         <div>
-                            <SearchButton isSubmit={true} iconFontSize={iconsize} className={"btn-primary"} />
-                            {" "}
+                            <SearchButton isSubmit={true} iconFontSize={iconsize} className={'btn-primary'} />
+                            {' '}
                             <button className={'btn btn-outline-dark'} type="button" onClick={clearSearch} >
                                 {<FaEraser fontSize={iconsize} style={{ verticalAlign: 'bottom' }} />} Clear
-                            </button>                            
+                            </button>
                         </div>
                     </div>
                 </div>
