@@ -23,24 +23,18 @@ type QuestionTypeControlProps =
     & typeof CodeStore.actionCreators;
 
 class QuestionTypeControl extends React.Component<QuestionTypeControlProps, {}> {
-    constructor(props: QuestionTypeControlProps) {
-        super(props);
-    }
     state = {
         isLoading: defaults.boolean,
         loadFailed: false
     };
+    constructor(props: QuestionTypeControlProps) {
+        super(props);
+    }
 
     public componentWillMount() {
         this.setState({ isLoading: true });
         this.props.loadDropdown(CodeStore.CodeType.questionType, this.props.history);
         this.props.loadDropdown(CodeStore.CodeType.distinctCodeType, this.props.history);
-    }
-
-    private getCodeOptions(options: any[]) {
-        return options.map(option => {
-            return { label: option.description, value: option.code }
-        });
     }
 
     public componentWillReceiveProps(newProps: any) {
@@ -57,7 +51,7 @@ class QuestionTypeControl extends React.Component<QuestionTypeControlProps, {}> 
         this.setState(newState);
     }
     public render() {
-        const { questionType, codeType, isReadOnly, codes, onChange, errors } = this.props
+        const { questionType, codeType, isReadOnly, codes, onChange, errors } = this.props;
         const { questionTypeInput, questionCodeTypeInput } = defaults.inputs.dropdowns;
 
         if (this.state.isLoading) {
@@ -98,14 +92,20 @@ class QuestionTypeControl extends React.Component<QuestionTypeControlProps, {}> 
                     />
                 }
             </div>
-        </div>
+        </div>;
+    }
+
+    private getCodeOptions(options: any[]) {
+        return options.map(option => {
+            return { label: option.description, value: option.code };
+        });
     }
 }
 export default connect(
     (state: ApplicationState) => {
         return {
             codes: state.codes.codes
-        }
+        };
     },
     CodeStore.actionCreators
 )(QuestionTypeControl);

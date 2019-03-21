@@ -13,7 +13,7 @@ type AdvancedSearchCriteriaProps = {
 }
     & typeof actionCreators;
 
-class AdvancedSearchCriteria extends React.Component<AdvancedSearchCriteriaProps>{
+class AdvancedSearchCriteria extends React.Component<AdvancedSearchCriteriaProps> {
 
     constructor(props: AdvancedSearchCriteriaProps) {
         super(props);
@@ -21,52 +21,30 @@ class AdvancedSearchCriteria extends React.Component<AdvancedSearchCriteriaProps
         this.onRemove = this.onRemove.bind(this);
     }
 
-    private onChange(name: string, value: any) {
-        const { columnInfo, updateCriteria } = this.props;
-        const criteria = Object.assign({}, this.props.criteria) as any;
-        
-        criteria[name] = value;
-        
-        if (name === 'fqColumnName' && (value !== '')) {            
-            criteria.dataType = columnInfo.filter(info => info.fqColumnName === value)[0].dataType;
-        }
-
-        if (criteria.operator === 'LIKE') {
-            criteria.value = `%${criteria.value}%`;
-        }
-
-        updateCriteria(criteria);
-    }
-
-    private onRemove() {
-        const { criteria, removeCriteria } = this.props;
-        removeCriteria(criteria);
-    }
-
     public render() {
 
         const { criteria, columnInfo } = this.props;
 
         const options = columnInfo.map(info => {
-            return { label: info.columnName, value: info.fqColumnName }
+            return { label: info.columnName, value: info.fqColumnName };
         });
 
         const stringOperators = [
-            { label: "=", value: "=" },
-            { label: "CONTAINS", value: "LIKE" },
-            { label: "<>", value: "<>" }
+            { label: '=', value: '=' },
+            { label: 'CONTAINS', value: 'LIKE' },
+            { label: '<>', value: '<>' }
         ];
 
         const standardOperators = [
-            { label: "=", value: "=" },
-            { label: ">", value: ">" },
-            { label: ">=", value: ">=" },
-            { label: "<", value: "<" },
-            { label: "<=", value: "<=" },
-            { label: "<>", value: "<>" }
+            { label: '=', value: '=' },
+            { label: '>', value: '>' },
+            { label: '>=', value: '>=' },
+            { label: '<', value: '<' },
+            { label: '<=', value: '<=' },
+            { label: '<>', value: '<>' }
         ];
 
-        
+
 
         const operators = criteria.dataType == 'string' ? stringOperators : standardOperators;
 
@@ -78,7 +56,7 @@ class AdvancedSearchCriteria extends React.Component<AdvancedSearchCriteriaProps
                 name="fqColumnName"
                 value={criteria.fqColumnName}
                 options={options}
-                placeholder={""}                
+                placeholder={''}
                 onChange={this.onChange}
                 isMulti={false}
                 isReadOnly={false}
@@ -96,7 +74,7 @@ class AdvancedSearchCriteria extends React.Component<AdvancedSearchCriteriaProps
             <TextInput
                 name="value"
                 label="Value"
-                value={criteria.value.replace(/%/g, "")}
+                value={criteria.value.replace(/%/g, '')}
                 cols={4}
                 onChange={this.onChange}
             />
@@ -105,6 +83,28 @@ class AdvancedSearchCriteria extends React.Component<AdvancedSearchCriteriaProps
                 <DeleteButton confirmationText="Remove Condition?" onClick={this.onRemove} buttonText=" " />
             </div>
         </div>;
+    }
+
+    private onChange(name: string, value: any) {
+        const { columnInfo, updateCriteria } = this.props;
+        const criteria = Object.assign({}, this.props.criteria) as any;
+
+        criteria[name] = value;
+
+        if (name === 'fqColumnName' && (value !== '')) {
+            criteria.dataType = columnInfo.filter(info => info.fqColumnName === value)[0].dataType;
+        }
+
+        if (criteria.operator === 'LIKE') {
+            criteria.value = `%${criteria.value}%`;
+        }
+
+        updateCriteria(criteria);
+    }
+
+    private onRemove() {
+        const { criteria, removeCriteria } = this.props;
+        removeCriteria(criteria);
     }
 }
 export default connect(

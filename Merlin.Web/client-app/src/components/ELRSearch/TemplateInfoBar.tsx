@@ -19,7 +19,7 @@ type TemplateInfoBarProps = {
     type: string
 } & typeof ElrSearchActions;
 
-class TemplateInfoBar extends React.Component<TemplateInfoBarProps>{
+class TemplateInfoBar extends React.Component<TemplateInfoBarProps> {
 
     state = {
         errors: {} as any,
@@ -38,8 +38,8 @@ class TemplateInfoBar extends React.Component<TemplateInfoBarProps>{
 
     public componentWillReceiveProps(newProps: TemplateInfoBarProps) {
 
-        const { name, id, type } = newProps
-        const isMasterTemplate = (type == TemplateType.master)
+        const { name, id, type } = newProps;
+        const isMasterTemplate = (type == TemplateType.master);
 
         if (id == 0)
             this.setState({
@@ -55,58 +55,22 @@ class TemplateInfoBar extends React.Component<TemplateInfoBarProps>{
             });
     }
 
-    private onChange(name: string, newValue: any) {
-        const newState = Object.assign({}, this.state) as any;
-        newState[name] = newValue;
-        this.setState(newState);
-    }
-
-    private async onRemove() {
-       await this.props.deleteTemplate();
-        toast.success(" Deleted Successfully");
-    }
-
-    private async onSave(event: any) {
-        event.preventDefault();
-
-        this.setState({ loading: true });
-
-        try {
-            const { name, isMasterTemplate } = this.state
-            const type = (isMasterTemplate == true) ? TemplateType.master : TemplateType.user;
- 
-            await this.props.saveTemplate(name, this.props.id, type);
-            toast.success(" Saved Successfully");
-            await this.props.loadTemplates();
-
-        }
-        catch (errors) {
-            const keys = Object.keys(errors);
-            if (keys.length > 0) {
-                keys.map(key => errors[key].map((error: string) => toast.error(error)));
-            }
-        } finally {
-            this.setState({ loading: false });
-        }
-
-    }
-
     public render() {
-        const { name, id, isMasterTemplate, loading } = this.state
+        const { name, id, isMasterTemplate, loading } = this.state;
 
-        if (isNullOrEmpty(this.props.name)) return "";
+        if (isNullOrEmpty(this.props.name)) return '';
 
         return <Alert alertType="info">
 
             <div className="row justify-content-between">
                 <TextInput
-                    name='name'
-                    label='Template Name'
+                    name="name"
+                    label="Template Name"
                     value={name}
                     hideLabel={true}
                     cols={4}
                     onChange={this.onChange}
-                    placeholder={"Enter Template Name"}
+                    placeholder={'Enter Template Name'}
                 />
 
                 <Secure requireClaim={ClaimType.role} requireClaimValue={[Role.Admin]}>
@@ -115,8 +79,8 @@ class TemplateInfoBar extends React.Component<TemplateInfoBarProps>{
                         <span> Master? &nbsp;</span>
 
                         <YesNo
-                            name={"isMasterTemplate"}
-                            label={""}
+                            name={'isMasterTemplate'}
+                            label={''}
                             value={isMasterTemplate}
                             hideLabel={true}
                             isBoolean={true}
@@ -128,12 +92,47 @@ class TemplateInfoBar extends React.Component<TemplateInfoBarProps>{
                 <SaveDeleteButton
                     saveOnClick={this.onSave}
                     deleteOnClick={this.onRemove}
-                    deleteDisabled={id == 0}   
+                    deleteDisabled={id == 0}
                     saveDisabled={loading}
                     saveButtonText={loading ? 'Saving...' : 'Save'}
                 />
             </div>
-        </Alert>
+        </Alert>;
+    }
+
+    private onChange(name: string, newValue: any) {
+        const newState = Object.assign({}, this.state) as any;
+        newState[name] = newValue;
+        this.setState(newState);
+    }
+
+    private async onRemove() {
+       await this.props.deleteTemplate();
+       toast.success(' Deleted Successfully');
+    }
+
+    private async onSave(event: any) {
+        event.preventDefault();
+
+        this.setState({ loading: true });
+
+        try {
+            const { name, isMasterTemplate } = this.state;
+            const type = (isMasterTemplate == true) ? TemplateType.master : TemplateType.user;
+
+            await this.props.saveTemplate(name, this.props.id, type);
+            toast.success(' Saved Successfully');
+            await this.props.loadTemplates();
+
+        } catch (errors) {
+            const keys = Object.keys(errors);
+            if (keys.length > 0) {
+                keys.map(key => errors[key].map((error: string) => toast.error(error)));
+            }
+        } finally {
+            this.setState({ loading: false });
+        }
+
     }
 
 }

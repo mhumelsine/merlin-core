@@ -12,21 +12,13 @@ type NoteListItemProps = {
 }
     & typeof OutbreakActions;
 
-class NoteListItem extends React.Component<NoteListItemProps>{
+class NoteListItem extends React.Component<NoteListItemProps> {
 
     constructor(props: NoteListItemProps) {
         super(props);
 
         this.onEdit = this.onEdit.bind(this);
         this.onDelete = this.onDelete.bind(this);
-    }
-
-    private onEdit(event: any) {
-        this.props.selectNoteEdit(event.currentTarget.name);
-    }
-
-    private onDelete(event: any) {
-        this.props.deleteNote(event.currentTarget.name);
     }
 
     public render() {
@@ -37,8 +29,8 @@ class NoteListItem extends React.Component<NoteListItemProps>{
             <td data-title="Note Type">{note.noteType}</td>
             <td data-title="Note">{note.note}</td>
             <td data-title="Date Added">{note.dateAdded}</td>
-            <td data-title="Author Name">{note.authorName}</td>            
-            <td className="d-flex justify-content-end" style={{ minWidth: "75px" }}>
+            <td data-title="Author Name">{note.authorName}</td>
+            <td className="d-flex justify-content-end" style={{ minWidth: '75px' }}>
                 <button
                     name={note.eventId}
                     type="button"
@@ -56,6 +48,14 @@ class NoteListItem extends React.Component<NoteListItemProps>{
                 />
             </td>
         </tr>;
+    }
+
+    private onEdit(event: any) {
+        this.props.selectNoteEdit(event.currentTarget.name);
+    }
+
+    private onDelete(event: any) {
+        this.props.deleteNote(event.currentTarget.name);
     }
 }
 

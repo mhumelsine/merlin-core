@@ -18,17 +18,6 @@ interface TagInputProps {
 
 class TagInput extends React.Component<TagInputProps> {
 
-    private onChange(newValue: any) {
-        let value: any = '';
-
-        if (newValue) {
-            const values = newValue.split(',');
-            value = this.props.multi ? values : values[0];
-        }
-
-        this.props.onChange(this.props.name, value);
-    }
-
 
     public render() {
         const { name, label, placeholder, value, onChange, cols, multi, isReadOnly, options, inputRef } = this.props;
@@ -44,6 +33,17 @@ class TagInput extends React.Component<TagInputProps> {
             isMulti={multi}
             isDisabled={isReadOnly}
         />;
+    }
+
+    private onChange(newValue: any) {
+        let value: any = '';
+
+        if (newValue) {
+            const values = newValue.split(',');
+            value = this.props.multi ? values : values[0];
+        }
+
+        this.props.onChange(this.props.name, value);
     }
 }
 

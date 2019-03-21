@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { connect } from 'react-redux'; 
-import Dropdown from '../common/Dropdown'; 
+import { connect } from 'react-redux';
+import Dropdown from '../common/Dropdown';
 import ErrorSummary from '../common/ErrorSummary';
 import { defaults } from '../../utils/Global';
 import Loading from '../common/Loading';
@@ -11,51 +11,51 @@ import { getOptions } from '../../utils/UIUtils';
 
 type SurveyTypeControlProps =
     {
-        onChange: (name: string, newValue: any) => any; 
+        onChange: (name: string, newValue: any) => any;
         surveyType: any;
         icd9Codes: any;
         outbreakIds: any;
-        isMulti: boolean; 
+        isMulti: boolean;
     }
     & CodeStore.CodeState
     & typeof CodeStore.actionCreators;
 
 class SurveyTypeControl extends React.Component<SurveyTypeControlProps, {}> {
-    constructor(props: SurveyTypeControlProps) {
-        super(props); 
-    }
     state = {
         isLoading: defaults.boolean,
         errors: {} as any
     };
+    constructor(props: SurveyTypeControlProps) {
+        super(props);
+    }
 
     public async componentWillMount() {
         this.setState({ isLoading: true });
-        try{
+        try {
                 this.props.loadDropdown(CodeStore.CodeType.surveyType);
                 this.props.loadDropdown(CodeStore.CodeType.icd9);
                 this.props.loadDropdown(CodeStore.CodeType.outbreak);
-        }catch(errors){
+        } catch (errors) {
             this.setState({errors: errors});
-        } 
-    } 
- 
+        }
+    }
+
     public componentWillReceiveProps(newProps: any) {
         if (!newProps.loadFailed) {
             this.setState({ isLoading: false });
-        } 
+        }
     }
-    
+
     public render() {
-        const { isLoading } = this.state
+        const { isLoading } = this.state;
         const { codes, isMulti, surveyType, icd9Codes, outbreakIds, onChange } = this.props;
-        const { surveyTypeInput, outbreakInput, diseaseCodeInput } = defaults.inputs.dropdowns
+        const { surveyTypeInput, outbreakInput, diseaseCodeInput } = defaults.inputs.dropdowns;
 
         if (isLoading) {
             return <Loading />;
         }
 
-        return <div> 
+        return <div>
             <Dropdown
                 label={surveyTypeInput.label}
                 hideLabel={false}
@@ -63,7 +63,7 @@ class SurveyTypeControl extends React.Component<SurveyTypeControlProps, {}> {
                 value={surveyType}
                 options={getOptions(codes.DYN_SURVEY_TYPE)}
                 placeholder={surveyTypeInput.placeholder}
-                onChange={onChange}  
+                onChange={onChange}
             />
             {(surveyType != defaults.string &&
                 diseaseSurveyTypesArray.indexOf(surveyType) >= 0) &&
@@ -75,7 +75,7 @@ class SurveyTypeControl extends React.Component<SurveyTypeControlProps, {}> {
                     options={getOptions(codes.ICD9)}
                     placeholder={diseaseCodeInput.placeholder}
                     onChange={onChange}
-                    isMulti={isMulti} 
+                    isMulti={isMulti}
                 />
             }
             {(surveyType != defaults.string &&
@@ -88,10 +88,10 @@ class SurveyTypeControl extends React.Component<SurveyTypeControlProps, {}> {
                     options={getOptions(codes.OUTBREAK)}
                     placeholder={outbreakInput.placeholder}
                     onChange={onChange}
-                    isMulti={isMulti} 
+                    isMulti={isMulti}
                 />
             }
-        </div>
+        </div>;
     }
 }
 export default connect(

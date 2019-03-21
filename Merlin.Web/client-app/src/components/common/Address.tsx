@@ -60,69 +60,10 @@ class Address extends React.Component<AddressProps> {
         }
     }
 
-    private async onChange(name: string, value: any) {
-        const newAddress = Object.assign({}, this.props.address);
-
-        newAddress[name] = value;
-
-        if (name === "zip" && value.length >= 5) {
-            const addresses = await AjaxUtils.get(`api/Address/${value.substring(0, 5)}`);
-
-            if (addresses.length === 1) {
-                const address = addresses[0];
-
-                newAddress.city = address.city || "";
-                newAddress.county = address.county || "";
-                newAddress.state = address.state || "";
-                newAddress.zip = address.zip || "";
-                newAddress.country = address.country || "USA";
-            }
-
-            if (addresses.length > 1) {
-                //show picker
-                this.setState({ addressesToChoose: addresses });
-            }
-        }
-
-        if (name === "country" && value !== "USA") {
-            newAddress.addressLine1 = "";
-            newAddress.addressLine2 = "";
-            newAddress.city = "";
-            newAddress.county = "";
-            newAddress.state = "";
-            newAddress.zip = "";
-        }
-
-        this.props.onChange(this.props.name, newAddress);
-    }
-
-    private onSelectAddress(name: string, value: any) {
-        const newAddress = Object.assign({}, this.props.address);
-
-        const addresses = this.state.addressesToChoose
-            .filter(a => this.createAddressKey(a) === value);
-
-        const address = addresses[0];
-
-        newAddress.city = address.city || "";
-        newAddress.county = address.county || "";
-        newAddress.state = address.state || "";
-        newAddress.zip = address.zip || "";
-        newAddress.country = address.country || "USA";
-
-        this.setState({ addressesToChoose: [] });
-
-        this.props.onChange(this.props.name, newAddress);
-    }
-
-    private createAddressKey(address: any) {
-        return `${address.zip}: ${address.county} - ${address.city}, ${address.state}`;
-    }
-
     public render() {
         const { codes, isReadOnly, address, errors } = this.props;
         const { loading, addressesToChoose } = this.state;
-        const showControl = (address.country === "USA" || !address.country);
+        const showControl = (address.country === 'USA' || !address.country);
 
         if (loading) {
             return <Loading />;
@@ -138,7 +79,7 @@ class Address extends React.Component<AddressProps> {
                         return {
                             label: this.createAddressKey(a),
                             value: this.createAddressKey(a)
-                        }
+                        };
                     })}
                     onChange={this.onSelectAddress}
                     isVertical={true}
@@ -225,12 +166,71 @@ class Address extends React.Component<AddressProps> {
             />
         </div>;
     }
+
+    private async onChange(name: string, value: any) {
+        const newAddress = Object.assign({}, this.props.address);
+
+        newAddress[name] = value;
+
+        if (name === 'zip' && value.length >= 5) {
+            const addresses = await AjaxUtils.get(`api/Address/${value.substring(0, 5)}`);
+
+            if (addresses.length === 1) {
+                const address = addresses[0];
+
+                newAddress.city = address.city || '';
+                newAddress.county = address.county || '';
+                newAddress.state = address.state || '';
+                newAddress.zip = address.zip || '';
+                newAddress.country = address.country || 'USA';
+            }
+
+            if (addresses.length > 1) {
+                // show picker
+                this.setState({ addressesToChoose: addresses });
+            }
+        }
+
+        if (name === 'country' && value !== 'USA') {
+            newAddress.addressLine1 = '';
+            newAddress.addressLine2 = '';
+            newAddress.city = '';
+            newAddress.county = '';
+            newAddress.state = '';
+            newAddress.zip = '';
+        }
+
+        this.props.onChange(this.props.name, newAddress);
+    }
+
+    private onSelectAddress(name: string, value: any) {
+        const newAddress = Object.assign({}, this.props.address);
+
+        const addresses = this.state.addressesToChoose
+            .filter(a => this.createAddressKey(a) === value);
+
+        const address = addresses[0];
+
+        newAddress.city = address.city || '';
+        newAddress.county = address.county || '';
+        newAddress.state = address.state || '';
+        newAddress.zip = address.zip || '';
+        newAddress.country = address.country || 'USA';
+
+        this.setState({ addressesToChoose: [] });
+
+        this.props.onChange(this.props.name, newAddress);
+    }
+
+    private createAddressKey(address: any) {
+        return `${address.zip}: ${address.county} - ${address.city}, ${address.state}`;
+    }
 }
 export default connect(
     (state: ApplicationState) => {
         return {
             codes: state.codes.codes
-        }
+        };
     },
     CodeActions
 )(Address);

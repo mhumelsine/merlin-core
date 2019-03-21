@@ -1,4 +1,4 @@
-import * as React from 'react'; 
+import * as React from 'react';
 import TextInput from '../../common/TextInput';
 import * as LayoutStore from '../../../store/Layout';
 import { defaults } from '../../../utils/Global';
@@ -9,24 +9,24 @@ import SingleSelectListGroup from '../../common/SingleSelectListGroup';
 import SaveButton from '../../common/SaveButton';
 
 interface MessageFormProps {
-    saveLayoutItem: (parentId:string, item: LayoutStore.LayoutItem) => void;
+    saveLayoutItem: (parentId: string, item: LayoutStore.LayoutItem) => void;
     layoutItem: LayoutStore.LayoutItem;
     parentId: string;
-};
+}
 
 export default class MessageForm extends React.Component<MessageFormProps> {
     state = {
-        message:this.props.layoutItem,
+        message: this.props.layoutItem,
         messageTypes: [
-            { "value": LayoutStore.messageType.light, "label": 'Default' },
-            { "value": LayoutStore.messageType.info, "label": 'Info' },
-            { "value": LayoutStore.messageType.warning, "label": 'Warning' },
-            { "value": LayoutStore.messageType.danger, "label": 'Danger' },
-            { "value": LayoutStore.messageType.success, "label": 'Success' }],
+            { 'value': LayoutStore.messageType.light, 'label': 'Default' },
+            { 'value': LayoutStore.messageType.info, 'label': 'Info' },
+            { 'value': LayoutStore.messageType.warning, 'label': 'Warning' },
+            { 'value': LayoutStore.messageType.danger, 'label': 'Danger' },
+            { 'value': LayoutStore.messageType.success, 'label': 'Success' }],
         error: defaults.string
     };
     constructor(props: any) {
-        super(props); 
+        super(props);
 
         this.onSave = this.onSave.bind(this);
         this.onEdit = this.onEdit.bind(this);
@@ -37,39 +37,12 @@ export default class MessageForm extends React.Component<MessageFormProps> {
         this.setState({ message: nextProps.layoutItem });
     }
 
-    private onEdit(parentId: string, itemId: string) {
-        //nothing
-    }
-
-    private onChange(name: string, value: string) {
-        let message = Object.assign({}, this.state.message) as any;
-
-        message[name] = value;
-
-        this.setState({ message });
-    }
-   
-    private onSave(e: any) {
-        e.preventDefault();
-
-        const { message } = this.state;
-
-        if (utils.isNullOrEmpty(message.text)) {
-            this.setState({
-                error: "Message Text is required"
-            });
-            return;
-        }
-
-        this.props.saveLayoutItem(this.props.parentId, message);
-    }
-    
     public render() {
         const { error, message } = this.state;
         const { text, width, messageType } = this.state.message;
-        const { messageTextInput } = defaults.inputs.textInputs
-        const { messageWidthInput } = defaults.inputs.rangeSliders
-        const { messageTypeInput } = defaults.inputs.singleSelectListGroups
+        const { messageTextInput } = defaults.inputs.textInputs;
+        const { messageWidthInput } = defaults.inputs.rangeSliders;
+        const { messageTypeInput } = defaults.inputs.singleSelectListGroups;
 
         return <div>
             <form>
@@ -103,6 +76,33 @@ export default class MessageForm extends React.Component<MessageFormProps> {
 
             <h4 className="text-center">Preview</h4>
             <Message parentId="empty" item={message} onEdit={this.onEdit} />
-        </div>;      
+        </div>;
+    }
+
+    private onEdit(parentId: string, itemId: string) {
+        // nothing
+    }
+
+    private onChange(name: string, value: string) {
+        let message = Object.assign({}, this.state.message) as any;
+
+        message[name] = value;
+
+        this.setState({ message });
+    }
+
+    private onSave(e: any) {
+        e.preventDefault();
+
+        const { message } = this.state;
+
+        if (utils.isNullOrEmpty(message.text)) {
+            this.setState({
+                error: 'Message Text is required'
+            });
+            return;
+        }
+
+        this.props.saveLayoutItem(this.props.parentId, message);
     }
 }

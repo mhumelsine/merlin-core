@@ -3,11 +3,11 @@
 
 interface AccordionProps {
     defaultPanelHeading?: string;
-};
+}
 
 export default class Accordion extends React.Component<AccordionProps> {
     state = {
-        activePanel: ""
+        activePanel: ''
     };
 
     constructor(props: AccordionProps) {
@@ -20,7 +20,7 @@ export default class Accordion extends React.Component<AccordionProps> {
 
     public componentWillMount() {
         const { defaultPanelHeading } = this.props;
-        this.setState({ activePanel: defaultPanelHeading || "" });
+        this.setState({ activePanel: defaultPanelHeading || '' });
     }
 
     public componentDidUpdate(prevProps: AccordionProps) {
@@ -32,6 +32,25 @@ export default class Accordion extends React.Component<AccordionProps> {
         }
     }
 
+    public render() {
+        const children = React.Children.toArray(this.props.children);
+        const { activePanel } = this.state;
+
+        return <div className="accordion">
+            {
+                children.map((child, index) =>
+                    React.cloneElement(child as any,
+                                       {
+                            isActive: this.isActive,
+                            onClick: this.onClick,
+                            onClickNext: this.onClickNext,
+                            next: this.getHeading(children, index),
+                            isLastChild: index === children.length - 1
+                        }))
+            }
+        </div>;
+    }
+
     private isActive(panelName: string): boolean {
         return this.state.activePanel === panelName;
     }
@@ -39,7 +58,7 @@ export default class Accordion extends React.Component<AccordionProps> {
     private onClick(e: any) {
         e.preventDefault();
         if (this.state.activePanel === e.currentTarget.name)
-            this.setState({ activePanel: "" });
+            this.setState({ activePanel: '' });
         else {
             this.setState({ activePanel: e.currentTarget.name });
         }
@@ -60,24 +79,5 @@ export default class Accordion extends React.Component<AccordionProps> {
         }
 
         return null;
-    }
-
-    public render() {
-        const children = React.Children.toArray(this.props.children);
-        const { activePanel } = this.state;
-
-        return <div className="accordion">
-            {
-                children.map((child, index) =>
-                    React.cloneElement(child as any,
-                        {
-                            isActive: this.isActive,
-                            onClick: this.onClick,
-                            onClickNext: this.onClickNext,
-                            next: this.getHeading(children, index),
-                            isLastChild: index === children.length - 1
-                        }))
-            }
-        </div>;
     }
 }

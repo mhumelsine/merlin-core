@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { RouteComponentProps, Link } from "react-router-dom";
+import { RouteComponentProps, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { ApplicationState } from '../../../store';
 import * as LayoutStore from '../../../store/Layout';
@@ -20,11 +20,6 @@ type AffectedLayoutListProps =
     & typeof LayoutStore.actionCreators;
 
 class AffectedLayoutList extends React.Component<AffectedLayoutListProps, {}> {
-    private movePage(page: number) {
-        const { questionId } = this.props;
-
-        this.props.requestAffectedLayouts(questionId, page, this.props.history);
-    }
 
     public render() {
         const { affectedLayouts } = this.props;
@@ -45,13 +40,18 @@ class AffectedLayoutList extends React.Component<AffectedLayoutListProps, {}> {
             }
         </ul>;
     }
+    private movePage(page: number) {
+        const { questionId } = this.props;
+
+        this.props.requestAffectedLayouts(questionId, page, this.props.history);
+    }
 }
 
 const pagedLayoutList = PagedList(AffectedLayoutList,
-    "Affected Layouts",
-    (props: any) => props.isLoading,
-    (props: any) => props.affectedLayouts.paging,
-    (props: any) => {
+                                  'Affected Layouts',
+                                  (props: any) => props.isLoading,
+                                  (props: any) => props.affectedLayouts.paging,
+                                  (props: any) => {
         const { questionId } = props;
         return (page: number) => props.requestAffectedLayouts(questionId, page);
     });

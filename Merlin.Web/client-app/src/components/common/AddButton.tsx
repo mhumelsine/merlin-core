@@ -2,14 +2,13 @@
 import { FaPlus } from 'react-icons/fa';
 import { defaults } from '../../utils/Global';
 
-type AddButtonProps =
-    {
+type AddButtonProps = {
         onClick?: any;
         iconFontSize?: number;
         buttonText?: string;
         className?: string;
         disabled?: boolean;
-    }
+    };
 
 export default class AddButton extends React.Component<AddButtonProps, {}> {
     public render() {
@@ -20,7 +19,7 @@ export default class AddButton extends React.Component<AddButtonProps, {}> {
         const disableAdd = this.props.disabled || defaults.boolean;
 
         return <button type="button" className={`${defaults.theme.buttons.class} ${className}`} onClick={onClick} disabled={disableAdd}>
-            <FaPlus fontSize={iconFontSize} style={{ verticalAlign: 'bottom' }} />{" "}{buttonText}
+            <FaPlus fontSize={iconFontSize} style={{ verticalAlign: 'bottom' }} />{' '}{buttonText}
         </button>;
     }
 }

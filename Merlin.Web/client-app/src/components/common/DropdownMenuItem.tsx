@@ -14,16 +14,6 @@ export default class DropdownMenuItem extends React.Component<DropdownMenuItemPr
         this.onClick = this.onClick.bind(this);
     }
 
-    private onClick(event: any) {
-        const { onClick, onMenuItemClicked } = this.props;
-
-        onClick(event);
-
-        if (onMenuItemClicked) {
-            onMenuItemClicked(event);
-        }
-    }
-
     public render() {
         const {children, visible } = this.props;
         if (visible !== undefined && !visible)
@@ -35,5 +25,15 @@ export default class DropdownMenuItem extends React.Component<DropdownMenuItemPr
             onClick={this.onClick}>
             {this.props.children}
         </button>;
+    }
+
+    private onClick(event: any) {
+        const { onClick, onMenuItemClicked } = this.props;
+
+        onClick(event);
+
+        if (onMenuItemClicked) {
+            onMenuItemClicked(event);
+        }
     }
 }

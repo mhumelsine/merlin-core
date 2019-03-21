@@ -24,21 +24,13 @@ class CaseReview extends React.Component<CaseReviewProps> {
         this.onChange = this.onChange.bind(this);
     }
 
-    private onChange(name: string, value: any) {
-        const caseReview = Object.assign({}, this.props.caseReview) as any;
-
-        caseReview[name] = value;
-
-        this.props.updateCaseReview(caseReview);
-    }
-
     public async componentDidMount() {
         const { loadCaseReview, loadDropdown } = this.props;
 
         try {
             this.setState({ loading: true });
             await loadCaseReview();
-            await loadDropdown(CodeType.reviewStatus)
+            await loadDropdown(CodeType.reviewStatus);
         } catch (err) {
             console.log(err);
         } finally {
@@ -47,11 +39,11 @@ class CaseReview extends React.Component<CaseReviewProps> {
     }
 
     public render() {
-        const { errors, caseReview, codes } = this.props
+        const { errors, caseReview, codes } = this.props;
 
         return <div>
 
-            {caseReview.reviewStatus !== "NOT SUBMITTED" &&
+            {caseReview.reviewStatus !== 'NOT SUBMITTED' &&
                 <div className="row">
                     <StaticInput
                         name="reviewedOn"
@@ -98,8 +90,16 @@ class CaseReview extends React.Component<CaseReviewProps> {
                     error={errors.comments}
                 />
             </div>
-        </div>
+        </div>;
 
+    }
+
+    private onChange(name: string, value: any) {
+        const caseReview = Object.assign({}, this.props.caseReview) as any;
+
+        caseReview[name] = value;
+
+        this.props.updateCaseReview(caseReview);
     }
 }
 export default connect(

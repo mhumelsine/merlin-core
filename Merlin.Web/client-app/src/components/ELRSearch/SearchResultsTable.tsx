@@ -26,13 +26,13 @@ class SearchResultsTable extends React.Component<SearchResultsTableProps> {
     state = {
         forceImportVisable: false,
         assignElrVisable: false
-    }
+    };
     constructor(props: SearchResultsTableProps) {
         super(props);
         this.onRefilter = this.onRefilter.bind(this);
         this.toggleForceImport = this.toggleForceImport.bind(this);
         this.toggleAssignElr = this.toggleAssignElr.bind(this);
-    };
+    }
 
     public async onRefilter(e: any) {
         e.preventDefault();
@@ -41,19 +41,19 @@ class SearchResultsTable extends React.Component<SearchResultsTableProps> {
         const errors = await refilter();
 
         createToast(errors, 'Save Successful.');
-    };
+    }
 
     public toggleForceImport() {
         const { forceImportVisable } = this.state;
 
         this.setState({ forceImportVisable: !forceImportVisable });
-    };
+    }
 
     public toggleAssignElr() {
         const { assignElrVisable } = this.state;
 
         this.setState({ assignElrVisable: !assignElrVisable });
-    };
+    }
 
     public render() {
 
@@ -70,7 +70,7 @@ class SearchResultsTable extends React.Component<SearchResultsTableProps> {
 
         return <div className="mt-3">
             <CardGroupCard heading="Search Results">
-                <div className="table-responsive" style={{ maxHeight: "600px" }}>
+                <div className="table-responsive" style={{ maxHeight: '600px' }}>
                     <table className="table table-sm table-mobile-compact sticky-headers mb-0">
                         <thead className="thead-light">
                             <tr>
@@ -130,7 +130,7 @@ export default connect(
             items: state.elrSearch.searchData,
             selectedObservationKeys: state.elrSearch.selectedObservationKeys,
             properties: state.elrSearch.columnProperties
-        }
+        };
     },
     actionCreators
 )(SearchResultsTable);

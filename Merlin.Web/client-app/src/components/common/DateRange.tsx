@@ -4,7 +4,7 @@ import CustomDatePicker from './CustomDatePicker';
 type DateRangeProps = {
     startDate: string;
     endDate: string;
-}
+};
 
 export default class DateRange extends React.Component<DateRangeProps> {
     public render() {

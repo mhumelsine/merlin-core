@@ -23,29 +23,14 @@ class EpiLinks extends React.Component<EpiLinksProps> {
         super(props);
     }
 
-    public componentWillReceiveProps(nextProps: EpiLinksProps){ 
-        if(nextProps.caseId !== this.state.caseId){
+    public componentWillReceiveProps(nextProps: EpiLinksProps) {
+        if (nextProps.caseId !== this.state.caseId) {
             this.loadData(nextProps.caseId);
         }
      }
 
     public async componentDidMount() {
         this.loadData(this.props.caseId);
-    }
-
-    private async loadData(caseId: number) {
-        const { loadEpiLinksForCase } = this.props;
-        try {
-            this.setState({ isLoading: true });
-            await loadEpiLinksForCase(caseId ? caseId : 0);
-        }
-        finally {
-            this.setState(
-                { 
-                    isLoading: false, 
-                    caseId: caseId
-                });
-        }
     }
 
     public render() {
@@ -55,13 +40,13 @@ class EpiLinks extends React.Component<EpiLinksProps> {
         if (isLoading) {
             return <Loading />;
         }
-    
+
         if (!epiLinks.length) {
             return <Alert alertType="warning">
                 No epiLinks found for Case# {caseId}
             </Alert>;
         }
-		return <div className="table-responsive-container">
+		      return <div className="table-responsive-container">
 			<div className="table-responsive">
 				<table className="table table-striped table-hover table-mobile-compact">
 					<thead>
@@ -80,6 +65,21 @@ class EpiLinks extends React.Component<EpiLinksProps> {
 				</table>
 			</div>
 		</div>;
+    }
+
+    private async loadData(caseId: number) {
+        const { loadEpiLinksForCase } = this.props;
+        try {
+            this.setState({ isLoading: true });
+            await loadEpiLinksForCase(caseId ? caseId : 0);
+        }
+        finally {
+            this.setState(
+                {
+                    isLoading: false,
+                    caseId: caseId
+                });
+        }
     }
 }
 

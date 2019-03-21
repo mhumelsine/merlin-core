@@ -10,28 +10,19 @@ type SurveyCollectionProps = {
     layoutUid: string,
     layout: Layout,
     onAnswersChanged: (answers: any) => void,
-    answers:any
+    answers: any
 }
     & typeof LayoutActions;
 
 class SurveyCollection extends React.Component<SurveyCollectionProps> {
     state = {
         loading: false
-    }
+    };
 
     constructor(props: SurveyCollectionProps) {
         super(props);
 
         this.onAnswerChanged = this.onAnswerChanged.bind(this);
-    }
-
-    private onAnswerChanged(name: string, value: any) {
-        const { onAnswersChanged, answers } = this.props;
-        const newAnswers = Object.assign({}, answers);
-
-        newAnswers[name] = value;
-
-        this.props.onAnswersChanged(newAnswers);
     }
 
     public async componentDidMount() {
@@ -62,6 +53,15 @@ class SurveyCollection extends React.Component<SurveyCollectionProps> {
             onAnswerChanged={this.onAnswerChanged}
             hideCaseInfoControl={true}
         />;
+    }
+
+    private onAnswerChanged(name: string, value: any) {
+        const { onAnswersChanged, answers } = this.props;
+        const newAnswers = Object.assign({}, answers);
+
+        newAnswers[name] = value;
+
+        this.props.onAnswersChanged(newAnswers);
     }
 }
 

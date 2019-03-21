@@ -8,24 +8,20 @@ type Props = {
     buttonShape?: string;
     disabled?: boolean;
     disabledMessage?: string;
-}
+};
 
 type State = {
     show: boolean;
-}
+};
 
 export default class DropDownForm extends React.Component<Props, State> {
 
-    state = { show: false }
+    state = { show: false };
 
     constructor(props: Props) {
         super(props);
 
         this.toggle = this.toggle.bind(this);
-    }
-
-    private toggle() {
-        this.setState({ show: !this.state.show })
     }
 
     public render() {
@@ -34,11 +30,11 @@ export default class DropDownForm extends React.Component<Props, State> {
         let { menuContextClass, buttonShape } = this.props;
 
         if (!menuContextClass) {
-            menuContextClass = "secondary";
+            menuContextClass = 'secondary';
         }
 
         if (!buttonShape) {
-            buttonShape = "round";
+            buttonShape = 'round';
         }
 
         return (
@@ -46,18 +42,22 @@ export default class DropDownForm extends React.Component<Props, State> {
                 <button className={`btn btn-${menuContextClass} btn-${buttonShape}`}
                     type="button"
                     aria-haspopup="true"
-                    aria-expanded={show ? "true" : "false"}
+                    aria-expanded={show ? 'true' : 'false'}
                     onClick={this.toggle}
-                    title={disabled ? disabledMessage || "" : title}
+                    title={disabled ? disabledMessage || '' : title}
                     disabled={disabled}
                 >
                     {menuText}
                 </button>
-                <div className={`dropdown-menu collapse ${show?"show":""} p-0 shadow rounded`}>
+                <div className={`dropdown-menu collapse ${show ? 'show' : ''} p-0 shadow rounded`}>
                     {this.props.children}
                 </div >
             </span>
-        )
+        );
+    }
+
+    private toggle() {
+        this.setState({ show: !this.state.show });
     }
 
 }

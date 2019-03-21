@@ -23,29 +23,14 @@ class Symptoms extends React.Component<SymptomProps> {
         super(props);
     }
 
-    public componentWillReceiveProps(nextProps: SymptomProps){ 
-        if(nextProps.caseId !== this.state.caseId){
+    public componentWillReceiveProps(nextProps: SymptomProps) {
+        if (nextProps.caseId !== this.state.caseId) {
             this.loadData(nextProps.caseId);
         }
      }
 
     public async componentDidMount() {
         this.loadData(this.props.caseId);
-    }
-
-    private async loadData(caseId: number){
-        const { loadSymptomsForCase } = this.props;
-        try {
-            this.setState({ isLoading: true });
-            await loadSymptomsForCase(caseId ? caseId : 0);
-        }
-        finally {
-            this.setState(
-                { 
-                    isLoading: false, 
-                    caseId: caseId
-                });
-        }
     }
 
     public render() {
@@ -72,13 +57,28 @@ class Symptoms extends React.Component<SymptomProps> {
                                 <th>Onset Date</th>
                                 <th>Time</th>
                             </tr>
-                        </thead>                    
+                        </thead>
                         <tbody>
                                 {symptoms.map(symptom => <SymptomItem key={symptom.symptomCode} symptom={symptom} />)}
                         </tbody>
                     </table>
                 </div>
-            </div>;       
+            </div>;
+    }
+
+    private async loadData(caseId: number) {
+        const { loadSymptomsForCase } = this.props;
+        try {
+            this.setState({ isLoading: true });
+            await loadSymptomsForCase(caseId ? caseId : 0);
+        }
+        finally {
+            this.setState(
+                {
+                    isLoading: false,
+                    caseId: caseId
+                });
+        }
     }
 }
 

@@ -1,5 +1,5 @@
 ﻿import * as React from 'react';
-import { RouteComponentProps } from "react-router-dom";
+import { RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { ApplicationState } from '../../../store';
 import * as SurveyStore from '../../../store/SurveySearch';
@@ -25,24 +25,12 @@ type QuestionListProps = {
 	className?: any;
 	fontSize?: FontSize;
 	hideNumbersFound?: boolean;
-}
+};
 
 class QuestionList extends React.Component<QuestionListProps> {
     state = {
         answers: {} as any
     };
-
-    private movePage(page: number) {
-        const { subText, history } = this.props;
-
-        this.props.requestQuestions(subText, page, history);
-    }
-
-    private onAnswerChanged(name: string, value: any) {
-        let newState = Object.assign({}, this.state);
-        newState.answers[name] = value;
-        this.setState(newState);
-    }
 
     public render() {
 
@@ -62,18 +50,30 @@ class QuestionList extends React.Component<QuestionListProps> {
 					answers={answers}
 					fontSize={fontSize}
 					hideNumbersFound={hideNumbersFound ? hideNumbersFound : false}
-					
+
 		/>
 	)}
         </ul>;
     }
+
+    private movePage(page: number) {
+        const { subText, history } = this.props;
+
+        this.props.requestQuestions(subText, page, history);
+    }
+
+    private onAnswerChanged(name: string, value: any) {
+        let newState = Object.assign({}, this.state);
+        newState.answers[name] = value;
+        this.setState(newState);
+    }
 }
 
 const pagedQuestionList = PagedList(QuestionList,
-    "",
-	(props: any) => props.isLoading,
-    (props: any) => props.questions.paging,
-    (props: any) => {
+                                    '',
+	                                   (props: any) => props.isLoading,
+                                    (props: any) => props.questions.paging,
+                                    (props: any) => {
         const { subText, history } = props;
 
         return (page: number) => props.requestQuestions(subText, page, history);

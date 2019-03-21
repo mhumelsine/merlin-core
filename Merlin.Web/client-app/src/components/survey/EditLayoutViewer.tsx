@@ -14,7 +14,7 @@ import Accordion from '../common/Accordion';
 
 type EditLayoutViewerProps = {
     onResize: (parentId: string, itemId: string, newColWidth: number) => void;
-    onEdit: (parentId: string, itemId: string) => void; 
+    onEdit: (parentId: string, itemId: string) => void;
     selectedItemId: string | null | undefined;
     errors?: any;
 } & LayoutViewerProps;
@@ -29,27 +29,10 @@ export default class EditLayoutViewer extends React.Component<EditLayoutViewerPr
         this.getSelectedClassName = this.getSelectedClassName.bind(this);
     }
 
-    private getItemWidth(id: string) {
-
-        const foundItem = LayoutUtils.getItemById(this.props.layout, id) as any;
-
-        if (foundItem) {
-            return foundItem.width;
-        }
-
-        //console.log(`could not find item with id ${id} defaulting to 12 width`);
-
-        return 12;
-    }
-
-    private getSelectedClassName(id: string): string {
-        return `layout-item ${id === this.props.selectedItemId ? "active" : ""}`;
-    }
-
     public render() {
 
         const { layout, answers, onAnswerChanged, onEdit, onResize, selectedItemId, errors} = this.props;
-        
+
         return <div className="layout-body">
             {
                 (Object.keys(errors).length > 0) &&
@@ -63,9 +46,9 @@ export default class EditLayoutViewer extends React.Component<EditLayoutViewerPr
                 onResize={onResize}
                 itemWidthAccessor={this.getItemWidth}
                 itemClassAccessor={this.getSelectedClassName}
-			> 
+			>
                 {layout && layout.items &&
-					layout.items.map((item, index) => 
+					layout.items.map((item, index) =>
 					<EditItem
                         onEdit={onEdit}
                         id={item.id}
@@ -73,7 +56,7 @@ export default class EditLayoutViewer extends React.Component<EditLayoutViewerPr
                         type={item.type}
                         key={item.id}
                         isFirst={index === 0}
-                        isLast={layout.items.length - 1 === index}                        
+                        isLast={layout.items.length - 1 === index}
                         isTextHidden={item.textHidden === true}
                         showNumbering={false}
                         isNumbered={item.isNumbered === true}
@@ -93,10 +76,27 @@ export default class EditLayoutViewer extends React.Component<EditLayoutViewerPr
                             layout={layout}
                         />
 					</EditItem> )
-					} 
+					}
             </DragContainer>
 
-        </div>
+        </div>;
 
+    }
+
+    private getItemWidth(id: string) {
+
+        const foundItem = LayoutUtils.getItemById(this.props.layout, id) as any;
+
+        if (foundItem) {
+            return foundItem.width;
+        }
+
+        // console.log(`could not find item with id ${id} defaulting to 12 width`);
+
+        return 12;
+    }
+
+    private getSelectedClassName(id: string): string {
+        return `layout-item ${id === this.props.selectedItemId ? 'active' : ''}`;
     }
 }

@@ -2,7 +2,7 @@
 import { RouteComponentProps, Redirect } from 'react-router-dom';
 import { ApplicationState } from '../store/index';
 import { connect } from 'react-redux';
-import * as Session from '../store/Session'
+import * as Session from '../store/Session';
 import Loading from './common/Loading';
 
 type LogOffProps =  Session.SessionState
@@ -12,15 +12,14 @@ type LogOffProps =  Session.SessionState
 class LogOff extends React.Component<LogOffProps> {
 	state = {
 		isLoading: false
-	}
+	};
 
 	public async componentWillMount() {
 		try {
 			this.setState({ isLoading: true });
-			
+
 			await this.props.logOff();
-		}
-		catch (err) {
+		} catch (err) {
 			console.log(err);
 		}
 		finally {
@@ -31,10 +30,10 @@ class LogOff extends React.Component<LogOffProps> {
 	public render() {
 
 		if (this.state.isLoading) {
-			return <Loading />
+			return <Loading />;
 		}
 
-		return <Redirect to="/"/>
+		return <Redirect to="/"/>;
 	}
 }
 export default connect(

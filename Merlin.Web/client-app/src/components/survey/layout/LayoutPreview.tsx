@@ -16,11 +16,11 @@ type LayoutPreviewProps = {
     & typeof actionCreators
     & RouteComponentProps<{}>;
 
-class LayoutPreview extends React.Component<LayoutPreviewProps>{
+class LayoutPreview extends React.Component<LayoutPreviewProps> {
     state = {
         isLoading: true,
         answers: {} as any
-    }
+    };
 
     constructor(props: LayoutPreviewProps) {
         super(props);
@@ -30,7 +30,44 @@ class LayoutPreview extends React.Component<LayoutPreviewProps>{
     }
 
     public componentDidMount() {
-        document.title = defaults.titles.PreviewPage
+        document.title = defaults.titles.PreviewPage;
+    }
+
+    public async componentWillMount() {
+        const { layoutId } = this.props.match.params as any;
+
+        try {
+            await this.props.requestLayout(layoutId);
+        } catch (err) {
+            console.log(err);
+        }
+        finally {
+            this.setState({ isLoading: false });
+        }
+
+    }
+    public render() {
+        const { layout, history } = this.props;
+        const { isLoading, answers } = this.state;
+
+        if (isLoading) {
+            return <Loading />;
+        }
+
+        return <div>
+			<button type="button" id="printbtn" className={`${defaults.theme.buttons.class} pull-right`} onClick={this.print}><FaPrint fontSize={defaults.iconSize} /> {' '}print</button>
+
+                <h1> Preview : {layout.layoutName} </h1>
+
+                <LayoutViewer
+                    answers={answers}
+                    layout={layout}
+                    onAnswerChanged={this.onAnswerChanged}
+                />
+                <br />
+                <BackButton goBack={history.goBack} />
+
+        </div>;
     }
 
     private onAnswerChanged(name: string, newValue: any) {
@@ -45,50 +82,13 @@ class LayoutPreview extends React.Component<LayoutPreviewProps>{
    private print() {
         window.print();
     }
-
-    public async componentWillMount() {
-        const { layoutId } = this.props.match.params as any;
-
-        try {
-            await this.props.requestLayout(layoutId);
-        } catch (err) {
-            console.log(err);
-        }
-        finally {
-            this.setState({ isLoading: false });
-        }
-        
-    }
-    public render() {
-        const { layout,history } = this.props;
-        const { isLoading, answers } = this.state;
-
-        if (isLoading) {
-            return <Loading />;
-        }
-
-        return <div>
-			<button type="button" id="printbtn" className={`${defaults.theme.buttons.class} pull-right`} onClick={this.print}><FaPrint fontSize={defaults.iconSize} /> {" "}print</button>
-
-                <h1> Preview : {layout.layoutName} </h1>            
-          
-                <LayoutViewer
-                    answers={answers}
-                    layout={layout}
-                    onAnswerChanged={this.onAnswerChanged}
-                />           
-                <br />
-                <BackButton goBack={history.goBack} />
-            
-        </div>;
-    }
 }
 
 export default connect(
     (state: ApplicationState) => {
         return {
             layout: state.layout.layout
-        }
+        };
     },
     actionCreators
 )(LayoutPreview);

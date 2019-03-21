@@ -8,7 +8,7 @@ import EditItem from './layout/EditItem';
 import DragItem from '../common/DragItem';
 import Question from './Question';
 import Section from './Section';
-import Message from './Message'
+import Message from './Message';
 import DragContainer from '../common/DragContainer';
 import Spacer from './Spacer';
 import SurveyControl from './SurveyControl';
@@ -33,7 +33,7 @@ type EditLayoutItemProps = {
     item: Item;
     onAnswerChanged?: (name: string, value: any, index?: any) => void;
     groupAccess?: string[];
-}
+};
 
 
 const previewAnswers = {};
@@ -48,6 +48,98 @@ export function getAnswers(props: any) {
 }
 
 export default class EditLayoutItem extends React.Component<EditLayoutItemProps> {
+
+    public render() {
+
+        const { layout, item, onResize, onEdit, itemWidthAccessor,
+            itemClassAccessor, selectedItemId, parentId, groupAccess } = this.props;
+
+        const onAnswerChanged = getAnswerChangeHandler(this.props);
+        const answers = getAnswers(this.props);
+
+        switch (item.type) {
+            case layoutItemType.question:
+                return <Question
+                    item={item}
+                    answers={answers}
+                    onAnswerChanged={onAnswerChanged}
+                >
+                    {item.items && item.items.length > 0 &&
+                        <DragContainer
+                            id={item.id}
+                            onResize={onResize}
+                            itemWidthAccessor={itemWidthAccessor}
+                            itemClassAccessor={itemClassAccessor}
+                        >
+                            {this.renderChildren(item)}
+                        </DragContainer>
+                    }
+                    <Accordion defaultPanelHeading="">
+                        <AccordionItem heading="Activation">
+                            <QuestionActivation
+                                questionId={item.id}
+                                activation={item.activation}
+                            />
+                        </AccordionItem >
+                        <AccordionItem heading="Validations">
+                            <QuestionValidation
+                                question={item}
+                                parentId={parentId}
+                            />
+                        </AccordionItem>
+                    </Accordion>
+                </Question>;
+            case layoutItemType.repeatingQuestionsGroup:
+                return <RepeatingQuestionGroup
+                    item={item}
+                    answers={answers}
+                    onAnswerChanged={onAnswerChanged}
+                >
+                    {item.items && item.items.length > 0 &&
+                        <DragContainer
+                            id={item.id}
+                            onResize={onResize}
+                            itemWidthAccessor={itemWidthAccessor}
+                            itemClassAccessor={itemClassAccessor}
+                        >
+                            {this.renderChildren(item)}
+                        </DragContainer>
+                    }
+				</RepeatingQuestionGroup>;
+            case layoutItemType.section:
+                return <Section
+                    item={item}
+                    answers={answers}
+                    onAnswerChanged={onAnswerChanged}
+                >
+                    {item.items && item.items.length > 0 &&
+                        <DragContainer
+                            id={item.id}
+                            onResize={onResize}
+                            itemWidthAccessor={itemWidthAccessor}
+                            itemClassAccessor={itemClassAccessor}
+                        >
+                            {this.renderChildren(item)}
+                        </DragContainer>
+                    }
+                </Section>;
+            case layoutItemType.message:
+                return <Message
+                    item={item}
+                    isSelected={item.id === selectedItemId}
+                    parentId={parentId}
+                    onEdit={onEdit}
+                />;
+            case layoutItemType.spacer:
+                return <Spacer showBackGround={true} />;
+            case layoutItemType.lineBreak:
+                return <LineBreak />;
+            case layoutItemType.control:
+                return <SurveyControl item={item} isEditable={true} />;
+            default:
+                return <div>Unrecognized layout item type: "{item.type}"</div>;
+        }
+    }
 
     private renderChildren(item: Item): any {
         const { layout, answers, onAnswerChanged, onEdit, onResize, itemWidthAccessor, itemClassAccessor, selectedItemId, groupAccess } = this.props;
@@ -92,97 +184,5 @@ export default class EditLayoutItem extends React.Component<EditLayoutItemProps>
                 />
             </EditItem>
         );
-    }
-
-    public render() {
-
-        const { layout, item, onResize, onEdit, itemWidthAccessor,
-            itemClassAccessor, selectedItemId, parentId, groupAccess } = this.props;
-
-        const onAnswerChanged = getAnswerChangeHandler(this.props);
-        const answers = getAnswers(this.props);
-
-        switch (item.type) {
-            case layoutItemType.question:
-                return <Question
-                    item={item}
-                    answers={answers}
-                    onAnswerChanged={onAnswerChanged}
-                >
-                    {item.items && item.items.length > 0 &&
-                        <DragContainer
-                            id={item.id}
-                            onResize={onResize}
-                            itemWidthAccessor={itemWidthAccessor}
-                            itemClassAccessor={itemClassAccessor}
-                        >
-                            {this.renderChildren(item)}
-                        </DragContainer>
-                    }
-                    <Accordion defaultPanelHeading="">
-                        <AccordionItem heading="Activation">
-                            <QuestionActivation
-                                questionId={item.id}
-                                activation={item.activation}                                
-                            />
-                        </AccordionItem >
-                        <AccordionItem heading="Validations">
-                            <QuestionValidation
-                                question={item}
-                                parentId={parentId}
-                            />
-                        </AccordionItem>
-                    </Accordion>
-                </Question>;
-            case layoutItemType.repeatingQuestionsGroup:
-                return <RepeatingQuestionGroup
-                    item={item}
-                    answers={answers}
-                    onAnswerChanged={onAnswerChanged}
-                >
-                    {item.items && item.items.length > 0 &&
-                        <DragContainer
-                            id={item.id}
-                            onResize={onResize}
-                            itemWidthAccessor={itemWidthAccessor}
-                            itemClassAccessor={itemClassAccessor}
-                        >
-                            {this.renderChildren(item)}
-                        </DragContainer>
-                    }
-				</RepeatingQuestionGroup>
-            case layoutItemType.section:
-                return <Section
-                    item={item}
-                    answers={answers}
-                    onAnswerChanged={onAnswerChanged}
-                >
-                    {item.items && item.items.length > 0 &&
-                        <DragContainer
-                            id={item.id}
-                            onResize={onResize}
-                            itemWidthAccessor={itemWidthAccessor}
-                            itemClassAccessor={itemClassAccessor}
-                        >
-                            {this.renderChildren(item)}
-                        </DragContainer>
-                    }
-                </Section>;
-            case layoutItemType.message:
-                return <Message
-                    item={item}
-                    isSelected={item.id === selectedItemId}
-                    parentId={parentId}
-                    onEdit={onEdit}
-                />;
-            case layoutItemType.spacer:
-                return <Spacer showBackGround={true} />;
-            case layoutItemType.lineBreak:
-                return <LineBreak />;
-            case layoutItemType.control:
-                return <SurveyControl item={item} isEditable={true} />;
-            default:
-                return <div>Unrecognized layout item type: "{item.type}"</div>;
-        }
     }
 }

@@ -19,9 +19,29 @@ type NumberInputProps = {
     allowNegative?: boolean;
     min?: number;
     max?: number;
-}
+};
 
-class NumberInput extends React.Component<NumberInputProps>{
+class NumberInput extends React.Component<NumberInputProps> {
+    public render() {
+
+        const { name, label, placeholder, cols, autoComplete, value, inputRef, isReadOnly, min, max } = this.props;
+
+        return <input type="number"
+            value={value || ''}
+            className={`form-control ${isReadOnly ? 'disabled' : ''}`}
+            id={name}
+            name={name}
+            aria-describedby={label}
+            placeholder={placeholder}
+            onChange={this.onChange.bind(this)}
+            onFocus={this.moveCaretAtEnd}
+            ref={inputRef}
+            readOnly={isReadOnly}
+            autoComplete={autoComplete || 'on'}
+            min={min}
+            max={max}
+        />;
+    }
     private onChange(event: ChangeEvent<HTMLInputElement>) {
 
         let value = parseInt(event.currentTarget.value);
@@ -42,29 +62,9 @@ class NumberInput extends React.Component<NumberInputProps>{
         this.props.onChange(this.props.name, value);
     }
     private moveCaretAtEnd(e: any) {
-        var temp_value = e.target.value;
+        let temp_value = e.target.value;
         e.target.value = '';
         e.target.value = temp_value;
-    }
-    public render() {
-
-        const { name, label, placeholder, cols, autoComplete, value, inputRef, isReadOnly, min, max } = this.props;
-
-        return <input type="number"
-            value={value || ''}
-            className={`form-control ${isReadOnly ? "disabled" : ""}`}
-            id={name}
-            name={name}
-            aria-describedby={label}
-            placeholder={placeholder}
-            onChange={this.onChange.bind(this)}
-            onFocus={this.moveCaretAtEnd}
-            ref={inputRef}
-            readOnly={isReadOnly}
-            autoComplete={autoComplete || "on"}
-            min={min}
-            max={max}
-        />;
     }
 }
 

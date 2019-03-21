@@ -12,7 +12,7 @@ type AuditInfoProps = {
 class AuditInfo extends React.Component<AuditInfoProps> {
     state = {
         loading: true
-    }
+    };
     constructor(props: AuditInfoProps) {
         super(props);
     }
@@ -65,7 +65,7 @@ export default connect(
     (state: ApplicationState) => {
         return {
             auditInfo: state.outbreak.auditInfo
-        }
+        };
     },
     OutbreakActions
 )(AuditInfo);

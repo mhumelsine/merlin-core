@@ -17,7 +17,7 @@ export default class ProcessingHistory extends React.Component<Props, State> {
     state = {
         loading: false,
         history: []
-    }
+    };
 
     public async componentWillMount() {
         const { observationKey } = this.props;

@@ -14,7 +14,7 @@ import { defaults } from '../../utils/Global';
 import Alert from '../common/Alert';
 import SaveButton from '../common/SaveButton';
 
-type VaccinationHistProps = { 
+type VaccinationHistProps = {
     caseId: number;
     icd9: string;
     profileId: number;
@@ -37,26 +37,26 @@ class VaccinationHistory extends React.Component<VaccinationHistProps> {
             caseId: defaults.number,
             profileID: defaults.number,
             icd9: defaults.string,
-            vaccineID:defaults.number
+            vaccineID: defaults.number
         },
-        vaccineHistoryList:this.props.vaccineHistory,
+        vaccineHistoryList: this.props.vaccineHistory,
         isLoading: false,
         errors: {} as any,
     };
 
     constructor(props: VaccinationHistProps) {
         super(props);
-        this.onChange = this.onChange.bind(this)
-        this.onSave = this.onSave.bind(this)
-        this.onDelete = this.onDelete.bind(this)
-        this.onEdit = this.onEdit.bind(this)
+        this.onChange = this.onChange.bind(this);
+        this.onSave = this.onSave.bind(this);
+        this.onDelete = this.onDelete.bind(this);
+        this.onEdit = this.onEdit.bind(this);
     }
 
-    
-    public componentWillReceiveProps(nextProps: VaccinationHistProps){ 
+
+    public componentWillReceiveProps(nextProps: VaccinationHistProps) {
         const {caseId, icd9} = nextProps;
 
-        if(caseId !== this.state.caseId){
+        if (caseId !== this.state.caseId) {
             this.loadData(caseId, icd9);
         }
 
@@ -70,105 +70,22 @@ class VaccinationHistory extends React.Component<VaccinationHistProps> {
         this.loadData(caseId, icd9);
     }
 
-    private async loadData(caseId: number, diseaseCode: string ) { 
-        const { loadVaccineHistory,loadDropdown, loadVaccines} = this.props;
-
-        try {
-            this.setState({ isLoading: true });
-            await loadDropdown(Codes.CodeType.vaccineMFRType);
-            await loadVaccineHistory(caseId ?  caseId : -1);
-            await loadVaccines(diseaseCode ? diseaseCode : "0");
-        }
-        finally {
-            this.setState(
-                { 
-                    isLoading: false, 
-                    caseId: caseId
-                });
-        }
-    }
-
-    private onChange(name: string, newValue: any) {
-
-        let newState = Object.assign({}, this.state);
-        (newState.vaccinehistorynew as any)[name] = newValue;
-        newState.errors[name] = defaults.string;
-        this.setState(newState);
-    }
-
-    private onReset() {
-        const newState = Object.assign({}, this.state)
-
-        newState.vaccinehistorynew.vaccineType = defaults.string,
-            newState.vaccinehistorynew.manufacturer = defaults.string,
-            newState.vaccinehistorynew.lotNumber = defaults.string,
-            newState.vaccinehistorynew.doseNumber = defaults.string,
-            newState.vaccinehistorynew.dateGiven = defaults.string,
-            newState.vaccinehistorynew.caseId = defaults.number,
-            newState.vaccinehistorynew.profileID = defaults.number,
-            newState.vaccinehistorynew.icd9 = defaults.string,
-            newState.vaccinehistorynew.vaccineID = defaults.number,
-            newState.errors = {}
-        this.setState({ vaccinehistorynew: newState.vaccinehistorynew });
-        this.setState(newState);
-    }
-
-    private onSave(event:any) {
-        event.preventDefault();
-        const { vaccineType, manufacturer } = this.state.vaccinehistorynew
-        let newState = Object.assign({}, this.state);
-        newState.errors = {} 
-
-
-        if (vaccineType === defaults.string) {
-            newState.errors.vaccineType = "vaccineType is required"
-        }
-
-        if (manufacturer === defaults.string) {
-            newState.errors.manufacturer = "Manufacturer is required"
-        }
-
-        if (Object.keys(newState.errors).length > 0) {
-            this.setState(newState);
-            return;
-        }
-
-        const { SaveVaccineHistoryItem, profileId,caseId,icd9 } = this.props
-        const newvaccinehistory = Object.assign({}, this.state.vaccinehistorynew)
-
-        newvaccinehistory.profileID = profileId;
-        newvaccinehistory.caseId = caseId;
-        newvaccinehistory.icd9 = icd9;
-        newvaccinehistory.vaccineID = (newvaccinehistory.vaccineID === 0) ? Date.now() : newvaccinehistory.vaccineID;
-        this.setState(newState);
-        SaveVaccineHistoryItem(newvaccinehistory);
-        this.onReset();
-    }
-
-    private onEdit(vaccineHistItem: VaccineHistory) {
-        this.setState({ vaccinehistorynew: vaccineHistItem })
-    }
-
-    private onDelete(VaccineID: number) {
-        this.props.DeleteVaccineHistoryItem(VaccineID);
-    }
-
     public render() {
 
-        const { isLoading, vaccineHistoryList,errors, caseId } = this.state;
-        const {vaccineType,manufacturer,lotNumber,doseNumber,dateGiven } = this.state.vaccinehistorynew
+        const { isLoading, vaccineHistoryList, errors, caseId } = this.state;
+        const {vaccineType, manufacturer, lotNumber, doseNumber, dateGiven } = this.state.vaccinehistorynew;
         const { codes, vaccines} = this.props;
-        
+
         if (isLoading) {
             return <Loading />;
-        } 
+        }
 
         return <div>
                     <div className="row" >
                          <Dropdown
-                            name={"vaccineType"}
+                            name={'vaccineType'}
                             value={vaccineType}
-                            label={"Vaccine Type"}
+                            label={'Vaccine Type'}
                             hideLabel={false}
                             placeholder={'Select item'}
                             options={utils.getOptions(vaccines ? vaccines : [])}
@@ -179,19 +96,19 @@ class VaccinationHistory extends React.Component<VaccinationHistProps> {
                             error={errors.vaccineType}
                         />
                         <CustomDatePicker
-                            name={"dateGiven"}
+                            name={'dateGiven'}
                             value={dateGiven}
-                            label={"Date Given"}
+                            label={'Date Given'}
                             hideLabel={false}
                             placeholder={'Enter date'}
                             isReadOnly={false}
                             onChange={this.onChange}
                             cols={6}
-                        />                
+                        />
                         <Dropdown
-                            name={"manufacturer"}
+                            name={'manufacturer'}
                             value={manufacturer}
-                            label={"Manufacturer"}
+                            label={'Manufacturer'}
                             hideLabel={false}
                             placeholder={'Select item'}
                             options={utils.getOptions(codes)}
@@ -202,9 +119,9 @@ class VaccinationHistory extends React.Component<VaccinationHistProps> {
                             error={errors.manufacturer}
                         />
                         <TextInput
-                            name={"lotNumber"}
+                            name={'lotNumber'}
                             value={lotNumber}
-                            label={"Lot Number"}
+                            label={'Lot Number'}
                             hideLabel={false}
                             placeholder={'Enter text'}
                             isReadOnly={false}
@@ -213,28 +130,28 @@ class VaccinationHistory extends React.Component<VaccinationHistProps> {
                         />
 
                         <TextInput
-                            name={"doseNumber"}
+                            name={'doseNumber'}
                             value={doseNumber}
-                            label={"Dose Number"}
+                            label={'Dose Number'}
                             hideLabel={false}
                             placeholder={'Enter text'}
                             isReadOnly={false}
                             onChange={this.onChange}
                             cols={3}
-                        /> 
+                        />
                     </div>
                     <div className="row">
                         <div className="col-md-4">
                             <SaveButton
                                 onClick={this.onSave}
-                                buttonText={" Save Vaccine History"}
+                                buttonText={' Save Vaccine History'}
                             />
-                   
+
                         </div>
                     </div>
 
 
-                        {vaccineHistoryList.length >0 &&
+                        {vaccineHistoryList.length > 0 &&
                             <div className="table-responsive-container">
                                 <div className="table-responsive">
                                     <table className="table table-striped table-hover table-mobile-compact">
@@ -257,6 +174,89 @@ class VaccinationHistory extends React.Component<VaccinationHistProps> {
                         }
 
          </div>;
+    }
+
+    private async loadData(caseId: number, diseaseCode: string ) {
+        const { loadVaccineHistory, loadDropdown, loadVaccines} = this.props;
+
+        try {
+            this.setState({ isLoading: true });
+            await loadDropdown(Codes.CodeType.vaccineMFRType);
+            await loadVaccineHistory(caseId ?  caseId : -1);
+            await loadVaccines(diseaseCode ? diseaseCode : '0');
+        }
+        finally {
+            this.setState(
+                {
+                    isLoading: false,
+                    caseId: caseId
+                });
+        }
+    }
+
+    private onChange(name: string, newValue: any) {
+
+        let newState = Object.assign({}, this.state);
+        (newState.vaccinehistorynew as any)[name] = newValue;
+        newState.errors[name] = defaults.string;
+        this.setState(newState);
+    }
+
+    private onReset() {
+        const newState = Object.assign({}, this.state);
+
+        newState.vaccinehistorynew.vaccineType = defaults.string,
+            newState.vaccinehistorynew.manufacturer = defaults.string,
+            newState.vaccinehistorynew.lotNumber = defaults.string,
+            newState.vaccinehistorynew.doseNumber = defaults.string,
+            newState.vaccinehistorynew.dateGiven = defaults.string,
+            newState.vaccinehistorynew.caseId = defaults.number,
+            newState.vaccinehistorynew.profileID = defaults.number,
+            newState.vaccinehistorynew.icd9 = defaults.string,
+            newState.vaccinehistorynew.vaccineID = defaults.number,
+            newState.errors = {};
+        this.setState({ vaccinehistorynew: newState.vaccinehistorynew });
+        this.setState(newState);
+    }
+
+    private onSave(event: any) {
+        event.preventDefault();
+        const { vaccineType, manufacturer } = this.state.vaccinehistorynew;
+        let newState = Object.assign({}, this.state);
+        newState.errors = {};
+
+
+        if (vaccineType === defaults.string) {
+            newState.errors.vaccineType = 'vaccineType is required';
+        }
+
+        if (manufacturer === defaults.string) {
+            newState.errors.manufacturer = 'Manufacturer is required';
+        }
+
+        if (Object.keys(newState.errors).length > 0) {
+            this.setState(newState);
+            return;
+        }
+
+        const { SaveVaccineHistoryItem, profileId, caseId, icd9 } = this.props;
+        const newvaccinehistory = Object.assign({}, this.state.vaccinehistorynew);
+
+        newvaccinehistory.profileID = profileId;
+        newvaccinehistory.caseId = caseId;
+        newvaccinehistory.icd9 = icd9;
+        newvaccinehistory.vaccineID = (newvaccinehistory.vaccineID === 0) ? Date.now() : newvaccinehistory.vaccineID;
+        this.setState(newState);
+        SaveVaccineHistoryItem(newvaccinehistory);
+        this.onReset();
+    }
+
+    private onEdit(vaccineHistItem: VaccineHistory) {
+        this.setState({ vaccinehistorynew: vaccineHistItem });
+    }
+
+    private onDelete(VaccineID: number) {
+        this.props.DeleteVaccineHistoryItem(VaccineID);
     }
 }
 export default connect(

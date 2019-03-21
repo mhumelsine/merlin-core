@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { RouteComponentProps, Link } from "react-router-dom";
+import { RouteComponentProps, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { ApplicationState } from '../../store/index';
 import { actionCreators as ElrSearchActions } from '../../store/ELRSearch';
@@ -13,7 +13,7 @@ type ELRSearchPageProps =
     {
 
     }
-    & typeof ElrSearchActions;    
+    & typeof ElrSearchActions;
 
 class ELRSearchPage extends React.Component<ELRSearchPageProps> {
 
@@ -23,21 +23,33 @@ class ELRSearchPage extends React.Component<ELRSearchPageProps> {
     };
 
     constructor(props: any) {
-        super(props);        
+        super(props);
         this.onSubmit = this.onSubmit.bind(this);
     }
-    
+
+    public render() {
+        const { errors, loading } = this.state;
+
+        return <div className="container-fluid">
+            <h1>ELR Search</h1>
+            <ErrorSummary errors={errors} />
+            <SearchForm onSubmit={this.onSubmit} />
+            {loading && <Loading />}
+            {!loading && <SearchResultsTable />}
+        </div>;
+    }
+
     private async onSubmit(e: any) {
-        e.preventDefault(); 
+        e.preventDefault();
 
         try {
             this.setState({ loading: true });
             const errors = await this.props.search() as any;
             this.props.clearSelectedObservations();
 
-            //replace criteria with empty string since there is no criteria field
+            // replace criteria with empty string since there is no criteria field
             if (errors.criteria) {
-                errors[""] = errors.criteria;
+                errors[''] = errors.criteria;
             }
 
             this.setState({ errors });
@@ -47,23 +59,11 @@ class ELRSearchPage extends React.Component<ELRSearchPageProps> {
             this.setState({ loading: false });
         }
     }
-
-    public render() {
-        const { errors, loading } = this.state;
-
-        return <div className='container-fluid'>
-            <h1>ELR Search</h1>
-            <ErrorSummary errors={errors} />
-            <SearchForm onSubmit={this.onSubmit} />
-            {loading && <Loading />}
-            {!loading && <SearchResultsTable />}
-        </div>
-    }
 }
 
 export default connect(
     (state: ApplicationState) => {
-        return {} },
+        return {}; },
     ElrSearchActions
 )(ELRSearchPage);
 

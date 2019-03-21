@@ -1,6 +1,6 @@
 ﻿import * as React from 'react';
 import { connect } from 'react-redux';
-import { actionCreators as ELRSearchActions,Details } from '../../store/ELRSearch';
+import { actionCreators as ELRSearchActions, Details } from '../../store/ELRSearch';
 import { actionCreators as CodeActions, CodeType, Codes } from '../../store/Code';
 import { ApplicationState } from '../../store/index';
 import TextInput, { TextInputWithAddOn } from '../common/TextInput';
@@ -30,20 +30,20 @@ type State = {
     stateno: string,
     assignmentType: string,
     assignmentReason: string,
-    county:string,
+    county: string,
     loading: boolean,
     searching: boolean,
     profile: any,
     errors: any
-}
-class AssignElr extends React.Component<Props, State>{
+};
+class AssignElr extends React.Component<Props, State> {
 
     state = {
-        profileId: "",
-        stateno: "",
-        assignmentType: "",
-        assignmentReason: "",
-        county:"",
+        profileId: '',
+        stateno: '',
+        assignmentType: '',
+        assignmentReason: '',
+        county: '',
         loading: false,
         searching: false,
         profile: undefined,
@@ -70,10 +70,10 @@ class AssignElr extends React.Component<Props, State>{
     public async onSave(e: any) {
         e.preventDefault();
         const { clearSelectedObservations, closeOnClick, selectedObservationKeys } = this.props;
-        const { profileId, stateno, assignmentType, assignmentReason,county } = this.state;
+        const { profileId, stateno, assignmentType, assignmentReason, county } = this.state;
 
         this.setState({ loading: true });
-        
+
         try {
             await AjaxUtils.post(`api/elrsearch/force-assignment`, {
                 profileId,
@@ -96,22 +96,10 @@ class AssignElr extends React.Component<Props, State>{
         }
     }
 
-    private onChange(name: string, value: any) {
-        const state = Object.assign({}, this.state) as any;
-
-        state[name] = value;
-
-        this.setState(state);
-    }
-
-    private onError(errors: any) {
-        this.setState({ errors });
-    }
-
     public render() {
         const { closeOnClick, codes } = this.props;
         const { profileId, stateno, assignmentType, assignmentReason, errors, loading, county } = this.state;
-        
+
         return <form onSubmit={this.onSave}>
             {loading && <Loading />}
 
@@ -124,7 +112,7 @@ class AssignElr extends React.Component<Props, State>{
                     name="assignmentType"
                     value={assignmentType}
                     options={getOptions(codes.ASSIGNMENT_TYPE)}
-                    placeholder={""}
+                    placeholder={''}
                     onChange={this.onChange}
                     isMulti={false}
                     isReadOnly={false}
@@ -158,17 +146,29 @@ class AssignElr extends React.Component<Props, State>{
                     name="county"
                     value={county}
                     options={getOptions(codes.COUNTIES)}
-                    placeholder={""}
+                    placeholder={''}
                     onChange={this.onChange}
                     isMulti={false}
                     isReadOnly={false}
-                />               
+                />
             </div>
 
             <div className="text-right">
                 <SaveCancelButton cancelOnClick={closeOnClick} saveDisabled={loading} saveButtonText={loading ? 'Saving...' : 'Save'} />
             </div>
-        </form>
+        </form>;
+    }
+
+    private onChange(name: string, value: any) {
+        const state = Object.assign({}, this.state) as any;
+
+        state[name] = value;
+
+        this.setState(state);
+    }
+
+    private onError(errors: any) {
+        this.setState({ errors });
     }
 }
 
@@ -177,7 +177,7 @@ export default connect(
         return {
             selectedObservationKeys: state.elrSearch.selectedObservationKeys,
             codes: state.codes.codes,
-            county:state.elrSearch.county.map(c =>c.county)[0]
+            county: state.elrSearch.county.map(c => c.county)[0]
         };
     },
     Object.assign({}, CodeActions, ELRSearchActions)

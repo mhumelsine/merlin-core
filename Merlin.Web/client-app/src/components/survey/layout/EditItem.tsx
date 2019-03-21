@@ -38,7 +38,7 @@ import { defaults } from '../../../utils/Global';
 import ButtonCheckGroup from '../../common/ButtonCheckGroup';
 import Checkbox from '../../common/Checkbox';
 import DropDownForm from '../../common/DropDownForm';
-import * as utils from "../../../utils/UIUtils";
+import * as utils from '../../../utils/UIUtils';
 
 type EditItemProps = {
     onEdit: (parentId: string, itemId: string) => void;
@@ -59,7 +59,7 @@ class EditItem extends React.Component<EditItemProps> {
         showRemoveModal: false,
         showAddQuestionModal: false,
         showEditQuestionModal: false
-    }
+    };
 
     constructor(props: any) {
         super(props);
@@ -74,7 +74,7 @@ class EditItem extends React.Component<EditItemProps> {
         this.onNumberedChanged = this.onNumberedChanged.bind(this);
         this.onTextHiddenChanged = this.onTextHiddenChanged.bind(this);
         this.onAddLineBreak = this.onAddLineBreak.bind(this);
-        this.onAddSpacer = this.onAddSpacer.bind(this);;
+        this.onAddSpacer = this.onAddSpacer.bind(this);
         this.deleteLayoutItemModal = this.deleteLayoutItemModal.bind(this);
         this.onItemRemovalConfirmed = this.onItemRemovalConfirmed.bind(this);
         this.addQuestionModal = this.addQuestionModal.bind(this);
@@ -85,13 +85,142 @@ class EditItem extends React.Component<EditItemProps> {
         this.toggleGroupAccess = this.toggleGroupAccess.bind(this);
     }
 
+    public render() {
+        const { isFirst, isLast, showNumbering, isNumbered, type, isTextHidden, groupAccess } = this.props;
+        const { showRemoveModal, showAddQuestionModal, showEditQuestionModal } = this.state;
+        const fontSize = 15;
+
+        return <div style={{ borderRadius: '6px' }}>
+            <div className="edit-controls">
+                {showNumbering &&
+                    <button
+                        type="button"
+                        title="Toggle Numbering"
+                        className={`btn btn-outline-success btn-round ${isNumbered ? 'active' : ''}`}
+                        onClick={this.onNumberedChanged}
+                    >
+                        <MdFormatListNumbered fontSize={fontSize} />
+                        <span className="sr-only">Toggle Numbering</span>
+                    </button>
+                }
+                {' '}
+                {type === layoutItemType.question &&
+                    <button
+                        type="button"
+                        title="Toggle Question Text"
+                        className={`btn btn-outline-success btn-round ${isTextHidden ? 'active' : ''}`}
+                        onClick={this.onTextHiddenChanged}
+                    >
+                        <MdFormatClear fontSize={fontSize} />
+                        <span className="sr-only">Toggle Question Text</span>
+                    </button>
+                }
+                {' '}
+                {!isFirst &&
+                    <button
+                        type="button"
+                        title="Move Up"
+                        className="btn btn-outline-warning btn-round"
+                        onClick={this.onMoveUp}
+                    >
+                        <FaArrowCircleUp fontSize={fontSize} />
+                        <span className="sr-only">Move Up</span>
+                    </button>
+                }
+                {' '}
+                {!isLast &&
+                    <button
+                        type="button"
+                        title="Move Down"
+                        className="btn btn-outline-warning btn-round"
+                        onClick={this.onMoveDown}
+                    >
+                        <FaArrowCircleDown fontSize={fontSize} />
+                        <span className="sr-only">Move Down</span>
+                    </button>
+                }
+                {' '}
+                {(type === layoutItemType.section ||
+                    type === layoutItemType.message ||
+                    type === layoutItemType.question) &&
+                    <button
+                        type="button"
+                        title="Edit"
+                        className="btn btn-outline-primary btn-round"
+                        onClick={this.onEdit}
+                    >
+                        <FaEdit fontSize={fontSize} />
+                        <span className="sr-only">Edit</span>
+                    </button>
+                }
+                {' '}
+                {(type === layoutItemType.section ||
+                    type === layoutItemType.question ||
+                    type === layoutItemType.repeatingQuestionsGroup) &&
+                    <DropdownMenu
+                        menuText={<FaPlusCircle fontSize={fontSize} />}
+                        menuContextClass="outline-info"
+                        direction="dropleft"
+                        title="Add Item"
+                    >
+                        <DropdownMenuItem onClick={this.onAddMessage}>
+                            <FaComment fontSize={20} /> {' '}Message
+						</DropdownMenuItem>
+                        <DropdownMenuItem onClick={this.onAddQuestion}>
+                            <FaQuestionCircle fontSize={20} /> {' '}{type === layoutItemType.question ? 'Sub Question' : 'Question'}
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={this.onAddRepeatingGroup} visible={type === layoutItemType.section}>
+                            <FaRegObjectGroup fontSize={20} /> {' '}Repeating Group
+						</DropdownMenuItem>
+                        <DropdownMenuItem onClick={this.onAddSpacer}>
+                            <MdSpaceBar fontSize={20} /> {' '}Spacer
+						</DropdownMenuItem>
+                        <DropdownMenuItem onClick={this.onAddLineBreak}>
+                            <MdRemove fontSize={20} /> {' '}Line Break
+						</DropdownMenuItem>
+                    </DropdownMenu>
+                }
+                {' '}
+                <DropDownForm
+                    menuText={<FaLock fontSize={fontSize} />}
+                    menuContextClass="outline-info"
+                    direction="dropleft"
+                    title="Access"
+                >
+                    <ButtonCheckGroup
+                        label="Group Acess"
+                        name="groupAccess"
+                        isVertical={true}
+                        onChange={this.toggleGroupAccess}
+                        options={utils.getOptions(this.props.codes!.ACCESS || [])}
+                        value={groupAccess} hideLabel={true}
+                    />
+                </DropDownForm>
+                {' '}
+                <button
+                    type="button"
+                    title="Remove"
+                    className="btn btn-outline-danger btn-round"
+                    onClick={this.onRemoveItem}
+                >
+                    <FaTimesCircle fontSize={fontSize} />
+                    <span className="sr-only">Remove</span>
+                </button>
+            </div>
+
+            {this.props.children}
+            {showRemoveModal && this.deleteLayoutItemModal()}
+            {showAddQuestionModal && this.addQuestionModal()}
+            {showEditQuestionModal && this.editQuestionModal()}
+        </div>;
+    }
+
     private onEdit(event: any) {
         const { id, parentId, type, onEdit } = this.props;
 
         if (type === layoutItemType.question) {
             this.setState({ showEditQuestionModal: true });
-        }
-        else {
+        } else {
             onEdit(parentId, id);
         }
     }
@@ -111,23 +240,23 @@ class EditItem extends React.Component<EditItemProps> {
             activation: defaults.activation,
             validations: defaults.validations,
             groupAccess: defaults.groupAccess
-        } as LayoutItem
+        } as LayoutItem;
 
         await saveLayoutItem(id, newItem);
         onEdit(id, newItem.id);
     }
 
-    /* 
+    /*
         could just have toggleAddQuestionModal called when the remove button is clicked,
-        but leaving onAddQuestion here for readability/consistency 
+        but leaving onAddQuestion here for readability/consistency
     */
     private onAddQuestion(event: any) {
         this.toggleAddQuestionModal();
     }
 
-    /* 
+    /*
         could just have toggleItemRemoveModal called when the remove button is clicked,
-        but leaving onRemoveItem here for readability/consistency 
+        but leaving onRemoveItem here for readability/consistency
     */
     private onRemoveItem(event: any) {
         this.toggleItemRemoveModal();
@@ -146,7 +275,7 @@ class EditItem extends React.Component<EditItemProps> {
             activation: defaults.activation,
             validations: defaults.validations,
             groupAccess: defaults.groupAccess
-        } as LayoutItem
+        } as LayoutItem;
 
         saveLayoutItem(id, newItem);
     }
@@ -164,7 +293,7 @@ class EditItem extends React.Component<EditItemProps> {
             activation: defaults.activation,
             validations: defaults.validations,
             groupAccess: defaults.groupAccess
-        } as LayoutItem
+        } as LayoutItem;
 
         saveLayoutItem(id, newItem);
     }
@@ -184,7 +313,7 @@ class EditItem extends React.Component<EditItemProps> {
             activation: defaults.activation,
             validations: defaults.validations,
             groupAccess: defaults.groupAccess
-        } as LayoutItem
+        } as LayoutItem;
 
         saveLayoutItem(id, newItem);
     }
@@ -223,7 +352,7 @@ class EditItem extends React.Component<EditItemProps> {
         const { id, parentId } = this.props;
 
         try {
-            this.setState({ showRemoveModal: false }, async () => { await this.props.removeLayoutItem(parentId, id); })
+            this.setState({ showRemoveModal: false }, async () => { await this.props.removeLayoutItem(parentId, id); });
         } catch (e) {
             console.log(e);
         }
@@ -247,7 +376,7 @@ class EditItem extends React.Component<EditItemProps> {
                     <button type="button" className="btn btn-default" onClick={this.toggleItemRemoveModal}>No</button>
                 </div>
             }
-        /></Portal>
+        /></Portal>;
     }
 
     private toggleUpdateQuestionModal(event?: any) {
@@ -279,7 +408,7 @@ class EditItem extends React.Component<EditItemProps> {
                         <button type="button" className="btn btn-default" onClick={this.toggleUpdateQuestionModal}>Done</button>
                     </div>
                 }
-            /></Portal>
+            /></Portal>;
         }
     }
 
@@ -313,7 +442,7 @@ class EditItem extends React.Component<EditItemProps> {
                         </div>
                     }
                 />
-            </Portal>
+            </Portal>;
         }
     }
 
@@ -331,136 +460,6 @@ class EditItem extends React.Component<EditItemProps> {
                     groupAccess.pop(event.target.value);
                 }
          */
-    }
-
-    public render() {
-        const { isFirst, isLast, showNumbering, isNumbered, type, isTextHidden, groupAccess } = this.props;
-        const { showRemoveModal, showAddQuestionModal, showEditQuestionModal } = this.state;
-        const fontSize = 15;
-
-        return <div style={{ borderRadius: "6px" }}>
-            <div className="edit-controls">
-                {showNumbering &&
-                    <button
-                        type="button"
-                        title="Toggle Numbering"
-                        className={`btn btn-outline-success btn-round ${isNumbered ? 'active' : ''}`}
-                        onClick={this.onNumberedChanged}
-                    >
-                        <MdFormatListNumbered fontSize={fontSize} />
-                        <span className="sr-only">Toggle Numbering</span>
-                    </button>
-                }
-                {" "}
-                {type === layoutItemType.question &&
-                    <button
-                        type="button"
-                        title="Toggle Question Text"
-                        className={`btn btn-outline-success btn-round ${isTextHidden ? 'active' : ''}`}
-                        onClick={this.onTextHiddenChanged}
-                    >
-                        <MdFormatClear fontSize={fontSize} />
-                        <span className="sr-only">Toggle Question Text</span>
-                    </button>
-                }
-                {" "}
-                {!isFirst &&
-                    <button
-                        type="button"
-                        title="Move Up"
-                        className="btn btn-outline-warning btn-round"
-                        onClick={this.onMoveUp}
-                    >
-                        <FaArrowCircleUp fontSize={fontSize} />
-                        <span className="sr-only">Move Up</span>
-                    </button>
-                }
-                {" "}
-                {!isLast &&
-                    <button
-                        type="button"
-                        title="Move Down"
-                        className="btn btn-outline-warning btn-round"
-                        onClick={this.onMoveDown}
-                    >
-                        <FaArrowCircleDown fontSize={fontSize} />
-                        <span className="sr-only">Move Down</span>
-                    </button>
-                }
-                {" "}
-                {(type === layoutItemType.section ||
-                    type === layoutItemType.message ||
-                    type === layoutItemType.question) &&
-                    <button
-                        type="button"
-                        title="Edit"
-                        className="btn btn-outline-primary btn-round"
-                        onClick={this.onEdit}
-                    >
-                        <FaEdit fontSize={fontSize} />
-                        <span className="sr-only">Edit</span>
-                    </button>
-                }
-                {" "}
-                {(type === layoutItemType.section ||
-                    type === layoutItemType.question ||
-                    type === layoutItemType.repeatingQuestionsGroup) &&
-                    <DropdownMenu
-                        menuText={<FaPlusCircle fontSize={fontSize} />}
-                        menuContextClass="outline-info"
-                        direction="dropleft"
-                        title="Add Item"
-                    >
-                        <DropdownMenuItem onClick={this.onAddMessage}>
-                            <FaComment fontSize={20} /> {" "}Message
-						</DropdownMenuItem>
-                        <DropdownMenuItem onClick={this.onAddQuestion}>
-                            <FaQuestionCircle fontSize={20} /> {" "}{type === layoutItemType.question ? "Sub Question" : "Question"}
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={this.onAddRepeatingGroup} visible={type === layoutItemType.section}>
-                            <FaRegObjectGroup fontSize={20} /> {" "}Repeating Group
-						</DropdownMenuItem>
-                        <DropdownMenuItem onClick={this.onAddSpacer}>
-                            <MdSpaceBar fontSize={20} /> {" "}Spacer
-						</DropdownMenuItem>
-                        <DropdownMenuItem onClick={this.onAddLineBreak}>
-                            <MdRemove fontSize={20} /> {" "}Line Break
-						</DropdownMenuItem>
-                    </DropdownMenu>
-                }
-                {" "}
-                <DropDownForm
-                    menuText={<FaLock fontSize={fontSize} />}
-                    menuContextClass="outline-info"
-                    direction="dropleft"
-                    title="Access"
-                >
-                    <ButtonCheckGroup
-                        label="Group Acess"
-                        name="groupAccess"
-                        isVertical={true}
-                        onChange={this.toggleGroupAccess}
-                        options={utils.getOptions(this.props.codes!.ACCESS || [])}
-                        value={groupAccess} hideLabel={true}
-                    />
-                </DropDownForm>
-                {" "}
-                <button
-                    type="button"
-                    title="Remove"
-                    className="btn btn-outline-danger btn-round"
-                    onClick={this.onRemoveItem}
-                >
-                    <FaTimesCircle fontSize={fontSize} />
-                    <span className="sr-only">Remove</span>
-                </button>
-            </div>
-
-            {this.props.children}
-            {showRemoveModal && this.deleteLayoutItemModal()}
-            {showAddQuestionModal && this.addQuestionModal()}
-            {showEditQuestionModal && this.editQuestionModal()}
-        </div>;
     }
 }
 

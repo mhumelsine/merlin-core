@@ -63,7 +63,7 @@ class LayoutEdit extends React.Component<LayoutEditProps, {}> {
     state = {
         survey: this.props.survey,
         layout: {} as Layout,
-        //selectedItem: defaults.string,
+        // selectedItem: defaults.string,
         sideMenuIsCollapsed: defaults.boolean,
         propertySelected: defaults.boolean,
         isSaving: defaults.boolean,
@@ -71,7 +71,7 @@ class LayoutEdit extends React.Component<LayoutEditProps, {}> {
         errorMessage: defaults.string,
         isLoading: defaults.boolean,
         isEditMode: defaults.boolean,
-        //selectedId: defaults.string,
+        // selectedId: defaults.string,
         isPreviewMode: defaults.boolean,
         editContext: {
             selectedItemId: '',
@@ -137,7 +137,7 @@ class LayoutEdit extends React.Component<LayoutEditProps, {}> {
             newState.isLoading = defaults.boolean;
             newState.errors = {} as any;
             if ((newProps.layout.savedOn !== this.state.layout.savedOn) && !isNullOrEmpty(newProps.layout.savedOn)) {
-                newState.timeSinceLastSave = this.getDateDifferenceAsString(new Date(), new Date(newProps.layout.savedOn.replace(/["']/g, "")));
+                newState.timeSinceLastSave = this.getDateDifferenceAsString(new Date(), new Date(newProps.layout.savedOn.replace(/["']/g, '')));
                 this.setLastSavedInterval();
                 newState.shouldResetCountdownTimer = true;
                 newState.saveFailed = defaults.boolean;
@@ -160,6 +160,157 @@ class LayoutEdit extends React.Component<LayoutEditProps, {}> {
         document.title = defaults.titles.EditLayoutPage;
     }
 
+    public render() {
+        const { isLoading, isPreviewMode, editContext, sideMenuIsCollapsed, survey, layout, isSaving, errorMessage, isEditMode, answers, propertySelected, errors, saveFailed, timeSinceLastSave, shouldResetCountdownTimer } = this.state;
+        const { history, updateLayoutItemWidth, deleteLayout } = this.props;
+        const offset = this.getOffset();
+        const useSlideMenu = editContext.selectedItemType !== undefined && editContext.action === ActionContext.addControl;
+        const contentOffset = useSlideMenu ? (sideMenuIsCollapsed ? '355px' : '480px') : offset;
+        const layoutId = (this.props.match.params as any).layoutId;
+        if (isLoading) {
+            return <Loading />;
+        }
+        return <div className="layout-edit">
+            <div>
+                <SideMenu isCollapsed={sideMenuIsCollapsed} toggleCollapse={this.toggleMenuCollapse}>
+                    {/* SubMenuItems HERE */}
+                    <SideMenuItem
+                        isCollapsed={sideMenuIsCollapsed}
+                        isActive={this.isInContext(layoutItemType.section)}
+                        itemType={layoutItemType.section}
+                        icon={<FaNewspaper fontSize={30} />}
+                        onClick={this.onSectionMenuItemClick}
+                    >
+                        Section
+                    </SideMenuItem>
+
+                    <SideMenuItem
+                        isCollapsed={sideMenuIsCollapsed}
+                        isActive={this.isInContext(layoutItemType.control)}
+                        itemType={layoutItemType.control}
+                        icon={<MdDashboard fontSize={30} />}
+                        onClick={this.onMenuItemClick}
+                    >
+                        Controls
+                    </SideMenuItem>
+
+                    <div className="Separator" style={{ 'border': '1px solid #009FB0' }} ></div>
+
+                    <SideMenuItem
+                        isCollapsed={sideMenuIsCollapsed}
+                        isActive={isPreviewMode}
+                        icon={isPreviewMode ? <FaEdit fontSize={30} /> : <FaPlayCircle fontSize={30} />}
+                        onClick={this.togglePreviewMode}>
+                        {isPreviewMode ? 'Edit' : 'Preview'}
+                    </SideMenuItem>
+
+                    <div className="Separator" style={{ 'border': '1px solid #009FB0' }}></div>
+
+                    <SideMenuItem
+                        isCollapsed={sideMenuIsCollapsed}
+                        isActive={false}
+                        icon={<FaListAlt fontSize={30} />}
+                        href={`${defaults.urls.questionManagerUrl}/${layoutId}`}
+                        onClick={this.menuNavigate}
+                    >
+                        Question Manager
+                    </SideMenuItem>
+
+                    <SideMenuItem
+                        isCollapsed={sideMenuIsCollapsed}
+                        isActive={false}
+                        icon={<FaTasks fontSize={30} />}
+                        href={`${defaults.urls.attachSurveysUrl}/${layout.layoutId}`}
+                        onClick={this.menuNavigate}
+                    >
+                        Attach Surveys
+                    </SideMenuItem>
+
+                    <SideMenuItem
+                        isCollapsed={sideMenuIsCollapsed}
+                        isActive={false}
+                        icon={<FaCog fontSize={30} />}
+                        onClick={this.onPropertyManagerClick}
+                    >
+                        Property Manager
+                    </SideMenuItem>
+
+                </SideMenu>
+                {
+                    // Show/Hide Charm
+                    useSlideMenu && this.ShowEditCharm()
+                }
+            </div>
+
+            <div className={'fadeIn'} style={{ 'paddingLeft': contentOffset, 'transitionProperty': 'padding' }}>
+                <Sticky>
+                    <h1 className="position-sticky-state row" style={{ 'top': 96, 'zIndex': 1080, 'backgroundColor': '#fff' }}>
+                        <div className="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+                            <span>{isPreviewMode ? `Preview - ${layout.layoutName}` : `Edit Layout - ${layout.layoutName} ${layout.hasBeenEdited ? '*(unsaved)' : ''}`}</span>
+                            {(!isSaving && !isPreviewMode) && this.showTimeSinceLastSave()}
+                        </div>
+                        <div className="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                            {/*<SaveButton
+								saveOnClick={this.onSaveLayout}
+								saveIconFontSize={20}
+							/>*/}
+                            {!isPreviewMode &&
+                                <button className={`${defaults.theme.buttons.class} pull-righ`} onClick={this.onSaveLayout}>
+                                    <FaRegSave fontSize={20} style={{ verticalAlign: 'bottom' }} />
+                                    {isSaving && <Loading />}
+                                    <span> {isSaving ? 'Saving' : 'Save'} </span>
+                                </button>
+                            }
+                        </div>
+                        {(!isPreviewMode && this.state.saveFailed) || errorMessage &&
+                            <div className="col-lg-12 col-md-12 col-sm-12" style={{ 'fontSize': 20 }}>
+                                <Alert alertType="danger" autoFocus={true} onBlur={this.clearErrorMessage}>
+                                    {errorMessage}
+                                </Alert>
+                            </div>
+                        }
+                    </h1>
+                </Sticky>
+                {!isPreviewMode && <EditLayoutViewer
+                    onResize={updateLayoutItemWidth}
+                    onEdit={this.onItemEdit}
+                    answers={answers}
+                    layout={layout}
+                    onAnswerChanged={this.onAnswerChange}
+                    selectedItemId={editContext.selectedItemId}
+                    errors={errors}
+                />}
+                {isPreviewMode && <LayoutViewer
+                    layout={layout}
+                    answers={answers}
+                    onAnswerChanged={this.onAnswerChange}
+                />
+                }
+                <Secure requireClaim={ClaimType.role} requireClaimValue={[Role.Admin]}>
+                    <BackButton className="btn-space-right" goBack={history.goBack} />
+                    <DeleteButton onClick={this.removeLayout} />
+                </Secure>
+            </div>
+            <PropertyManager toggle={this.onPropertyClose} visible={propertySelected} title={'Edit Layout Properties'} />
+
+        </div>;
+    }
+
+    public componentDidUpdate(prevProps: LayoutEditProps) {
+
+        const { lastAddedContext } = this.props;
+
+        if (lastAddedContext !== prevProps.lastAddedContext) {
+            const node = document.getElementById(lastAddedContext.itemId);
+
+            if (node) {
+                window.scrollTo(0, node.getBoundingClientRect().top + (window.scrollY - 200));
+
+                // need to highlight item once added.
+            }
+        }
+    }
+
     private async addLayout(layoutId: string) {
         const { requestLayout, history } = this.props;
         const { layout } = this.state;
@@ -170,33 +321,32 @@ class LayoutEdit extends React.Component<LayoutEditProps, {}> {
         this.getAllDuplicateIdErrors(allIds, layoutToBeImported.items, allDuplicateIdErrors);
         if (allDuplicateIdErrors.length > 0) {
             let newState = Object.assign({}, this.state);
-            newState.errors[""] = allDuplicateIdErrors;
+            newState.errors[''] = allDuplicateIdErrors;
             this.setState(newState);
-        }
-        else {
+        } else {
             this.props.importLayout(layoutToBeImported);
         }
     }
 
     private getDateDifferenceAsString(d1: Date, d2: Date) {
-        var m1 = moment(d1);
-        var m2 = moment(d2);
+        let m1 = moment(d1);
+        let m2 = moment(d2);
 
-        var s2 = moment.max(m1, m2);
+        let s2 = moment.max(m1, m2);
 
-        var s1 = moment.min(m1, m2);
+        let s1 = moment.min(m1, m2);
 
-        var years = s2.diff(s1, "years");
-        var months = s2.diff(s1, "months");
-        var days = s2.diff(s1, "days");
-        var hours = s2.diff(s1, "hours");
-        var minutes = s2.diff(s1, "minutes");
-        var seconds = s2.diff(s1, "seconds");
+        let years = s2.diff(s1, 'years');
+        let months = s2.diff(s1, 'months');
+        let days = s2.diff(s1, 'days');
+        let hours = s2.diff(s1, 'hours');
+        let minutes = s2.diff(s1, 'minutes');
+        let seconds = s2.diff(s1, 'seconds');
 
-        var differenceDescription = defaults.string;
+        let differenceDescription = defaults.string;
 
         if (seconds >= 0) {
-            differenceDescription = "less than a minute";
+            differenceDescription = 'less than a minute';
         }
         if (minutes > 0) {
             differenceDescription = `${minutes} ${minutes == 1 ? 'minute' : 'minutes'}`;
@@ -251,7 +401,7 @@ class LayoutEdit extends React.Component<LayoutEditProps, {}> {
                             itemDescription = layoutItem.title || itemDescription;
                         case layoutItemType.spacer:
                         default:
-                        //do nothing
+                        // do nothing
                     }
                 }
                 duplicateIdErrors.push(`Please remove the ${itemType} '${itemDescription}' from the current layout before importing.`);
@@ -279,7 +429,7 @@ class LayoutEdit extends React.Component<LayoutEditProps, {}> {
             activation: defaults.activation,
             validations: defaults.validations,
             groupAccess: defaults.groupAccess
-        } as LayoutStore.LayoutItem
+        } as LayoutStore.LayoutItem;
 
         this.props.saveLayoutItem(layoutId, newItem);
     }
@@ -317,7 +467,7 @@ class LayoutEdit extends React.Component<LayoutEditProps, {}> {
     }
 
     private showSaved() {
-        //capture this
+        // capture this
         const component = this;
         const date = new Date();
 
@@ -333,7 +483,7 @@ class LayoutEdit extends React.Component<LayoutEditProps, {}> {
     }
 
     private async onSaveLayout(event?: any | undefined) {
-        var id = defaults.string;
+        let id = defaults.string;
 
         if (event) {
             event.preventDefault();
@@ -345,14 +495,13 @@ class LayoutEdit extends React.Component<LayoutEditProps, {}> {
         try {
             await this.props.saveLayout();
         } catch (err) {
-            var errorMessage = defaults.string;
+            let errorMessage = defaults.string;
             try {
-                if (!isNullOrEmpty(err[""])) {
-                    errorMessage = err[""];
+                if (!isNullOrEmpty(err[''])) {
+                    errorMessage = err[''];
                 }
-            }
-            catch (e) {
-                //do nothing
+            } catch (e) {
+                // do nothing
             }
             this.setState({ saveMessage: `Layout save failed. ${errorMessage}`, saveFailed: true, isSaving: defaults.boolean });
         } finally {
@@ -369,16 +518,16 @@ class LayoutEdit extends React.Component<LayoutEditProps, {}> {
             this.lastSavedInterval = defaults.NULL;
         }
         this.lastSavedInterval = setInterval(() => {
-            this.setState({ timeSinceLastSave: this.getDateDifferenceAsString(new Date(), new Date(this.state.layout.savedOn.replace(/["']/g, ""))) });
+            this.setState({ timeSinceLastSave: this.getDateDifferenceAsString(new Date(), new Date(this.state.layout.savedOn.replace(/["']/g, ''))) });
         },
-            60000);
+                                             60000);
     }
 
     private showTimeSinceLastSave() {
         const { timeSinceLastSave } = this.state;
 
         return (
-            <p className="btn-space-right" style={{ "fontSize": 13, "display": "inline" }}>
+            <p className="btn-space-right" style={{ 'fontSize': 13, 'display': 'inline' }}>
                 {!isNullOrEmpty(timeSinceLastSave) &&
                     <span>
                         {'Last saved '}
@@ -397,9 +546,9 @@ class LayoutEdit extends React.Component<LayoutEditProps, {}> {
         let item = undefined;
         let parentId = editContext.selectedItemId;
 
-        //if is it an edit fetch the item
+        // if is it an edit fetch the item
         if (editContext.menuItemSelected === editContext.selectedItemType
-            && editContext.selectedItemType !== layoutItemType.question) { //no edit for question, this is add sub-question
+            && editContext.selectedItemType !== layoutItemType.question) { // no edit for question, this is add sub-question
 
             item = LayoutUtils.getItemById(this.props.layout, editContext.selectedItemId) as LayoutStore.LayoutItem;
             parentId = editContext.parentId;
@@ -486,7 +635,7 @@ class LayoutEdit extends React.Component<LayoutEditProps, {}> {
 
     private onPropertyClose() {
         let newState = Object.assign({}, this.state);
-        newState.propertySelected = !newState.propertySelected
+        newState.propertySelected = !newState.propertySelected;
         this.setState(newState);
     }
 
@@ -511,7 +660,7 @@ class LayoutEdit extends React.Component<LayoutEditProps, {}> {
     private menuNavigate(event: any) {
         event.preventDefault();
 
-        this.props.history.push(event.currentTarget.getAttribute("data-href"));
+        this.props.history.push(event.currentTarget.getAttribute('data-href'));
     }
 
     private saveLayoutItem(parentId: string, item: LayoutStore.LayoutItem) {
@@ -532,15 +681,14 @@ class LayoutEdit extends React.Component<LayoutEditProps, {}> {
             this.setState({ errorMessage: defaults.string });
             await deleteLayout(layout.layoutId);
             history.goBack();
-        }
-        catch (err) {
-            //console.log(err);
+        } catch (err) {
+            // console.log(err);
             this.setState({ errorMessage: 'Cannot delete a layout in use.' });
         }
     }
 
     private clearErrorMessage() {
-        console.log("CLICKED");
+        console.log('CLICKED');
         this.setState({ errorMessage: '' });
     }
 
@@ -555,163 +703,12 @@ class LayoutEdit extends React.Component<LayoutEditProps, {}> {
             onCloseCharm={this.clearEditContext}
         >
             {this.charmChildSelected()}
-        </EditCharm>
+        </EditCharm>;
     }
 
     private getOffset() {
         const { sideMenuIsCollapsed } = this.state;
         return sideMenuIsCollapsed ? '55px' : '180px';
-    }
-
-    public render() {
-        const { isLoading, isPreviewMode, editContext, sideMenuIsCollapsed, survey, layout, isSaving, errorMessage, isEditMode, answers, propertySelected, errors, saveFailed, timeSinceLastSave, shouldResetCountdownTimer } = this.state;
-        const { history, updateLayoutItemWidth, deleteLayout } = this.props;
-        const offset = this.getOffset();
-        const useSlideMenu = editContext.selectedItemType !== undefined && editContext.action === ActionContext.addControl;
-        const contentOffset = useSlideMenu ? (sideMenuIsCollapsed ? '355px' : '480px') : offset;
-        const layoutId = (this.props.match.params as any).layoutId;
-        if (isLoading) {
-            return <Loading />
-        }
-        return <div className="layout-edit">
-            <div>
-                <SideMenu isCollapsed={sideMenuIsCollapsed} toggleCollapse={this.toggleMenuCollapse}>
-                    {/* SubMenuItems HERE */}
-                    <SideMenuItem
-                        isCollapsed={sideMenuIsCollapsed}
-                        isActive={this.isInContext(layoutItemType.section)}
-                        itemType={layoutItemType.section}
-                        icon={<FaNewspaper fontSize={30} />}
-                        onClick={this.onSectionMenuItemClick}
-                    >
-                        Section
-                    </SideMenuItem>
-
-                    <SideMenuItem
-                        isCollapsed={sideMenuIsCollapsed}
-                        isActive={this.isInContext(layoutItemType.control)}
-                        itemType={layoutItemType.control}
-                        icon={<MdDashboard fontSize={30} />}
-                        onClick={this.onMenuItemClick}
-                    >
-                        Controls
-                    </SideMenuItem>
-
-                    <div className="Separator" style={{ "border": "1px solid #009FB0" }} ></div>
-
-                    <SideMenuItem
-                        isCollapsed={sideMenuIsCollapsed}
-                        isActive={isPreviewMode}
-                        icon={isPreviewMode ? <FaEdit fontSize={30} /> : <FaPlayCircle fontSize={30} />}
-                        onClick={this.togglePreviewMode}>
-                        {isPreviewMode ? "Edit" : "Preview"}
-                    </SideMenuItem>
-
-                    <div className="Separator" style={{ "border": "1px solid #009FB0" }}></div>
-
-                    <SideMenuItem
-                        isCollapsed={sideMenuIsCollapsed}
-                        isActive={false}
-                        icon={<FaListAlt fontSize={30} />}
-                        href={`${defaults.urls.questionManagerUrl}/${layoutId}`}
-                        onClick={this.menuNavigate}
-                    >
-                        Question Manager
-                    </SideMenuItem>
-
-                    <SideMenuItem
-                        isCollapsed={sideMenuIsCollapsed}
-                        isActive={false}
-                        icon={<FaTasks fontSize={30} />}
-                        href={`${defaults.urls.attachSurveysUrl}/${layout.layoutId}`}
-                        onClick={this.menuNavigate}
-                    >
-                        Attach Surveys
-                    </SideMenuItem>
-
-                    <SideMenuItem
-                        isCollapsed={sideMenuIsCollapsed}
-                        isActive={false}
-                        icon={<FaCog fontSize={30} />}
-                        onClick={this.onPropertyManagerClick}
-                    >
-                        Property Manager
-                    </SideMenuItem>
-
-                </SideMenu>
-                {
-                    // Show/Hide Charm
-                    useSlideMenu && this.ShowEditCharm()
-                }
-            </div>
-
-            <div className={"fadeIn"} style={{ "paddingLeft": contentOffset, "transitionProperty": "padding" }}>
-                <Sticky>
-                    <h1 className="position-sticky-state row" style={{ "top": 96, "zIndex": 1080, "backgroundColor": "#fff" }}>
-                        <div className="col-lg-10 col-md-10 col-sm-12 col-xs-12">
-                            <span>{isPreviewMode ? `Preview - ${layout.layoutName}` : `Edit Layout - ${layout.layoutName} ${layout.hasBeenEdited ? '*(unsaved)' : ''}`}</span>
-                            {(!isSaving && !isPreviewMode) && this.showTimeSinceLastSave()}
-                        </div>
-                        <div className="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                            {/*<SaveButton
-								saveOnClick={this.onSaveLayout}
-								saveIconFontSize={20}                            
-							/>*/}
-                            {!isPreviewMode &&
-                                <button className={`${defaults.theme.buttons.class} pull-righ`} onClick={this.onSaveLayout}>
-                                    <FaRegSave fontSize={20} style={{ verticalAlign: 'bottom' }} />
-                                    {isSaving && <Loading />}
-                                    <span> {isSaving ? "Saving" : "Save"} </span>
-                                </button>
-                            }
-                        </div>
-                        {(!isPreviewMode && this.state.saveFailed) || errorMessage &&
-                            <div className="col-lg-12 col-md-12 col-sm-12" style={{ "fontSize": 20 }}>
-                                <Alert alertType="danger" autoFocus={true} onBlur={this.clearErrorMessage}>
-                                    {errorMessage}
-                                </Alert>
-                            </div>
-                        }
-                    </h1>
-                </Sticky>
-                {!isPreviewMode && <EditLayoutViewer
-                    onResize={updateLayoutItemWidth}
-                    onEdit={this.onItemEdit}
-                    answers={answers}
-                    layout={layout}
-                    onAnswerChanged={this.onAnswerChange}
-                    selectedItemId={editContext.selectedItemId}
-                    errors={errors}
-                />}
-                {isPreviewMode && <LayoutViewer
-                    layout={layout}
-                    answers={answers}
-                    onAnswerChanged={this.onAnswerChange}
-                />
-                }
-                <Secure requireClaim={ClaimType.role} requireClaimValue={[Role.Admin]}>
-                    <BackButton className="btn-space-right" goBack={history.goBack} />
-                    <DeleteButton onClick={this.removeLayout} />
-                </Secure>
-            </div>
-            <PropertyManager toggle={this.onPropertyClose} visible={propertySelected} title={"Edit Layout Properties"} />
-
-        </div>;
-    }
-
-    public componentDidUpdate(prevProps: LayoutEditProps) {
-
-        const { lastAddedContext } = this.props;
-
-        if (lastAddedContext !== prevProps.lastAddedContext) {
-            const node = document.getElementById(lastAddedContext.itemId);
-
-            if (node) {
-                window.scrollTo(0, node.getBoundingClientRect().top + (window.scrollY - 200));
-
-                //need to highlight item once added.
-            }
-        }
     }
 }
 export default connect(

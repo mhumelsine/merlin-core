@@ -33,6 +33,37 @@ class NewLayoutPage extends React.Component<LayoutPageProps> {
 		document.title = defaults.titles.CreateLayoutPage;
 	}
 
+    public render() {
+
+		const { layoutName, tags, layoutId, errors, isLoading} = this.state;
+  const { history } = this.props;
+
+  if (layoutId) {
+            return <Redirect to={`/layout/edit/${layoutId}`} />;
+		}
+
+		if (isLoading) {
+			return <Loading />;
+		}
+
+  return <div className="row">
+            <div className="col-md-8 offset-md-2">
+                <h1>Create Layout</h1>
+					<SaveLayoutControl
+						layoutName={layoutName}
+						tags={tags}
+						errors={errors}
+						onChange={this.onChange}
+					/>
+                    <BackButton
+                        goBack={history.goBack}
+                        className="btn-space-right"
+                    />
+                    <SaveButton onClick={this.onSubmit}/>
+            </div>
+        </div>;
+    }
+
     private onChange(name: string, value: any) {
         const newState = Object.assign({}, this.state) as any;
         newState[name] = value;
@@ -54,40 +85,9 @@ class NewLayoutPage extends React.Component<LayoutPageProps> {
             this.setState({ isLoading: false });
         }
     }
-
-    public render() {
-
-		const { layoutName, tags, layoutId, errors, isLoading} = this.state;
-        const { history } = this.props; 
-
-        if (layoutId) {
-            return <Redirect to={`/layout/edit/${layoutId}`} />;
-		} 
-
-		if (isLoading) {
-			return <Loading />;
-		}
-
-        return <div className="row">
-            <div className="col-md-8 offset-md-2">
-                <h1>Create Layout</h1>
-					<SaveLayoutControl
-						layoutName={layoutName} 
-						tags={tags}
-						errors={errors}
-						onChange={this.onChange}
-					/>
-                    <BackButton
-                        goBack={history.goBack}
-                        className="btn-space-right"
-                    />
-                    <SaveButton onClick={this.onSubmit}/>               
-            </div>
-        </div>;
-    }
 }
 
 export default connect(
-    (state: ApplicationState) => { return {} },
+    (state: ApplicationState) => { return {}; },
     actionCreators
 )(NewLayoutPage);

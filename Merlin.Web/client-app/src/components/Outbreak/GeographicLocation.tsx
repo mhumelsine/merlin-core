@@ -23,30 +23,11 @@ type GeographicProps = {
 class GeographicLocation extends React.Component<GeographicProps> {
     state = {
         loading: true
-    }
+    };
 
     constructor(props: GeographicProps) {
         super(props);
-        this.onChange = this.onChange.bind(this)
-    }
-
-    private onChange(name: string, newValue: any) {
-        let location = Object.assign({}, this.props.geographicLocation);
-
-        (location as any)[name] = newValue;
-
-        if (name === "otherCountiesAffected") {
-            if (newValue !== "YES") {
-                location.otherCountiesList = [];
-            }
-        }
-        else if (name === "otherStatesAffected") {
-            if (newValue !== "YES") {
-                location.otherStatesList = [];
-            }
-        }
-
-        this.props.updateGeographicLocation(location);
+        this.onChange = this.onChange.bind(this);
     }
 
     public async componentDidMount() {
@@ -72,16 +53,16 @@ class GeographicLocation extends React.Component<GeographicProps> {
         if (loading) {
             return <Loading />;
         }
-               
+
         const { errors, codes, geographicLocation } = this.props;
 
         return <div>
             <div className="row" >
                 <Dropdown
-                    name={"county"}
+                    name={'county'}
                     isRequired={true}
                     value={geographicLocation.county}
-                    label={"County:"}
+                    label={'County:'}
                     hideLabel={false}
                     placeholder={''}
                     options={utils.getOptions(codes.COUNTIES)}
@@ -94,16 +75,16 @@ class GeographicLocation extends React.Component<GeographicProps> {
             </div>
             <div className="row" >
                 <YesNoUnknown
-                    name={"otherCountiesAffected"}
+                    name={'otherCountiesAffected'}
                     value={geographicLocation.otherCountiesAffected}
-                    label={"Other Counties Affected:"}
+                    label={'Other Counties Affected:'}
                     cols={6}
                     onChange={this.onChange}
                 />
                 <Dropdown
-                    name={"otherCountiesList"}
+                    name={'otherCountiesList'}
                     value={geographicLocation.otherCountiesList}
-                    label={"List Other Counties Affected:"}
+                    label={'List Other Counties Affected:'}
                     hideLabel={false}
                     placeholder={''}
                     options={utils.getOptions(codes.COUNTIES)}
@@ -116,16 +97,16 @@ class GeographicLocation extends React.Component<GeographicProps> {
             </div>
             <div className="row" >
                 <YesNoUnknown
-                    name={"otherStatesAffected"}
+                    name={'otherStatesAffected'}
                     value={geographicLocation.otherStatesAffected}
-                    label={"Other States Affected:"}
+                    label={'Other States Affected:'}
                     cols={6}
                     onChange={this.onChange}
                 />
                 <Dropdown
-                    name={"otherStatesList"}
+                    name={'otherStatesList'}
                     value={geographicLocation.otherStatesList}
-                    label={"List Other states Affected:"}
+                    label={'List Other states Affected:'}
                     hideLabel={false}
                     placeholder={''}
                     options={utils.getOptions(codes.STATE)}
@@ -138,9 +119,9 @@ class GeographicLocation extends React.Component<GeographicProps> {
             </div>
             <div className="row" >
                 <Dropdown
-                    name={"otherCountriesList"}
+                    name={'otherCountriesList'}
                     value={geographicLocation.otherCountriesList}
-                    label={"Other Countries Affected:"}
+                    label={'Other Countries Affected:'}
                     hideLabel={false}
                     placeholder={''}
                     options={utils.getOptions(codes.COUNTRIES)}
@@ -152,6 +133,24 @@ class GeographicLocation extends React.Component<GeographicProps> {
                 />
             </div>
         </div>;
+    }
+
+    private onChange(name: string, newValue: any) {
+        let location = Object.assign({}, this.props.geographicLocation);
+
+        (location as any)[name] = newValue;
+
+        if (name === 'otherCountiesAffected') {
+            if (newValue !== 'YES') {
+                location.otherCountiesList = [];
+            }
+        } else if (name === 'otherStatesAffected') {
+            if (newValue !== 'YES') {
+                location.otherStatesList = [];
+            }
+        }
+
+        this.props.updateGeographicLocation(location);
     }
 }
 

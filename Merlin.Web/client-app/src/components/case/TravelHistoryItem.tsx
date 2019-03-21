@@ -11,18 +11,18 @@ import { connect } from 'react-redux';
 import * as CodeStore from '../../store/Code';
 
 export enum TravelType {
-    FLORIDA = "FLORIDA",
-    ANOTHER_STATE = "ANOTHER_STATE",
-    US_TERRITORY = "US_TERRITORY",
-    OUT_OF_US = "OUT_OF_US"
+    FLORIDA = 'FLORIDA',
+    ANOTHER_STATE = 'ANOTHER_STATE',
+    US_TERRITORY = 'US_TERRITORY',
+    OUT_OF_US = 'OUT_OF_US'
 }
 
 type TravelHistoryItemProps = {
     travelId: number;
     travelHistoryItem: CaseState.TravelHistoryItem;
     travelType: TravelType;
-    onAddressChange: (travelId:number, name: string, newValue: any) => void;
-}  & CodeStore.CodeState 
+    onAddressChange: (travelId: number, name: string, newValue: any) => void;
+}  & CodeStore.CodeState
   & typeof CodeStore.actionCreators;
 
 class TravelHistoryItem extends React.Component<TravelHistoryItemProps> {
@@ -34,18 +34,12 @@ class TravelHistoryItem extends React.Component<TravelHistoryItemProps> {
     }
 
     public async componentWillMount() {
-        this.props.loadDropdown(CodeStore.CodeType.traveltype); 
+        this.props.loadDropdown(CodeStore.CodeType.traveltype);
     }
 
-    private onAddressChange(name: string, newValue: any) {
-        const { onAddressChange, travelId } = this.props;
-
-        onAddressChange(travelId, name, newValue);
-    }
-   
     public render() {
         const { onAddressChange } = this;
-        const { travelType, travelHistoryItem,codes } = this.props;
+        const { travelType, travelHistoryItem, codes } = this.props;
         const { locationName, beginDate, endDate, notes, address } = travelHistoryItem;
 
 
@@ -81,10 +75,16 @@ class TravelHistoryItem extends React.Component<TravelHistoryItemProps> {
             <div className="col-md-12">
                 {/*<Address Address={address} notifyChanges={onAddressChange}/>*/}
             </div>
-        </div>
+        </div>;
+    }
+
+    private onAddressChange(name: string, newValue: any) {
+        const { onAddressChange, travelId } = this.props;
+
+        onAddressChange(travelId, name, newValue);
     }
 }
-export default connect( 
+export default connect(
         (state: ApplicationState) => Object.assign({}, state.case, state.codes),
-            Object.assign({}, CodeStore.actionCreators) 
+        Object.assign({}, CodeStore.actionCreators)
 )(TravelHistoryItem);

@@ -1,31 +1,27 @@
 ﻿import * as React from 'react';
 import TextInput from '../../common/TextInput';
-import TagInput from '../../common/TagInput'; 
+import TagInput from '../../common/TagInput';
 
-type LayoutPageProps = { 
-	onChange: (name: string, value: any) => void; 
+type LayoutPageProps = {
+	onChange: (name: string, value: any) => void;
 	layoutName: string;
 	tags: string[];
 	errors: any
-	}
+	};
 
 export default class SaveLayoutControl extends React.Component<LayoutPageProps> {
-	
+
 	constructor(props: LayoutPageProps) {
 		super(props);
 
-		this.onChange = this.onChange.bind(this); 
-	}
-
-	private onChange(name: string, value: any) {
-		this.props.onChange(name, value);
+		this.onChange = this.onChange.bind(this);
 	}
 
 	public render() {
 
-		const { layoutName, tags, errors } = this.props; 
-		const tagOptions = (tags || []).map(tag => { return { label: tag, value: tag } });
-			
+		const { layoutName, tags, errors } = this.props;
+		const tagOptions = (tags || []).map(tag => { return { label: tag, value: tag }; });
+
 
 		return <div className="row">
 			<div className="col-md-8 offset-md-2">
@@ -35,7 +31,7 @@ export default class SaveLayoutControl extends React.Component<LayoutPageProps> 
 						maxLength={255}
 						value={layoutName}
 						onChange={this.onChange}
-						error={errors.layoutName} 
+						error={errors.layoutName}
 					/>
 
 					<TagInput
@@ -49,5 +45,9 @@ export default class SaveLayoutControl extends React.Component<LayoutPageProps> 
 					/>
 			</div>
 		</div>;
+	}
+
+	private onChange(name: string, value: any) {
+		this.props.onChange(name, value);
 	}
 }

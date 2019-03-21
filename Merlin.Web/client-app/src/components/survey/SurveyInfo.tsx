@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import * as SurveyStore from '../../store/SurveySearch';
 
 interface SurveyInfoProps {
-    survey: any
+    survey: any;
 }
 
 export default class SurveyInfo extends React.Component<SurveyInfoProps, {}> {

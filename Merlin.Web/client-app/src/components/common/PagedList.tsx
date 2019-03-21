@@ -15,7 +15,7 @@ interface PagedListProps {
     paging: Paging;
     noResultsMessage?: any;
     onPageChange: (page: number) => void;
-};
+}
 
 export default function asPagedList(
     WrappedComponent: any,
@@ -30,9 +30,9 @@ export default function asPagedList(
             const paging = pagingAccessor(this.props);
             const onPageChange = onPageChangedAccessor(this.props);
 
-			const { maxHeight, className, noResultsMessage, fontSize, hideNumbersFound} = this.props;
+			         const { maxHeight, className, noResultsMessage, fontSize, hideNumbersFound} = this.props;
 
-            //handle no results found
+            // handle no results found
             if (!isLoading && paging.totalItems === 0) {
                 if (noResultsMessage) {
                     return noResultsMessage;
@@ -43,16 +43,16 @@ export default function asPagedList(
                 </Alert>;
             }
 
-            //see if we want a max height
+            // see if we want a max height
             let style = {} as any;
 
             if (maxHeight) {
                 style.maxHeight = maxHeight;
-                style.overflowY = "scroll";
-                style.padding = "5px";
-                style.margin = "-5px";
-			} 
-			console.log(this.props);
+                style.overflowY = 'scroll';
+                style.padding = '5px';
+                style.margin = '-5px';
+			}
+			         console.log(this.props);
             return <div className={className}>
 
                 {isLoading && <Loading />}
@@ -74,7 +74,7 @@ export default function asPagedList(
                         />
                     </div>
                 </div>
-				
+
                 <div className="list" style={style}>
                     <WrappedComponent {...this.props} />
                 </div>
@@ -90,5 +90,5 @@ export default function asPagedList(
                 </div>
             </div>;
         }
-    }
+    };
 }

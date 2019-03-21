@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { RouteComponentProps, Link } from "react-router-dom";
+import { RouteComponentProps, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { ApplicationState } from '../../store/index';
 import * as SurveyStore from '../../store/Survey';
@@ -21,11 +21,6 @@ type AffectedSurveyListProps =
     & RouteComponentProps<{}>;
 
 class AffectedSurveyList extends React.Component<AffectedSurveyListProps, {}> {
-    private movePage(page: number) {
-        const { surveyId } = this.props;
-
-        this.props.requestAffectedSurveys(surveyId, page, this.props.history);
-    }
 
     public render() {
         const { affectedSurveys } = this.props;
@@ -45,13 +40,18 @@ class AffectedSurveyList extends React.Component<AffectedSurveyListProps, {}> {
             }
         </ul>;
     }
+    private movePage(page: number) {
+        const { surveyId } = this.props;
+
+        this.props.requestAffectedSurveys(surveyId, page, this.props.history);
+    }
 }
 
 const pagedSurveyList = PagedList(AffectedSurveyList,
-    "Affected Surveys",
-    (props: any) => props.isLoading,
-    (props: any) => props.affectedSurveys.paging,
-    (props: any) => {
+                                  'Affected Surveys',
+                                  (props: any) => props.isLoading,
+                                  (props: any) => props.affectedSurveys.paging,
+                                  (props: any) => {
         const { surveyId } = props;
         return (page: number) => props.requestAffectedSurveys(surveyId, page);
     });

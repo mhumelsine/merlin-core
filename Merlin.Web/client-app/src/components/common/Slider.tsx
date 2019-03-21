@@ -15,12 +15,9 @@ type RangeSliderProps = {
     inputRef: (ref: any) => void;
     onChange: (name: string, selectedValue: any) => void;
     error?: string;
-}
+};
 
-class RangeSlider extends React.Component<RangeSliderProps, {}>{
-    private onChange(event: ChangeEvent<HTMLInputElement>) {
-        this.props.onChange(this.props.name, event.currentTarget.value);
-    }
+class RangeSlider extends React.Component<RangeSliderProps, {}> {
     public render() {
         const { name, label, cols, min, max, value, inputRef, isReadOnly } = this.props;
 
@@ -36,6 +33,9 @@ class RangeSlider extends React.Component<RangeSliderProps, {}>{
                 ref={inputRef}
                 readOnly={isReadOnly}
             />;
+    }
+    private onChange(event: ChangeEvent<HTMLInputElement>) {
+        this.props.onChange(this.props.name, event.currentTarget.value);
     }
 }
 export default FormField(RangeSlider);

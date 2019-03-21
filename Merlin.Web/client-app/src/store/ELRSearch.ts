@@ -12,10 +12,10 @@ export interface ELRSearchState {
     selectedObservationKeys: number[];
     county: SelectedCounties[];
     columnProperties: ColumnProperty[];
-    templates: DropdownCode[]
+    templates: DropdownCode[];
     templateName: string;
     templateID: number;
-    templateType: string
+    templateType: string;
 }
 
 export interface ColumnProperty {
@@ -38,7 +38,7 @@ export interface BasicSearch {
 }
 
 export interface SearchCriteria {
-    id: number,
+    id: number;
     fqColumnName: string;
     columnName: string;
     operator: string;
@@ -52,16 +52,16 @@ export interface SelectedCounties {
 }
 
 export enum Details {
-    profileId = "ProfileID",
-    stateNo ="StateNo"
+    profileId = 'ProfileID',
+    stateNo = 'StateNo'
 }
 
 export enum TemplateType {
-    master = "MASTER",
-    user   = "USER"
+    master = 'MASTER',
+    user   = 'USER'
 }
 
-//actions
+// actions
 interface ReceiveElrDataAction {
     type: 'RECEIVE_ELR_DATA';
     searchData: any;
@@ -73,59 +73,59 @@ interface ReceiveElrDataNamesAction {
 }
 
 interface SaveSearchCriteria {
-    type: 'SAVE_SEARCH_ITEM'
-    expressions: SearchCriteria[]
+    type: 'SAVE_SEARCH_ITEM';
+    expressions: SearchCriteria[];
 }
 
 interface UpdateBasicSearch {
-    type: 'UPDATE_BASIC_SEARCH'
-    basicSearch: BasicSearch
+    type: 'UPDATE_BASIC_SEARCH';
+    basicSearch: BasicSearch;
 }
 
 interface UpdateAdvancedSearch {
-    type: 'UPDATE_ADVANCED_SEARCH'
-    advancedCriteria: SearchCriteria[]
+    type: 'UPDATE_ADVANCED_SEARCH';
+    advancedCriteria: SearchCriteria[];
 }
 
 interface SelectObservation {
-    type: 'SELECT_OBSERVATION'
-    observationKey: number
-    county:string
+    type: 'SELECT_OBSERVATION';
+    observationKey: number;
+    county: string;
 }
 
 interface UnSelectObservation {
-    type: 'UN_SELECT_OBSERVATION'
-    observationKey: number
-    county: string
+    type: 'UN_SELECT_OBSERVATION';
+    observationKey: number;
+    county: string;
 }
 
 interface ClearSelectedObservations {
-    type: 'CLEAR_SELECTED_OBSERVATIONS'
+    type: 'CLEAR_SELECTED_OBSERVATIONS';
 }
 
 interface ClearSearch {
-    type: 'CLEAR_SEARCH'
+    type: 'CLEAR_SEARCH';
 }
 
 interface SetColumnProperties {
-    type: 'SET_COLUMN_PROPERTIES',
-    properties: ColumnProperty[]
+    type: 'SET_COLUMN_PROPERTIES';
+    properties: ColumnProperty[];
 }
 
 interface ReceiveTemplateList {
-    type: 'RECEIVE_TEMPLATE_LIST'
-    templates: DropdownCode[]
+    type: 'RECEIVE_TEMPLATE_LIST';
+    templates: DropdownCode[];
 }
 
 interface SaveTemplate {
-    type: 'SAVE_TEMPLATE',
-    templateDetails: any
+    type: 'SAVE_TEMPLATE';
+    templateDetails: any;
 }
 
 interface CreateTemplate {
-    type: 'CREATE_TEMPLATE',
-    name: string
-    id:number
+    type: 'CREATE_TEMPLATE';
+    name: string;
+    id: number;
 }
 
 type KnownAction = ReceiveElrDataAction
@@ -160,11 +160,11 @@ export const actionCreators = {
                 advancedCriteria: [...advancedCriteria,
                     {
                         id: Date.now(),
-                        fqColumnName: "",
-                        columnName: "",
-                        operator: "=",
-                        value: "",
-                        dataType: ""
+                        fqColumnName: '',
+                        columnName: '',
+                        operator: '=',
+                        value: '',
+                        dataType: ''
                     }
                 ]
             });
@@ -194,7 +194,7 @@ export const actionCreators = {
                 const columnName = columnInfo
                     .filter(info => info.fqColumnName === criteria.fqColumnName)[0].columnName;
 
-                //need to match camelCasing
+                // need to match camelCasing
                 criteria.columnName = `${columnName.charAt(0).toLowerCase()}${columnName.slice(1)}`;
             }
 
@@ -224,10 +224,10 @@ export const actionCreators = {
             if (basicSearch.patientFirstName) {
                 combinedSearchCriteria.push({
                     id: 4,
-                    dataType: "string",
-                    fqColumnName: "elrRequest.PatientFirstName",
-                    columnName: "patientFirstName",
-                    operator: "LIKE",
+                    dataType: 'string',
+                    fqColumnName: 'elrRequest.PatientFirstName',
+                    columnName: 'patientFirstName',
+                    operator: 'LIKE',
                     value: `${basicSearch.patientFirstName.trim()}%`
                 });
 
@@ -235,30 +235,30 @@ export const actionCreators = {
             if (basicSearch.patientLastName) {
                 combinedSearchCriteria.push({
                     id: 3,
-                    dataType: "string",
-                    fqColumnName: "elrRequest.PatientLastName",
-                    columnName: "patientLastName",
-                    operator: "LIKE",
+                    dataType: 'string',
+                    fqColumnName: 'elrRequest.PatientLastName',
+                    columnName: 'patientLastName',
+                    operator: 'LIKE',
                     value: `${basicSearch.patientLastName.trim()}%`
                 });
             }
             if (basicSearch.patientDOB) {
                 combinedSearchCriteria.push({
                     id: 2,
-                    dataType: "date",
-                    fqColumnName: "elrRequest.PatientDOB",
-                    columnName: "patientDOB",
-                    operator: "=",
+                    dataType: 'date',
+                    fqColumnName: 'elrRequest.PatientDOB',
+                    columnName: 'patientDOB',
+                    operator: '=',
                     value: basicSearch.patientDOB
                 });
             }
             if (basicSearch.specimenID) {
                 combinedSearchCriteria.push({
                     id: 1,
-                    dataType:"string",
-                    fqColumnName: "elrOrder.SpecimenID",
-                    columnName: "specimenID",
-                    operator: "LIKE",
+                    dataType: 'string',
+                    fqColumnName: 'elrOrder.SpecimenID',
+                    columnName: 'specimenID',
+                    operator: 'LIKE',
                     value: `${basicSearch.specimenID.trim()}%`
                 });
             }
@@ -268,8 +268,8 @@ export const actionCreators = {
 
                 if (searchData.length > 0) {
 
-                    const keys = Object.keys(searchData[0]).sort(columnOrder('insertedDateTime'));                    
-                   
+                    const keys = Object.keys(searchData[0]).sort(columnOrder('insertedDateTime'));
+
                     const properties = keys.sort((a, b) => {
 
                         const foundA = combinedSearchCriteria.some(c => c.columnName === a);
@@ -287,13 +287,13 @@ export const actionCreators = {
                     })
                     .map(property => {
                         return {
-                            name:property,
+                            name: property,
                             wasSearched: combinedSearchCriteria.some(c => c.columnName === property)
                         };
                     });
 
                     dispatch({
-                        type: "SET_COLUMN_PROPERTIES",
+                        type: 'SET_COLUMN_PROPERTIES',
                         properties
                     });
                 }
@@ -308,7 +308,7 @@ export const actionCreators = {
                 return err;
             }
         },
-    selectObservation: (observationKey: number,county:string): AppThunkAction<KnownAction> =>
+    selectObservation: (observationKey: number, county: string): AppThunkAction<KnownAction> =>
         (dispatch, getState) => {
 
             dispatch({
@@ -365,18 +365,18 @@ export const actionCreators = {
             });
         },
 
-    loadTemplates: ():AppThunkAction<KnownAction> =>
+    loadTemplates: (): AppThunkAction<KnownAction> =>
         async (dispatch, getState) => {
             try {
-                
-                const templates = await AjaxUtils.get(`api/elrsearch/templates`) 
+
+                const templates = await AjaxUtils.get(`api/elrsearch/templates`);
 
                 dispatch({
                     type: 'RECEIVE_TEMPLATE_LIST',
                     templates
                 });
 
-                return {}
+                return {};
             } catch (err) {
                 console.log(err);
                 return err;
@@ -387,29 +387,27 @@ export const actionCreators = {
             try {
 
                 if (id > 0) {
-                    var templateDetails = await AjaxUtils.get(`api/elrsearch/template/${id}`);
+                    let templateDetails = await AjaxUtils.get(`api/elrsearch/template/${id}`);
 
                     dispatch({
                         type: 'SAVE_TEMPLATE',
                         templateDetails
                     });
-                }
-                else {
+                } else {
                     dispatch({
                         type: 'CREATE_TEMPLATE',
                         name,
                         id
                     });
-                }                
-            }
-            catch (err) { console.log(err)}
+                }
+            } catch (err) { console.log(err); }
 
         },
     deleteTemplate: (): AppThunkAction<KnownAction> =>
         async (dispatch, getState) => {
             try {
                 const id = getState().elrSearch.templateID;
-                const templates = getState().elrSearch.templates
+                const templates = getState().elrSearch.templates;
 
                 if (id > 0) {
                     await AjaxUtils.remove(`api/elrsearch/template/${id}`);
@@ -423,13 +421,13 @@ export const actionCreators = {
                     type: 'RECEIVE_TEMPLATE_LIST',
                     templates: [...templates.filter(item => parseInt(item.code) !== id)]
                 });
-                return {}
+                return {};
             } catch (err) {
                 console.log(err);
                 return err;
             }
         },
-    saveTemplate: (name: string,id:number,templateType: string): AppThunkAction<KnownAction> =>
+    saveTemplate: (name: string, id: number, templateType: string): AppThunkAction<KnownAction> =>
        async (dispatch, getState) => {
            const advancedCriteria = getState().elrSearch.advancedCriteria;
            let templateDetails = {
@@ -437,7 +435,7 @@ export const actionCreators = {
                templateID: id,
                templateType: templateType,
                criteria: advancedCriteria
-           }
+           };
 
            if (id > 0)
                await AjaxUtils.put(`api/elrsearch/template`, templateDetails);
@@ -514,7 +512,7 @@ export const reducer: Reducer<ELRSearchState> = (state: ELRSearchState = unloade
                 templateName: unloadedState.templateName,
                 templateID: unloadedState.templateID,
                 templateType: unloadedState.templateType,
-                county:unloadedState.county,
+                county: unloadedState.county,
             });
         case 'SET_COLUMN_PROPERTIES':
             return { ...state, columnProperties: action.properties };
@@ -524,7 +522,7 @@ export const reducer: Reducer<ELRSearchState> = (state: ELRSearchState = unloade
                 advancedCriteria: action.templateDetails.criteria.sort((x: any, y: any) => x.id - y.id),
                 templateName: action.templateDetails.templateName,
                 templateID: action.templateDetails.templateID,
-                templateType:action.templateDetails.templateType,
+                templateType: action.templateDetails.templateType,
             });
         case 'RECEIVE_TEMPLATE_LIST':
             return Object.assign({}, state, {
@@ -536,7 +534,7 @@ export const reducer: Reducer<ELRSearchState> = (state: ELRSearchState = unloade
                 templateName: action.name,
                 templateID: action.id,
             });
-       
+
         default:
             // The following line guarantees that every action in the KnownAction union has been covered by a case above
             const exhaustiveCheck: never = action;

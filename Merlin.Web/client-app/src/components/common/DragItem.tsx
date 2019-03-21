@@ -22,15 +22,10 @@ export default class DragItem extends React.Component<DragItemProps> {
         this.onDragStart = this.onDragStart.bind(this);
     }
 
-    private onDragStart(event: any) {
-        event.preventDefault();
-        this.props.dragStart(this.me);
-    }
-
     public render() {
 
         const { children, id, isDragging, width, className } = this.props;
-        const dragClass = isDragging ? "dragging" : "";
+        const dragClass = isDragging ? 'dragging' : '';
 
         return <div className={`resizable col-md-${width}`} >
             <div
@@ -45,7 +40,7 @@ export default class DragItem extends React.Component<DragItemProps> {
                     onMouseDown={this.onDragStart}
                     type="button"
                     title="Drag to resize"
-                    className={`drag-handle btn btn-outline-primary btn-round ${isDragging ? "active" : ""}`}
+                    className={`drag-handle btn btn-outline-primary btn-round ${isDragging ? 'active' : ''}`}
                 >
                     <FaCrop fontSize={15} />
                     <span className="sr-only">Drag to resize</span>
@@ -53,5 +48,10 @@ export default class DragItem extends React.Component<DragItemProps> {
 
             </div>
         </div>;
+    }
+
+    private onDragStart(event: any) {
+        event.preventDefault();
+        this.props.dragStart(this.me);
     }
 }

@@ -6,11 +6,11 @@ type PaginationLinkProps = {
     onClick: (page: number) => void;
 };
 
-export default class PaginationLink extends React.Component<PaginationLinkProps, {}>{
+export default class PaginationLink extends React.Component<PaginationLinkProps, {}> {
     public render() {
         const { selected, onClick, page } = this.props;
 
-        return <li className={`page-item ${selected ? 'active' : ''} ${selected ? "disabled" : ""}`}>
+        return <li className={`page-item ${selected ? 'active' : ''} ${selected ? 'disabled' : ''}`}>
 
             <button
                 type="button"

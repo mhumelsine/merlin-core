@@ -21,7 +21,7 @@ export default class LayoutSearchPage extends React.Component<LayoutSearchPagePr
             <div className="mt-3 mb-3">
 				<Link to="/layout/new" className={defaults.theme.buttons.class}>
                     <FaPlus />
-                    {" "}
+                    {' '}
                     New Layout
                     </Link>
             </div>

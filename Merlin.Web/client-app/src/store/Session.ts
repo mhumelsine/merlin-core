@@ -3,39 +3,39 @@ import { AppThunkAction } from './';
 import moment from 'moment';
 
 export enum ClaimType {
-    county = "merlin/COUNTY",
-    fullName = "merlin/FullName",
-    role = "merlin/role",
-    epicomUserId = "merlin/epicom-userId",
-    nameidentifier = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"
+    county = 'merlin/COUNTY',
+    fullName = 'merlin/FullName',
+    role = 'merlin/role',
+    epicomUserId = 'merlin/epicom-userId',
+    nameidentifier = 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'
 }
 
 export enum Role {
-    Admin = "ADMIN"
+    Admin = 'ADMIN'
 }
 
 export interface SessionState {
-    claims: any[],
-    expiresOn: moment.Moment
-    refreshing: boolean,
-    expired: boolean
+    claims: any[];
+    expiresOn: moment.Moment;
+    refreshing: boolean;
+    expired: boolean;
 }
 
 interface TokenResponse {
-    token: string
+    token: string;
 }
 
 interface RequestTokenAction {
-    type: 'REQUEST_TOKEN',
-    expired: boolean
+    type: 'REQUEST_TOKEN';
+    expired: boolean;
 }
 
 interface ReceiveTokenAction {
-    type: 'RECEIVE_TOKEN',
-    token: string
+    type: 'RECEIVE_TOKEN';
+    token: string;
 }
 interface LogOffAction {
-    type: 'LOGOFF_SESSION'
+    type: 'LOGOFF_SESSION';
 }
 
 type KnownAction =
@@ -51,13 +51,13 @@ export const actionCreators = {
             const refreshing = getState().session.refreshing;
             const diff = expiresOn.diff(moment.utc(), 'minutes');
 
-            //if token will expire in the next 2 minutes, refresh
+            // if token will expire in the next 2 minutes, refresh
             const needsRefresh = diff < 2;
 
             if (needsRefresh && !refreshing) {
 
                 dispatch({
-                    type: "REQUEST_TOKEN",
+                    type: 'REQUEST_TOKEN',
                     expired: diff < 1
                 });
 
@@ -67,7 +67,7 @@ export const actionCreators = {
                     credentials: 'include'
                 });
 
-                //redirect
+                // redirect
                 if (response.redirected) {
                     if (window.location.href !== response.url) {
                         window.location.href = response.url;
@@ -88,10 +88,10 @@ export const actionCreators = {
     logOff: (): AppThunkAction<KnownAction> =>
         async (dispatch, getState) => {
             dispatch({
-                type: "LOGOFF_SESSION"
+                type: 'LOGOFF_SESSION'
             });
         }
-}
+};
 
 const unloadedState: SessionState = {
     claims: [],
@@ -105,13 +105,13 @@ export const reducer: Reducer<SessionState> = (state: SessionState = unloadedSta
     const action = incomingAction as KnownAction;
 
     switch (action.type) {
-        case "REQUEST_TOKEN":
+        case 'REQUEST_TOKEN':
             return Object.assign({}, state, { refreshing: true, expired: action.expired });
         case 'RECEIVE_TOKEN':
 
             const tokenParts = action.token.split('.');
 
-            //invalid token; do not process
+            // invalid token; do not process
             if (tokenParts.length !== 3) {
                 throw new Error(`Invalid Token: ${action.token}`);
             }
@@ -119,11 +119,11 @@ export const reducer: Reducer<SessionState> = (state: SessionState = unloadedSta
 
             const claims = JSON.parse(atob(binaryClaims));
 
-            //ASP.NET returns seconds since epoc JS wants milliseconds since epoc
-            const expiresOn = moment.utc(claims.exp*1000);
+            // ASP.NET returns seconds since epoc JS wants milliseconds since epoc
+            const expiresOn = moment.utc(claims.exp * 1000);
 
-            //put token in sessionStorage to use from AjaxUtils
-            //see if this can be moved so it is always served out of the redux store
+            // put token in sessionStorage to use from AjaxUtils
+            // see if this can be moved so it is always served out of the redux store
             sessionStorage.setItem('token', action.token);
 
             return {
@@ -132,8 +132,8 @@ export const reducer: Reducer<SessionState> = (state: SessionState = unloadedSta
                 refreshing: false,
                 expired: false
             };
-        case "LOGOFF_SESSION":
-            window.sessionStorage.removeItem("token");
+        case 'LOGOFF_SESSION':
+            window.sessionStorage.removeItem('token');
 
             return Object.assign({}, unloadedState);
         default:

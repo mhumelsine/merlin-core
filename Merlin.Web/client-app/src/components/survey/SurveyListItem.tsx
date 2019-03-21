@@ -6,13 +6,13 @@ import CollapsibleCard from '../common/CollapsibleCard';
 type SurveyListItemProps = {
     index: any;
     survey: SurveyStore.Survey
-}
+};
 
 export default class SurveyListItem extends React.Component<SurveyListItemProps, {}> {
     state = {
         isExpanded: defaults.boolean,
         surveys: [{}]
-    }
+    };
 
     constructor(props: SurveyListItemProps) {
         super(props);
@@ -57,10 +57,10 @@ export default class SurveyListItem extends React.Component<SurveyListItemProps,
                 }
             />
 
-            {/* <div onClick={this.toggleExpand}> 
+            {/* <div onClick={this.toggleExpand}>
                 { isExpanded ? <FaMinusSquareO fontSize={30} /> : <FaPlusSquareO  fontSize={30} />}
             </div>
-             {isExpanded &&  
+             {isExpanded &&
                 <SurveyListHistory
                      survey={survey}
                 /> */}

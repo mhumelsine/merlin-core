@@ -8,7 +8,7 @@ interface ControlListProps {
     canAddControl: (controlId: string) => boolean;
     onAdd: (parentId: string, item: LayoutStore.LayoutItem) => void;
     parentId: string;
-};
+}
 
 export default class ControlList extends React.Component<ControlListProps> {
 
@@ -18,18 +18,32 @@ export default class ControlList extends React.Component<ControlListProps> {
         this.onClick = this.onClick.bind(this);
     }
 
+    public render() {
+		return <ul className="list-group">
+            {this.createItem(ControlType.LabResults)}
+            {this.createItem(ControlType.Symptoms)}
+            {this.createItem(ControlType.HealthCareVisits)}
+            {this.createItem(ControlType.TravelHistory)}
+            {this.createItem(ControlType.VaccinationHistory)}
+            {this.createItem(ControlType.LabSummary)}
+            {this.createItem(ControlType.Epilinks)}
+            {this.createItem(ControlType.Treatments)}
+            {this.createItem(ControlType.OutbreakLabList)}
+        </ul>;
+    }
+
     private onClick(event: any) {
         const { onAdd, parentId } = this.props;
         const name = event.currentTarget.name;
 
         onAdd(parentId, {
             type: layoutItemType.control,
-            title:name,
+            title: name,
             id: name,
             width: 12,
             activation: defaults.activation,
             validations: defaults.validations,
-            groupAccess:[]
+            groupAccess: []
         });
     }
 
@@ -47,23 +61,9 @@ export default class ControlList extends React.Component<ControlListProps> {
                     name={controlType}
                     disabled={!canAddControl(controlType)}
                 >
-                    <FaPlus />{" "}Add
+                    <FaPlus />{' '}Add
                 </button>
             </div>
         </li>;
-    }
-
-    public render() {
-		return <ul className="list-group"> 
-            {this.createItem(ControlType.LabResults)}
-            {this.createItem(ControlType.Symptoms)}
-            {this.createItem(ControlType.HealthCareVisits)}
-            {this.createItem(ControlType.TravelHistory)}
-            {this.createItem(ControlType.VaccinationHistory)}
-            {this.createItem(ControlType.LabSummary)}
-            {this.createItem(ControlType.Epilinks)}
-            {this.createItem(ControlType.Treatments)}
-            {this.createItem(ControlType.OutbreakLabList)}
-        </ul>;
     }
 }

@@ -17,7 +17,7 @@ export default class Snomed extends React.Component<Props, State> {
     state = {
         loading: false,
         snomeds: []
-    }
+    };
 
     public async componentWillMount() {
         const { resultCode } = this.props;

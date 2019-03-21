@@ -12,15 +12,15 @@ import { getOptions } from '../../utils/UIUtils';
 
 type SymptomItemProps= {
     symptom: CaseSymptom,
-    codes :CodeStore.DropdownCode[]
-}  &typeof CodeStore.actionCreators
+    codes: CodeStore.DropdownCode[]
+}  &typeof CodeStore.actionCreators;
 
 
 class SymptomItem extends React.Component<SymptomItemProps> {
     state = {
         symptom: this.props.symptom,
-        hasSymptom: (this.props.symptom.hasSymptom) ? this.props.symptom.hasSymptom :defaults.boolean
-    }
+        hasSymptom: (this.props.symptom.hasSymptom) ? this.props.symptom.hasSymptom : defaults.boolean
+    };
 
     constructor(props: SymptomItemProps) {
         super(props);
@@ -29,8 +29,20 @@ class SymptomItem extends React.Component<SymptomItemProps> {
     }
 
     public async componentWillMount() {
-        await this.props.loadDropdown(CodeStore.CodeType.onsettime);   
+        await this.props.loadDropdown(CodeStore.CodeType.onsettime);
 
+    }
+
+
+    public render() {
+
+        const { other} = this.state.symptom;
+        return <tr>
+                <td data-title="Symptom"> {this.symptom()}  </td>
+                <td data-title="Other">{other}</td>
+                <td data-title="Onset Date">{this.onsetDate()}</td>
+                <td data-title="Time"> {this.onsetTime()}</td>
+              </tr>;
     }
 
 
@@ -38,7 +50,7 @@ class SymptomItem extends React.Component<SymptomItemProps> {
 
         let newState = Object.assign({}, this.state);
 
-        newState.hasSymptom = !this.state.hasSymptom
+        newState.hasSymptom = !this.state.hasSymptom;
         if (this.state.hasSymptom) {
             newState.symptom.onsetDate = defaults.string;
             newState.symptom.onsetTime = defaults.string;
@@ -55,33 +67,33 @@ class SymptomItem extends React.Component<SymptomItemProps> {
 
     private onsetDate() {
         const { onsetDate } = this.state.symptom;
-        
+
         return <CustomDatePicker
-            name={"onsetDate"}
+            name={'onsetDate'}
             value={onsetDate}
-            placeholder={"select date"}
+            placeholder={'select date'}
             cols={12}
             label="Start Date"
             hideLabel={true}
             isReadOnly={!(this.state.hasSymptom) }
             onChange={this.onDropdownChange}
         />;
-    } 
+    }
 
     private onsetTime() {
         const { onsetTime } = this.state.symptom;
         return  <Dropdown
             cols={12}
-            label={""}
+            label={''}
             hideLabel={true}
-            name={"onsetTime"}
+            name={'onsetTime'}
             value={onsetTime}
             options={getOptions(this.props.codes)}
-            placeholder={"select time"}
+            placeholder={'select time'}
             onChange={this.onDropdownChange}
             isReadOnly={!(this.state.hasSymptom)}
             isMulti={false}
-            error={""}
+            error={''}
         />;
     }
     private symptom() {
@@ -90,24 +102,12 @@ class SymptomItem extends React.Component<SymptomItemProps> {
         return <HorizontalYesNo
             name={symptomCode}
             label={symptomName}
-            value={hasSymptom ? "YES" : "NO"}
+            value={hasSymptom ? 'YES' : 'NO'}
             hideLabel={false}
             onChange={this.onhasSymptomChange}
             labelCols={6}
             inputCols={4}
-        />
-    }
-
-
-    public render() {
-
-        const { other} = this.state.symptom;
-        return <tr>
-                <td data-title="Symptom"> {this.symptom()}  </td>
-                <td data-title="Other">{other}</td>
-                <td data-title="Onset Date">{this.onsetDate()}</td>
-                <td data-title="Time"> {this.onsetTime()}</td>
-              </tr>;
+        />;
     }
 }
 export default connect(

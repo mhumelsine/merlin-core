@@ -13,20 +13,20 @@ type RepeatingQuestionGroupViewProps = {
     answers?: answers;
     onAnswerChanged?: (name: string, value: any) => void;
     errors?: any;
-}
+};
 
 type questionRow = {
     rowId: number;
     index: number;
     questions: LayoutItem[];
-}
+};
 
 class RepeatingQuestionGroupView extends React.Component<RepeatingQuestionGroupViewProps> {
 
     state = {
         questionGrid: [] as questionRow[],
         answers: {} as answers
-    }
+    };
 
     constructor(props: any) {
         super(props);
@@ -47,6 +47,36 @@ class RepeatingQuestionGroupView extends React.Component<RepeatingQuestionGroupV
         }
     }
 
+    public render() {
+        const { questionGrid } = this.state;
+        const { answers, item, onAnswerChanged } = this.props;
+        const rgAnswers = (answers![item.id] || []) as any[];
+
+        return <div className="mb-2">
+            {
+                rgAnswers && rgAnswers.map((answer, index) => <RepeatingQuestionGroupRow
+                    key={answer.index}
+                    item={item}
+                    index={answer.index as number}
+                    rgAnswers={rgAnswers[index]}
+                    onAnswerChanged={this.onAnswerChanged}
+                    removeRow={this.removeRow}
+                />
+                )
+            }
+            <button
+                role="buton"
+                title="Add Entry"
+                onClick={this.addRow}
+                className="btn btn-link p-0 text-capitalize"
+            >
+                <FaPlusCircle fontSize={defaults.iconSize} style={{ verticalAlign: 'bottom' }} />
+                {' '}Add Entry
+                <span className="sr-only">Add Entry</span>
+            </button>
+        </div>;
+    }
+
     private onAnswerChanged(name: string, value: any, index?: number) {
         const { item, answers, onAnswerChanged } = this.props;
 
@@ -58,7 +88,7 @@ class RepeatingQuestionGroupView extends React.Component<RepeatingQuestionGroupV
 
         const answer = Object.assign({}, rgAnswers.filter(a => a.index == index)[0]);
 
-        answer[name.replace("-" + index, "")] = value;
+        answer[name.replace('-' + index, '')] = value;
 
         const newAnswers = [...rgAnswers.filter(a => a.index != index), answer]
             .sort((x, y) => x.index - y.index);
@@ -66,11 +96,11 @@ class RepeatingQuestionGroupView extends React.Component<RepeatingQuestionGroupV
         onAnswerChanged(item.id, newAnswers);
     }
 
-    //private onAnswerChanged(name: string, value: any) {
+    // private onAnswerChanged(name: string, value: any) {
     //    const { onAnswerChanged } = this.props;
 
     //    onAnswerChanged(name, value)
-    //}
+    // }
 
     private addRow() {
         const { item, answers, onAnswerChanged } = this.props;
@@ -83,11 +113,11 @@ class RepeatingQuestionGroupView extends React.Component<RepeatingQuestionGroupV
 
         const answer = {} as any;
 
-        answer["index"] = rgAnswers.length;
+        answer.index = rgAnswers.length;
 
         (item.items || []).map(item => answer[item.id] = '');
 
-        onAnswerChanged(item.id, [...rgAnswers,answer]);
+        onAnswerChanged(item.id, [...rgAnswers, answer]);
     }
 
     private removeRow(e: any) {
@@ -105,40 +135,10 @@ class RepeatingQuestionGroupView extends React.Component<RepeatingQuestionGroupV
 
         onAnswerChanged(item.id, newAnswers);
     }
-
-    public render() {
-        const { questionGrid } = this.state;
-        const { answers, item, onAnswerChanged } = this.props;
-        const rgAnswers = (answers![item.id] || []) as any[];
-
-        return <div className="mb-2">
-            {
-                rgAnswers && rgAnswers.map((answer,index) => <RepeatingQuestionGroupRow
-                    key={answer.index}
-                    item={item}
-                    index={answer.index as number}
-                    rgAnswers={rgAnswers[index]}
-                    onAnswerChanged={this.onAnswerChanged}
-                    removeRow={this.removeRow}
-                />
-                )
-            }
-            <button
-                role="buton"
-                title="Add Entry"
-                onClick={this.addRow}
-                className="btn btn-link p-0 text-capitalize"
-            >
-                <FaPlusCircle fontSize={defaults.iconSize} style={{ verticalAlign: 'bottom' }} />
-                {" "}Add Entry
-                <span className="sr-only">Add Entry</span>
-            </button>
-        </div>
-    }
 } export default connect(
     (state: ApplicationState) => {
         return {
             layout: state.layout
-        }
+        };
     }, {}
 )(RepeatingQuestionGroupView);

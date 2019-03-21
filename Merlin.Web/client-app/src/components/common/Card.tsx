@@ -7,14 +7,11 @@ type CardProps = {
     footer?: any
     style?: any
     className?: string;
-}
+};
 
 export default class Card extends React.Component<CardProps, {}> {
     constructor(props: CardProps) {
         super(props);
-    }
-    private onChange() {
-
     }
     public render() {
         const { className, style, header, children, footer } = this.props;
@@ -33,4 +30,7 @@ export default class Card extends React.Component<CardProps, {}> {
             }
         </div>;
     }
-};
+    private onChange() {
+
+    }
+}

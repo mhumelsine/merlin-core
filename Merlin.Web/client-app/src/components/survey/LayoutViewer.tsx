@@ -6,11 +6,11 @@ import { defaults } from '../../utils/Global';
 import CaseInfoControl from './CaseInfoControl';
 
 export interface LayoutViewerProps {
-	answers: any,
-	layout: Layout,
-	hideCaseInfoControl?: boolean,
+	answers: any;
+	layout: Layout;
+	hideCaseInfoControl?: boolean;
 	onAnswerChanged: (name: string, value: any) => void;
-	errors?: any
+	errors?: any;
 }
 
 export default class LayoutViewer extends React.Component<LayoutViewerProps> {
@@ -47,36 +47,36 @@ export default class LayoutViewer extends React.Component<LayoutViewerProps> {
 					)
 				}
 			</div>
-		</div>
+		</div>;
 
 		// Code comented onpurpose, this implement the next functionality with accordions
-		//return <div className="layout-body">
-		//	<div className="row align-items-center justify-content-center pb-4">
-		//		<CaseInfoControl />
-		//	</div>
-		//	{layout && layout.items && layout.items.length > 0 &&
-		//		<Accordion defaultPanelHeading={layout.items[0].title || ""} >
-		//			{layout.items.map((item, index) =>
+		// return <div className="layout-body">
+		// 	<div className="row align-items-center justify-content-center pb-4">
+		// 		<CaseInfoControl />
+		// 	</div>
+		// 	{layout && layout.items && layout.items.length > 0 &&
+		// 		<Accordion defaultPanelHeading={layout.items[0].title || ""} >
+		// 			{layout.items.map((item, index) =>
 
-		//				<AccordionPanel
-		//					heading={item.title || ""}
-		//					key={index}
-		//					className="card">
-		//					<LayoutItem
-		//						key={item.id || index}
-		//						item={item}
-		//						answers={answers}
-		//						onAnswerChanged={onAnswerChanged}
-		//						errors={errors}
-		//						activationsInterpreter={activationsInterpreterNew}
-		//						validationsInterpreter={validationsInterpreterNew}
-		//					/>
-		//				</AccordionPanel>
-		//			)
-		//			}
-		//		</Accordion>
-		//	}
-		//</div>
+		// 				<AccordionPanel
+		// 					heading={item.title || ""}
+		// 					key={index}
+		// 					className="card">
+		// 					<LayoutItem
+		// 						key={item.id || index}
+		// 						item={item}
+		// 						answers={answers}
+		// 						onAnswerChanged={onAnswerChanged}
+		// 						errors={errors}
+		// 						activationsInterpreter={activationsInterpreterNew}
+		// 						validationsInterpreter={validationsInterpreterNew}
+		// 					/>
+		// 				</AccordionPanel>
+		// 			)
+		// 			}
+		// 		</Accordion>
+		// 	}
+		// </div>
 
 
 	}

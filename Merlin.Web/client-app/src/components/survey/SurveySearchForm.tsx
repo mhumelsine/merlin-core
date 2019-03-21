@@ -24,24 +24,18 @@ export default class SurveySearchForm extends React.Component<SurveyFormProps, {
         this.input.focus();
     }
 
-    private getCodeOptions(options: any[]) {
-        return options.map(option => {
-            return { label: option.description, value: option.code }
-        });
-    }
-
     public render() {
-        const { onSearch, onChange, surveyTypes, surveyTypeCodes, icd9Codes, icd9, name } = this.props
-        const { surveyTypesInput, outbreakInput, diseaseCodeInput, layoutDescriptionInput } = defaults.inputs.dropdowns
-        const { surveySearchInput, surveyDescriptionInput } = defaults.inputs.textInputs
-        const { effectiveDateInput } = defaults.inputs.datePickers
+        const { onSearch, onChange, surveyTypes, surveyTypeCodes, icd9Codes, icd9, name } = this.props;
+        const { surveyTypesInput, outbreakInput, diseaseCodeInput, layoutDescriptionInput } = defaults.inputs.dropdowns;
+        const { surveySearchInput, surveyDescriptionInput } = defaults.inputs.textInputs;
+        const { effectiveDateInput } = defaults.inputs.datePickers;
 
         return <form className="row" onSubmit={onSearch}>
 			<Dropdown
 				cols={6}
 				label={diseaseCodeInput.label}
 				hideLabel={true}
-				name={"icd9"}
+				name={'icd9'}
 				value={icd9}
 				options={this.getCodeOptions(icd9Codes)}
 				placeholder={diseaseCodeInput.placeholder}
@@ -62,7 +56,7 @@ export default class SurveySearchForm extends React.Component<SurveyFormProps, {
                 isMulti={true}
                 isReadOnly={false}
             />
-            
+
 			<TextInput
 				cols={12}
 				label={surveySearchInput.label}
@@ -71,16 +65,22 @@ export default class SurveySearchForm extends React.Component<SurveyFormProps, {
 				value={name}
 				placeholder={surveySearchInput.placeholder}
 				onChange={onChange}
-				inputRef={(input: any) => { this.input = input }}
+				inputRef={(input: any) => { this.input = input; }}
 				isReadOnly={false}
 			/>
 			<div className="form-group col-md-12">
 				<Link to="/layout/new" className={defaults.theme.buttons.class}>
 					<FaPlus />
-					{" "}
+					{' '}
 					New Layout
                     </Link>
 			</div>
         </form>;
+    }
+
+    private getCodeOptions(options: any[]) {
+        return options.map(option => {
+            return { label: option.description, value: option.code };
+        });
     }
 }

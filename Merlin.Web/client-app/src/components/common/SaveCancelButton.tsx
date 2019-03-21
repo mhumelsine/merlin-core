@@ -3,14 +3,13 @@ import { defaults } from '../../utils/Global';
 import SaveButton from './SaveButton';
 import CancelButton from './CancelButton';
 
-type SaveCancelButtonProps =
-    {
+type SaveCancelButtonProps = {
         saveOnClick?: any;
         iconFontSize?: number;
         cancelOnClick?: any;
         saveDisabled?: boolean;
         saveButtonText?: string
-    }
+    };
 
 export default class SaveCancelButton extends React.Component<SaveCancelButtonProps, {}> {
     public render() {
@@ -23,12 +22,12 @@ export default class SaveCancelButton extends React.Component<SaveCancelButtonPr
             <CancelButton onClick={cancelOnClick}
                 iconFontSize={iconFontSize}
             />
-            {" "}
+            {' '}
             <SaveButton onClick={saveOnClick}
                 iconFontSize={iconFontSize}
                 disabled={saveDisabled}
                 buttonText={saveButtonText}
             />
-        </span>
+        </span>;
     }
 }

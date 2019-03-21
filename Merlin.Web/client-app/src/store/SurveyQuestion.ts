@@ -43,7 +43,7 @@ export enum QuestionType {
     date = 'DATE'
 }
 
-//actions
+// actions
 interface RequestQuestionAction {
     type: 'REQUEST_QUESTION';
 }
@@ -83,12 +83,12 @@ interface ReceiveQuestionsAction {
 }
 
 interface RequestObjectMappingsAction {
-    type: 'REQUEST_OBJECT_MAPPINGS'
+    type: 'REQUEST_OBJECT_MAPPINGS';
 }
 
 interface ReceiveObjectMappingsAction {
-    type: 'RECEIVE_OBJECT_MAPPINGS',
-    objectMappings: ObjectMapping[]
+    type: 'RECEIVE_OBJECT_MAPPINGS';
+    objectMappings: ObjectMapping[];
 }
 
 type KnownAction = RequestQuestionAction
@@ -127,7 +127,7 @@ export const actionCreators = {
             return await AjaxUtils.put(`api/Survey/question/`, question);
         },
     saveQuestion: (question: Question): AppThunkAction<KnownAction> =>
-		async (dispatch, getState) => { 
+		async (dispatch, getState) => {
             return await AjaxUtils.post(`api/Survey/question/`, question);
         },
     requestQuestions: (subText: string, page: number, history: any): AppThunkAction<KnownAction> =>
@@ -141,7 +141,7 @@ export const actionCreators = {
             // Only load data if it's something we don't already have (and are not already loading)
             const currentState = getState().surveyQuestion;
 
-            //const isNewSearch = subText !== currentState.subText
+            // const isNewSearch = subText !== currentState.subText
             //    || page !== currentState.questionList.paging.page
             //    || currentState.questionList.list.length === 0;
 
@@ -191,7 +191,7 @@ export const actionCreators = {
                 mappingType: objectMapping.mappingType,
                 uId: objectMapping.uid,
                 mappingValue: objectMapping.mappingValue
-            }
+            };
             return await AjaxUtils.remove(`api/Survey/question/${objectMapping.questionId}/mapping/${questionUid}`, data);
         },
     replaceObjectMapping: (objectMapping: ObjectMapping, mappingTypeOfMappingToBeReplaced: string): AppThunkAction<KnownAction> =>
@@ -260,7 +260,7 @@ export const reducer: Reducer<SurveyQuestionState> = (state: SurveyQuestionState
             });
 
         case 'RECEIVE_OBJECT_MAPPINGS':
-            const objectMapping = action.objectMappings || []
+            const objectMapping = action.objectMappings || [];
             return Object.assign({}, state, {
                 objectMappings: objectMapping,
                 isLoading: false

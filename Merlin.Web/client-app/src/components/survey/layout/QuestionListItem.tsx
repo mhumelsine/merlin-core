@@ -23,13 +23,51 @@ interface QuestionListItemProps {
 }
 
 class QuestionListItem extends React.Component<QuestionListItemProps> {
+    state = {
+        visible: false
+    };
     constructor(props: QuestionListItemProps) {
         super(props);
         this.onQuestionAdd = this.onQuestionAdd.bind(this);
     }
-    state = {
-        visible: false
-    };
+
+    public render() {
+        const { question, isInManageMode, canAddQuestion, onAnswerChanged, answers, fontSize } = this.props;
+        const disabled = !(canAddQuestion && canAddQuestion(question.questionId));
+        const fontSizeUsed = fontSize ? fontSize : FontSize.default;
+
+        return <li className="list-group-item">
+            <div className="row">
+                <div className="col-md-12" style={{ fontSize: fontSizeUsed }}>
+                    <p>- ID: {question.questionId}</p>
+                </div>
+                <div className="col-md-12">
+                    <div className="row">
+                        <div className="col-md-8" style={{ marginLeft: '25px', fontSize: fontSizeUsed }}>
+                            <Question
+                                item={this.createLayoutItem(true)}
+                                smallViewport={true}
+                                answers={answers}
+                                onAnswerChanged={onAnswerChanged}
+                            />
+                        </div>
+                        <div className={`${isInManageMode ? 'col-md-1' : 'col-md-3'}`} style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
+                            {!isInManageMode &&
+                                <button id={question.questionId} className="btn btn-outline-dark" onClick={this.onQuestionAdd} disabled={disabled}>
+                                    Add
+								</button>
+                            }
+                            {isInManageMode &&
+                                <Link className="btn btn-info pull-right" to={`${defaults.urls.questionEditUrl}/${question.questionId}`}>
+                                    <FaEdit fontSize={15} />
+                                </Link>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>;
+    }
 
     private onclick() {
         let newState = Object.assign({}, this.state);
@@ -65,47 +103,9 @@ class QuestionListItem extends React.Component<QuestionListItemProps> {
     }
 
     private renderHighlightedText() {
-        return <Highlight search={this.props.subText} matchStyle={{ "backgroundColor": "yellow" }} >
+        return <Highlight search={this.props.subText} matchStyle={{ 'backgroundColor': 'yellow' }} >
             {this.props.question.questionText}
-        </Highlight>
-    }
-
-    public render() {
-        const { question, isInManageMode, canAddQuestion, onAnswerChanged, answers, fontSize } = this.props;
-        const disabled = !(canAddQuestion && canAddQuestion(question.questionId));
-        const fontSizeUsed = fontSize ? fontSize : FontSize.default;
-
-        return <li className="list-group-item">
-            <div className="row">
-                <div className="col-md-12" style={{ fontSize: fontSizeUsed }}>
-                    <p>- ID: {question.questionId}</p>
-                </div>
-                <div className="col-md-12">
-                    <div className="row">
-                        <div className='col-md-8' style={{ marginLeft: "25px", fontSize: fontSizeUsed }}>
-                            <Question
-                                item={this.createLayoutItem(true)}
-                                smallViewport={true}
-                                answers={answers}
-                                onAnswerChanged={onAnswerChanged}
-                            />
-                        </div>
-                        <div className={`${isInManageMode ? 'col-md-1' : 'col-md-3'}`} style={{ display: "flex", justifyContent: "flex-end", alignItems: "center" }}>
-                            {!isInManageMode &&
-                                <button id={question.questionId} className="btn btn-outline-dark" onClick={this.onQuestionAdd} disabled={disabled}>
-                                    Add
-								</button>
-                            }
-                            {isInManageMode &&
-                                <Link className="btn btn-info pull-right" to={`${defaults.urls.questionEditUrl}/${question.questionId}`}>
-                                    <FaEdit fontSize={15} />
-                                </Link>
-                            }
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </li>;
+        </Highlight>;
     }
 }
 
